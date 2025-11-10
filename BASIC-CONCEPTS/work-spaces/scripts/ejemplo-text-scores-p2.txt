@@ -1,0 +1,10 @@
+Default Weights: This is the story of a young woman who leaves everything behind to pursue a strange signal she heard on her radio. She follows it across towns, experiencing rejection, moments of awe, and eventually, a terrifying discovery beneath the mountains. 
+--------------------------------------------------------------------------------
+Attention-Dominant: A piercing sound interrupts her sleep. Eyes wide, heart racing, she grabs the radio. The signal is back. Without packing, she runs into the night, chased by blinding lights and unexplained forces. 
+-------------------------------------------------------------------------------- 
+Narrative-Dominant: Once, in a forgotten town, a girl found a radio in her grandfather’s attic. From that moment, a mystery unraveled. She faced townspeople who warned her, signs that made no sense, and finally — the moment she realized the signal was calling her by name.
+--------------------------------------------------------------------------------
+Emotion-Dominant: Her hands trembled over the dials. She had not cried since her father died, but the sound — familiar, almost like his voice — undid her. Memories surged. Was it grief? Was it hope? She pressed her ear to the radio, eyes closed, breath shaking.
+--------------------------------------------------------------------------------
+Balanced Weights: She hears a signal. It pulls her — heart thumping, story unfolding, emotions building. She crosses thresholds: fear, rejection, memory. And at the center, buried in the hills, she finds not just a machine, but a memory made physical — one that changes her forever.
+-------------------------------------------------------------------------------

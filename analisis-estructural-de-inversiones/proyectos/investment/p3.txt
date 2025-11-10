@@ -1,0 +1,208 @@
+TÍTULO: MARCO SISTÉMICO PARA DISEÑAR Y OPERAR CARTERAS (“METÁFORA RAÍZ → NIVELES → ARQUITECTURA NÚCLEO–PUENTES–ALAS”)
+
+PROPÓSITO DEL DOCUMENTO
+Este texto explica, de manera autosuficiente y operativa, un marco de inversión inspirado en teoría de sistemas y arquitectura de software. No asume conocimientos previos y está pensado para que cualquier equipo pueda implementar la metodología paso a paso. La idea central: una cartera no es una lista de activos, sino un SISTEMA con capas jerárquicas; si la arquitectura es correcta, los instrumentos pueden cambiar sin romper el diseño.
+
+──────────────────────────────────────────────────────────────────────────────
+1) IDEA FUNDACIONAL (“METÁFORA RAÍZ”)
+──────────────────────────────────────────────────────────────────────────────
+Definición:
+- La “metáfora raíz” es el nodo cognitivo mínimo que unifica lenguaje y decisiones. Aquí, la raíz es: **“Invertir = construir y gobernar un sistema de capas, donde el conocimiento estructural manda y los instrumentos son el lenguaje de ejecución.”**
+
+Implicaciones:
+- Primero arquitectura (reglas, límites, funciones), luego táctica (qué comprar/vender).
+- Minimiza errores de sobreajuste: se decide por PROCESO y SEÑALES, no por corazonadas.
+- Permite auditar y enseñar: cualquier cambio se registra como ajuste estructural o como acción de nivel lingüístico.
+
+──────────────────────────────────────────────────────────────────────────────
+2) DOS NIVELES DEL SISTEMA
+──────────────────────────────────────────────────────────────────────────────
+2.1 Nivel LINGÜÍSTICO (lo visible, rápido, operativo)
+- Qué es: la “capa de código” que ejecuta órdenes. Contiene instrumentos concretos:
+  acciones, bonos, cripto, ETFs, REITs, materias primas, etc.
+- Propiedades: alto dinamismo, susceptible a noticias y flujos; donde se definen entradas/salidas, tamaños de posición y rebalanceos.
+- Analogía con software: el **lenguaje** con el que escribes funciones (p. ej., Python/JS). Cambia a menudo sin necesidad de rediseñar la arquitectura.
+
+2.2 Nivel ESTRUCTURAL (lo subyacente, estable, gobernante)
+- Qué es: la arquitectura y las reglas del sistema (patrones, límites, jerarquías).
+- Contenido típico:
+  • Objetivo: preservar poder de compra y capturar primas de riesgo medibles.
+  • Arquitectura: **Núcleo–Puentes–Alas** con pesos objetivo y bandas.
+  • Señales macro: tasas reales, dólar (DXY), inflación esperada (“breakevens”), ciclos (PMI/ISM), spreads de crédito, flujos a ETFs.
+  • Regla de disparo: entrar cuando 2–3 señales se alinean.
+  • Regla de defensa: recortar si 2 señales se revierten (stop de proceso).
+  • Rebalanceo: periódico (mensual/trimestral) y por umbrales (+/− X%).
+- Analogía con software: **arquitectura/patrón** (MVC, hexagonal). Cambia poco; cuando cambia, reconfigura todo.
+
+──────────────────────────────────────────────────────────────────────────────
+3) ARQUITECTURA DE CARTERA: NÚCLEO – PUENTES – ALAS
+──────────────────────────────────────────────────────────────────────────────
+3.1 NÚCLEO (≥ 60% del capital; ≥ 60–70% en alta incertidumbre)
+Función: caja fuerte de poder adquisitivo; baja volatilidad; liquidez para rotaciones.
+Componentes arquetípicos:
+- Activos reales refugio (p. ej., **oro físico o ETF** de oro).
+- Bonos ligados a inflación de **corta duración** (p. ej., **VTIP** en USD; equivalentes locales indexados a IPC).
+- Bonos/efectivo de muy corto plazo (letras, T-bills, CETES) para “pólvora seca”.
+- Acciones de **calidad** (flujo estable, bajo apalancamiento) como bloque minoritario.
+
+Por qué funciona:
+- Reduce drawdowns (matemática: −12% con 40% de alas que caen −30%, frente a −30% sin núcleo).
+- Disminuye dependencia de pronósticos; facilita comprar oportunidades sin vender en pánico.
+- Cobertura de extremos: oro defiende shocks de confianza; indexados protegen inflación persistente; caja defiende endurecimientos bruscos.
+
+3.2 PUENTES (~ 25% del capital)
+Función: conectar el núcleo con exposiciones temáticas/sectoriales sin saltar a idiosincrasia extrema.
+Instrumentos típicos:
+- **ETFs sectoriales** (energía, materiales, financieros, salud, industriales).
+- **Mineras “senior”** (diversificadas, con balance más sólido).
+- **Bonos indexados de duración media** (SCHP/TIP) cuando se espera descenso moderado de tasas reales.
+- **REITs**/dividendos de calidad cuando las tasas dejan de subir.
+Rasgos: beta moderada (β≈0.5–0.8 al factor dominante); diversificación intrínseca; mejor relación señal/ruido que una acción “single name”.
+
+3.3 ALAS BETA (≤ 15% del capital total; gestionar por “experimentos”)
+Función: amplificar fases favorables con asimetría positiva, acotando daño si fallan.
+Instrumentos típicos (beta creciente):
+- **Metales con mayor beta que el oro**: **plata (SLV)**, **platino (PPLT)**, mineras **junior** (GDXJ, SILJ).
+- **Productores de energía** (XLE, IEO, XOP) y cíclicos puros (cobre COPX) cuando el ciclo industrial acelera (PMI/ISM > 50).
+- **Cripto núcleo** (BTC/ETH; tamaño pequeño), si la liquidez global mejora y acciones de crecimiento confirman.
+Reglas:
+- Tamaño por posición: 3–8% (máx.); total alas ≤ 15% (20% si señales A muy fuertes).
+- Entradas por **escalones**; toma parcial de utilidades (+25–30%) salvo que las señales mejoren más.
+- Stop de **proceso** (no solo de precio): si 2 señales que validaron la entrada se revierten, reducir 50% sin dudar.
+
+──────────────────────────────────────────────────────────────────────────────
+4) FACTORES Y SEÑALES (LOS “SENSORES” DEL SISTEMA)
+──────────────────────────────────────────────────────────────────────────────
+Factores dominantes:
+- **Tasa real** (tasa nominal − inflación esperada): resume “costo del dinero” real.
+- **DXY** (índice del dólar): mide fortaleza de liquidez global en USD.
+- **Breakevens** (inflación esperada implícita en bonos): miden reflación vs desinflación.
+- **PMI/ISM**: difunde el pulso del ciclo industrial (≥ 50 expansión).
+- **Spreads de crédito** (bonos High Yield − Treasuries): tensión financiera.
+- **Flujos** a ETFs/ETNs por clase (oro, cripto, equity): apetito/aversión.
+
+Semáforo de interpretación:
+- **A (Recortes/prudencia)**: tasa real ↓, DXY ↓, breakevens ↑ → pro-metales y TIPS de media/larga.
+- **B (Refugio/miedo)**: oro ↑ con DXY plano/↑, spreads ↑, PMI/ISM < 50 → subir núcleo (oro, VTIP, caja), moderar alas.
+- **C (Hawkish/credibilidad)**: tasa real ↑, DXY ↑, PCE subyacente repunta → recortar alas, rotar a caja y TIPS cortos; mantener calidad.
+
+──────────────────────────────────────────────────────────────────────────────
+5) BETA (SENSIBILIDAD) Y CÓMO UBICAR CADA ACTIVO
+──────────────────────────────────────────────────────────────────────────────
+Definición práctica:
+- β ≈ respuesta del activo ante cambios del factor (p. ej., tasas reales). Sirve para ordenar piezas por “potencia” y riesgo.
+
+Orden didáctico de beta creciente:
+VTIP (corto) → SCHP (medio) → TIP (más largo) → Oro → Mineras “senior” → Plata/Platino → Mineras “junior” → Cripto.
+
+Reglas útiles:
+- Si esperas **caída fuerte** de tasas reales: TIP/SCHP (alas moderadas) y metales suben; VTIP se mantiene.
+- Si temes **suba** de tasas reales: VTIP y caja protegen; TIP/SCHP sufren; metales se estancan o corrigen.
+- Si el driver es **geopolítico**: pueden subir **oro y dólar** a la vez; la señal clave será energía (Brent/WTI).
+
+──────────────────────────────────────────────────────────────────────────────
+6) EJEMPLOS CONCRETOS (CARTELES DE REFERENCIA)
+──────────────────────────────────────────────────────────────────────────────
+Núcleo:
+- Oro: GLD/IAU (exposición a oro físico).
+- Bonos indexados cortos: VTIP (USD) o equivalentes locales ligados a IPC.
+- Caja/letras: fondos monetarios/T-bills/CETES.
+- Calidad: ETF de calidad (p. ej., QUAL) o de “value” mega cap (VTV).
+
+Puentes:
+- Energía integrada: XLE; exploración/producción: IEO/XOP.
+- Materiales básicos: IYM; financieros: XLF; salud: XLV (defensivo).
+- Mineras “senior”: GDX (oro), SIL (plata).
+- TIPS media/larga: SCHP/TIP (cuando conviene duración real).
+
+Alas:
+- Metales “turbo”: SLV (plata), PPLT (platino); mineras junior: GDXJ/SILJ.
+- Cíclicos de commodities: COPX (cobre) si PMI/ISM > 50.
+- Cripto núcleo: BTC/ETH (vía ETF spot), tamaño pequeño.
+
+──────────────────────────────────────────────────────────────────────────────
+7) PROCESO OPERATIVO (DEL DISEÑO A LA ACCIÓN)
+──────────────────────────────────────────────────────────────────────────────
+7.1 Pesos objetivo y bandas:
+- Núcleo: 60–70% (banda 55–75%).
+- Puentes: 20–30% (banda 15–35%).
+- Alas: 10–15% (banda 0–20%).
+(En máxima incertidumbre, subir núcleo; en señales A muy fuertes, subir alas hasta el tope de banda.)
+
+7.2 Entradas:
+- Requieren 2–3 señales alineadas (p. ej., tasa real ↓ + DXY ↓ + flujos a oro ↑).
+- Escalonar compras (tercios) para reducir riesgo de “falso arranque”.
+
+7.3 Salidas:
+- “Stop de proceso”: si 2 señales se revierten, reducir 50% sin esperar.
+- “Toma de utilidades”: si la posición supera +25–30% y las señales no mejoran, realizar 1/3–1/2.
+
+7.4 Rebalanceo:
+- Mensual/trimestral a pesos objetivo; adicional por umbral si un bloque se desvía > ±20% de su peso objetivo.
+
+7.5 Bitácora:
+- Registrar hipótesis, señales que activan entrada, tamaño, objetivo, condición de salida, y aprendizaje post-trade. El conocimiento forma PARTE de la estructura.
+
+──────────────────────────────────────────────────────────────────────────────
+8) EDUCACIÓN ES ESTRUCTURA: MICROGUIA DE BONOS INDEXADOS
+──────────────────────────────────────────────────────────────────────────────
+- Un bono indexado (p. ej., TIPS/UDIs) ajusta su principal por inflación medida; su precio de mercado depende de la **tasa real**.
+- **Duración** = sensibilidad del precio a movimientos de tasa. Corto (VTIP) ≈ baja sensibilidad; medio (SCHP) ≈ intermedia; largo (TIP) ≈ alta.
+- En ciclos de **suba** de tasas reales (ej. 2022), los bonos largos caen más; el oro puede estancarse; VTIP amortigua.
+- En **bajas** fuertes de tasas reales, TIP/SCHP se revalorizan más (aprovechan duración).
+
+──────────────────────────────────────────────────────────────────────────────
+9) ESCENARIOS MACRO Y PLAYBOOK
+──────────────────────────────────────────────────────────────────────────────
+A) Recortes/prudencia (tasa real ↓, DXY ↓, breakevens ↑):
+- Mantener/añadir: oro (núcleo), plata/platino (alas), SCHP/TIP (duración real).
+- Añadir productores de energía si PMI/ISM > 50.
+- Riesgo: exceso de optimismo; usar escalones.
+
+B) Refugio/miedo (oro ↑ con DXY estable/↑, spreads ↑, PMI/ISM < 50):
+- Subir núcleo: oro + VTIP + caja. Mantener alas pequeñas (plata/platino).
+- Evitar cíclicos industriales; cripto mínimo hasta que el estrés ceda.
+
+C) Hawkish/credibilidad (tasa real ↑, DXY ↑, inflación subyacente sorprende):
+- Recortar alas (plata/platino/mineras junior) y TIPS largos.
+- Rotar a caja + VTIP; en equity, calidad/defensivos.
+- Reabrir beta cuando la tasa real deje de subir.
+
+──────────────────────────────────────────────────────────────────────────────
+10) GESTIÓN DEL RIESGO (REGLAS QUE EVITAN RUINA)
+──────────────────────────────────────────────────────────────────────────────
+- Tamaño máximo por posición de ala: 3–8%; alas totales ≤ 15–20%.
+- Evitar ETFs de futuros con **contango crónico** (petróleo/gas) para largos plazos; preferir productores.
+- “Nunca todo en un solo refugio”: oro y bonos indexados cubren shocks distintos.
+- Diversificación por FUNCIÓN (refugio/puente/ala), no por cantidad de tickers.
+- Disciplina de proceso > precisión del pronóstico.
+
+──────────────────────────────────────────────────────────────────────────────
+11) PLANTILLAS (LISTAS RÁPIDAS)
+──────────────────────────────────────────────────────────────────────────────
+Checklist diario:
+[ ] Tasa real 10Y: ↑/↓ ¿Cuánto?  
+[ ] DXY: ↑/↓ ¿Ruptura o rango?  
+[ ] Breakevens: ↑/↓  
+[ ] PMI/ISM: >50 o <50, tendencia  
+[ ] Spreads HY: se abren/cierran  
+[ ] Flujos en oro/cripto/equity: entradas/salidas  
+[ ] Noticia geopolítica/energía: ¿afecta oferta?  
+
+Semáforo de acción:
+- Verde: 2–3 señales pro-metales (A) → añadir en escalones.
+- Amarillo: divergencias o miedo (B) → subir núcleo; alas pequeñas.
+- Rojo: hawkish (C) → cortar alas y duración larga; caja/VTIP.
+
+──────────────────────────────────────────────────────────────────────────────
+12) RESUMEN EJECUTIVO PARA NUEVOS LECTORES
+──────────────────────────────────────────────────────────────────────────────
+- Pensar la cartera como **sistema**: METÁFORA RAÍZ → NIVELES (estructural/lingüístico) → ARQUITECTURA (núcleo–puentes–alas).
+- **Núcleo** (≥ 60%): oro + indexados cortos + caja (+ calidad). Objetivo: preservar poder de compra y estabilidad.
+- **Puentes** (~ 25%): ETFs sectoriales/mineras senior/TIPS medios; conectan defensa con oportunidad.
+- **Alas** (≤ 15%): plata/platino/mineras junior/cripto/productores cíclicos; amplifican cuando las señales se alinean.
+- Decidir con **sensores macro** (tasa real, DXY, breakevens, PMI/ISM, spreads, flujos). Entrar con 2–3 señales; salir si 2 se revierten.
+- La **educación** (entender bonos, duración, contango, correlaciones) **es parte de la estructura**; sin ese conocimiento, la táctica se vuelve azar.
+
+CONCLUSIÓN
+Este marco convierte la inversión en un proceso replicable y auditable. Al separar arquitectura de instrumentos, reduce errores de comportamiento, preserva capital en crisis y permite explotar oportunidades cuando el régimen es favorable. “Primero el sistema, luego las órdenes”: esa es la esencia de la metodología.

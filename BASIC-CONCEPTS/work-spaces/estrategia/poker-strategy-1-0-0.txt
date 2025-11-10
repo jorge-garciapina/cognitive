@@ -1,0 +1,196 @@
+# ============================================================
+# EJEMPLO APLICADO — "POKER_DECISIONAL" (conforme a ESTRATEGIA_GENERAL@v1.0)
+# Autosuficiente: instancia la PLANTILLA GENERAL DE ESTRATEGIA a un caso concreto.
+# Sin siglas ni abreviaturas.
+# ============================================================
+
+@metadata: {
+  id: "EJEMPLO_POKER_DECISIONAL@v1.0",
+  modelo_base: "ESTRATEGIA_GENERAL@v1.0",
+  dominio: "póker",
+  formatos: ["juego por dinero en efectivo", "torneo por mesas múltiples", "torneo por mesa única"],
+  modos_de_mesa: ["uno contra uno", "seis jugadores", "mesa completa"],
+  canal: ["presencial", "en línea"],
+  version_de_esquema: "1.0.0"
+}
+
+# ------------------------------------------------------------
+# A) DEFINICION (instancia de “estrategia” en el dominio póker)
+# ------------------------------------------------------------
+estrategia: {
+  definicion_operativa: "Sistema que decide fines, compone medios y diseña modos para maximizar el valor esperado ajustado, bajo restricciones de banca, formato e información.",
+  niveles: [
+    { nombre: "estratégico", salida: "teoría_de_la_victoria, portafolio_de_arquitecturas_propias_de_póker, guardarraíles, métrica_faro" },
+    { nombre: "orquestador", salida: "dimensiones, combinaciones_de_pesos, reglas_si_entonces, asignación_de_recursos (tiempo, número_de_mesas, energía)" },
+    { nombre: "operativo", salida: "contratos_mínimos_por_sesión_y_por_calle, validaciones_estrictas, medición_y_aprendizaje" }
+  ],
+  teoria_de_la_victoria: {
+    en_una_linea: "El valor esperado ajustado debe ser positivo con estabilidad de la banca y baja tasa de errores no forzados.",
+    notas: "Valor esperado ajustado = valor_esperado_bruto menos (costo_de_varianza más costo_por_pérdida_de_control_emocional más costo_por_errores_no_forzados)."
+  }
+}
+
+# ------------------------------------------------------------
+# B) INVARIANTES (si se violan → BLOQUEO)
+# ------------------------------------------------------------
+invariantes: [
+  "Gestión mínima de banca: la banca disponible debe ser mayor o igual al número mínimo de compras requerido por el nivel de apuestas objetivo.",
+  "Prohibido ejecutar líneas con valor esperado negativo cuando la evaluación sea confiable.",
+  "Separar el plan estratégico de los resultados de corto plazo (no cambiar por rachas).",
+  "Prohibido realizar faroles sin cartas bloqueadoras pertinentes o sin probabilidad razonable de que el rival se retire.",
+  "Prohibido ejercer agresión en varias calles sin un plan encadenado definido (flop, turno, río)."
+]
+
+# ------------------------------------------------------------
+# C) PORTAFOLIO DE ARQUITECTURAS ESTRATÉGICAS (formas del dominio)
+# ------------------------------------------------------------
+arquitecturas: [
+  {
+    id: "ARQ_RANGOS_Y_POSICION",
+    descripcion: "Ventaja mediante construcción de rangos y aprovechamiento de la posición.",
+    condiciones_de_uso: [
+      "Información suficiente para estimar los rangos de los rivales.",
+      "Capacidad de ejecutar planes encadenados con tamaños de apuesta coherentes."
+    ],
+    riesgos: [
+      "Ajuste excesivo a muestras pequeñas.",
+      "Inconsistencia de tamaños que delata fuerza o desequilibra rangos."
+    ]
+  },
+  {
+    id: "ARQ_AJUSTE_OBSERVACIONAL",
+    descripcion: "Ajustes explotadores basados en observaciones y notas sobre tendencias repetidas.",
+    condiciones_de_uso: [
+      "Evidencia mínima de patrones estables (retiro ante apuesta_de_continuación, pago excesivo en río, y similares)."
+    ],
+    riesgos: [
+      "Ajuste prematuro sin evidencia suficiente.",
+      "Contraajustes por parte de jugadores experimentados."
+    ]
+  },
+  {
+    id: "ARQ_CONTROL_DE_VARIANZA",
+    descripcion: "Gestión del tamaño del bote y simplificación cuando los árboles de decisión son complejos.",
+    condiciones_de_uso: [ "Pilas de fichas profundas o mesas con varios jugadores viendo el flop." ],
+    riesgos: [ "Renunciar a valor por exceso de cautela." ]
+  },
+  {
+    id: "ARQ_SELECCION_DE_MESA",
+    descripcion: "Curación del entorno (rivales y posiciones) para mejorar el valor esperado de base.",
+    condiciones_de_uso: [ "Disponibilidad de mesas alternativas o listas de espera." ],
+    riesgos: [ "Dependencia de la oferta y sesgos de selección." ]
+  }
+]
+
+# ------------------------------------------------------------
+# D) ADAPTADORES (parametrizan la elección o mezcla de arquitecturas)
+# ------------------------------------------------------------
+adaptadores: {
+  formato: ["juego por dinero en efectivo", "torneo por mesas múltiples", "torneo por mesa única"],
+  modo_de_mesa: ["uno contra uno", "seis jugadores", "mesa completa"],
+  canal: ["presencial", "en línea"],
+  profundidad_de_pila: ["corta (hasta cuarenta ciegas grandes)", "media (de cuarenta a ochenta ciegas grandes)", "profunda (al menos cien ciegas grandes)"],
+  perfil_de_mesa: ["pasiva", "agresiva", "cerrada", "abierta", "mixta"],
+  horizonte: ["sesión", "semana", "mes", "cantidad_de_manos"],
+  restriccion_principal: ["banca", "tiempo", "capacidad_de_jugar_varias_mesas", "energía_mental"]
+}
+
+# ------------------------------------------------------------
+# E) ORQUESTADOR DE PESOS (la suma debe ser 1.0)
+# ------------------------------------------------------------
+dimensiones_y_pesos: {
+  dimensiones: [
+    "agresión_controlada",
+    "control_de_varianza",
+    "explotación_frente_a_estrategia_óptima_de_teoría_de_juegos",
+    "calidad_de_información_y_lecturas",
+    "selección_de_mesa",
+    "estabilidad_emocional"
+  ],
+  combinacion_de_pesos: {
+    regla_de_suma: 1.0,
+    ejemplo: {
+      agresión_controlada: 0.25,
+      control_de_varianza: 0.20,
+      explotación_frente_a_estrategia_óptima_de_teoría_de_juegos: 0.20,
+      calidad_de_información_y_lecturas: 0.15,
+      selección_de_mesa: 0.10,
+      estabilidad_emocional: 0.10
+    },
+    validacion: "Si la suma de pesos es distinta de 1.0 → BLOQUEO antes de iniciar."
+  }
+}
+
+# ------------------------------------------------------------
+# F) CONTRATOS MINIMOS (interfaces exigidas por la instancia)
+# ------------------------------------------------------------
+contratos: [
+  {
+    id: "CONTRATO_PLAN_DE_SESION",
+    campos_obligatorios: [
+      "formato", "modo_de_mesa", "canal",
+      "duración_máxima", "número_de_mesas",
+      "criterio_de_pausa (por tiempo o por pérdidas)",
+      "criterio_de_cierre (límite_máximo_de_pérdidas y objetivo_de_ganancias)",
+      "pesos_activos (vector)",
+      "indicador_clave_de_la_sesion"
+    ],
+    validaciones: [
+      "Los límites de pérdidas y el objetivo de ganancias deben ser coherentes con la varianza del formato.",
+      "Los pesos activos deben ser coherentes con los adaptadores declarados."
+    ],
+    bloqueos: [
+      "Si falta el criterio_de_cierre → BLOQUEO.",
+      "Si los pesos activos no son coherentes con los adaptadores → BLOQUEO para jugar varias mesas."
+    ]
+  },
+  {
+    id: "CONTRATO_BANCA",
+    campos_obligatorios: ["banca_total", "nivel_de_apuestas_objetivo", "compras_mínimas_requeridas", "criterio_para_subir_o_bajar_de_nivel"],
+    validaciones: [
+      "Las compras mínimas deben ser mayores o iguales al umbral recomendado por formato.",
+      "Definir umbral para bajar de nivel si la banca disminuye durante un número de sesiones."
+    ],
+    bloqueos: [ "Si la banca_total es menor que las compras_mínimas_requeridas → BLOQUEO para ese nivel de apuestas." ]
+  },
+  {
+    id: "CONTRATO_DECISION_POR_CALLE",
+    campos_obligatorios: [
+      "posición",
+      "pilas_de_fichas_efectivas",
+      "rango_propio_estimado",
+      "rango_del_rival_estimado",
+      "tamaños_de_apuesta_posibles",
+      "equidad_aproximada",
+      "plan_encadenado (flop, turno, río)"
+    ],
+    validaciones: [
+      "Coherencia entre calles: la línea debe contemplar cartas futuras.",
+      "Criterio de retirada definido frente a presión alta sin soporte de rangos."
+    ],
+    bloqueos: [
+      "Si faltan pilas_de_fichas_efectivas o posición → prohibido usar tamaño grande.",
+      "Si falta el plan_encadenado → prohibido ejercer agresión en varias calles."
+    ]
+  }
+]
+
+# ------------------------------------------------------------
+# G) REGLAS “SI–ENTONCES” (gobernanza de la instancia)
+# ------------------------------------------------------------
+reglas_si_entonces: [
+  "Si el rival se retira con frecuencia ante la apuesta de continuación en tableros secos, entonces aumentar la frecuencia de apuesta de continuación con cartas bloqueadoras adecuadas.",
+  "Si el rival paga con demasiada frecuencia en río con rangos débiles, entonces reducir los faroles en río y aumentar las apuestas finas por valor.",
+  "Si los rivales abren rangos amplios y mi frecuencia de resubida previa al reparto de cartas del flop es baja, entonces aumentar la resubida en posición con cartas bloqueadoras.",
+  "Si la varianza diaria supera el umbral acordado y el estado emocional empeora, entonces pausar la sesión y registrar el incidente de pérdida de control emocional.",
+  "Si la mesa se vuelve muy difícil (pocos jugadores recreativos y varios jugadores experimentados agresivos), entonces cambiar de mesa o cerrar la sesión.",
+  "Si la pila efectiva es corta (hasta cuarenta ciegas grandes), entonces priorizar la decisión de ir con todo o retirarse y simplificar el juego posterior al flop.",
+  "Si la evidencia es insuficiente, entonces inclinar los pesos hacia una estrategia básica cercana a la teoría de juegos y reducir los faroles sin cartas bloqueadoras."
+]
+
+# ------------------------------------------------------------
+# H) METRICAS (separar MÉTRICA FARO del sistema y MÉTRICAS DE INSTANCIA)
+# ------------------------------------------------------------
+metricas: {
+  metrica_faro: [
+    "Ciegas_grandes_ganadas_po_

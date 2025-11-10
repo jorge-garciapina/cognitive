@@ -1,0 +1,52 @@
+timestamp: "2025-09-19T17:19:07-06:00 America/Mexico_City"
+id: process:chat-memory→cnode-index@1.0.0
+kind: cognitive-node
+title: "Índice de Memoria por Chat → en forma de Nodos Cognitivos"
+version: 1.0.0
+summary: "Encapsula toda la memoria de este chat como CNodes aislados. Nada pasa a la memoria global del proyecto salvo orden explícita del usuario."
+
+export_surface:
+  PROVIDES: [memnode.session, memnode.index, memnode.log, memnode.snapshot]
+  REQUIRES: []
+  CONSTRAINTS: [evidence_only, provenance_required, deterministic_outputs]
+
+orchestrator:
+  intent: "Aislar la memoria por chat y registrar eventos con trazabilidad."
+  rules:
+    - "No escribir en memoria global salvo comando explícito: [MEM: SAVE <scope>]."
+    - "Todo se guarda bajo session_id y se consulta vía memnode.index."
+  levels:
+    - L0: intuición/hipótesis
+    - L1: glosario y límites (scope/constraints)
+    - L2: estructura (contexto, nodes, interfaces)
+    - L3: plan ejecutable (comandos, scripts, rutas)
+    - L4: validación (tests, criterios de aceptación)
+
+types:
+  Event: {kind: string, data: {}, ts: datetime}
+  UnderstandingLevel: {level: string, notes: string[], evidence: string[]}
+  Snapshot: {contexto: {}, niveles: UnderstandingLevel[], decisiones: string[], next_actions: string[], provenance: {}}
+
+commands.cli:
+  - "[MEMNODE: START <título>]"     # abre sesión aislada
+  - "[MEMNODE: LOG <evento>]"       # {INTENT|EVIDENCE|DECISION|COMMAND|RESULT}
+  - "[MEMNODE: SNAPSHOT]"           # devuelve {cnode_index, entries, next_actions}
+  - "[MEMNODE: STOP]"               # cierra sesión
+  - "[MEM: SAVE <scope>]"           # (opt-in) exporta algo a memoria global del proyecto
+
+output.schema:
+  session: {id, title, startedAt, status}
+  snapshot: Snapshot
+  log: Event[]
+
+merge.policy:
+  precedence: [by_specificity, by_recency]
+  conflicts:
+    - {type: "definition_conflict", rule: "registrar A/B y justificar elección"}
+    - {type: "evidence_conflict",   rule: "pedir evidencia adicional o degradar a L0"}
+
+quality_signals:
+  - traceability.evidence_links
+  - clarity.level_progression (L0→L4)
+  - actionability.next_actions
+  - boundary_explicitness

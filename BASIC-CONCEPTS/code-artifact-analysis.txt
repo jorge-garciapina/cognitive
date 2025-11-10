@@ -1,0 +1,74 @@
+# PROMPT PARA ANÁLISIS DE ARTEFACTOS DE CÓDIGO (JSONL)
+
+Tu tarea es analizar un artefacto JSONL generado por mi extractor. Cada línea describe UN archivo del proyecto con campos como:
+- path (ruta relativa POSIX)
+- content (solo si es texto; puede contener el marcador /*__TRUNCATED__*/ si superó --max-bytes)
+- size, sha256, mtime
+- kind ("text" | "binary")
+- encoding, ext
+
+OBJETIVO
+Quiero una radiografía clara y accionable del proyecto. Debes explicar QUÉ hace, CÓMO está organizado, DÓNDE están los puntos clave y QUÉ mejoras priorizar.
+
+ALCANCE DEL ANÁLISIS (incluye, si aplica)
+1) Resumen ejecutivo (5–10 líneas)
+   - Propósito del proyecto, tecnologías principales, cómo se ejecuta (si es inferible).
+2) Inventario y estructura
+   - Mapa de carpetas y archivos relevantes (src/, test/, scripts/, infra/, config/…).
+   - Lenguajes detectados y roles de archivos clave (README, Dockerfile, CI, etc.).
+3) Dependencias y configuración
+   - Dependencias directas (package.json/requirements/go.mod/pyproject…).
+   - Scripts de build/ejecución; herramientas de lint/format; configuraciones (tsconfig/eslint/prettier).
+   - Variables de entorno utilizadas (NOMBRES únicamente; NO valores): lista y en qué paths aparecen.
+4) Interfaz del sistema
+   - Endpoints HTTP/rutas (método + path) o comandos CLI detectados, middlewares/autenticación.
+   - Integraciones externas (SDKs/APIs: p. ej., Twilio, AWS, DBs, colas).
+5) Modelo de datos y persistencia
+   - ORMs, migraciones, esquemas, consultas SQL/NoSQL, conexiones (sin credenciales).
+6) Grafo y acoplamientos
+   - Módulos de entrada (main/app/server/index).
+   - Dependencias internas (imports) destacando “hotspots” y posibles ciclos.
+7) Calidad y mantenibilidad
+   - Métricas heurísticas (LOC por archivo grande, funciones muy largas, duplicación notable).
+   - Code smells frecuentes y estructura de capas.
+8) Seguridad (estática)
+   - Patrones de secretos en código (no en .env), uso de cryptos débiles, SQL no parametrizado, CORS laxo, etc.
+9) Observabilidad/operación
+   - Logging, manejo de errores, trazas/metrics, healthchecks, Docker/compose e IaC si existe.
+10) Documentación y DX
+   - README, licencias, TODOs, scripts de desarrollo, claridad de onboarding.
+
+ENTREGABLES Y FORMATO
+- Usa secciones con encabezados claros.
+- Incluye evidencia concisa por hallazgo: `path:línea` y un snippet (máx. 6–8 líneas) cuando sea útil.
+- Termina con un plan de acción priorizado:
+  - Quick wins (alto impacto, bajo esfuerzo)
+  - Mediano plazo
+  - Riesgos críticos
+
+REGLAS Y LIMITACIONES
+- No inventes archivos que no estén en el artefacto.
+- No asumas valores de variables; solo nombra las claves detectadas.
+- Si un archivo está truncado (`/*__TRUNCATED__*/`), indica que el análisis de ese archivo es parcial.
+- Binarios: si aparecen, solo considera metadatos o su rol por contexto (no intentes “leerlos”).
+- Si información clave falta, dilo explícitamente y propone qué necesitarías (p. ej., .env.example, docker-compose, tests).
+
+PARÁMETROS (opcionales que puedo pasar)
+- focus: ["seguridad","dependencias","endpoints","mantenibilidad","datos","ci/cd"]
+- ignore_paths: lista de prefijos a omitir en el reporte.
+- max_findings_per_section: número entero para limitar hallazgos por sección.
+
+SALIDA ESPERADA (orden sugerido)
+1) Resumen ejecutivo
+2) Estructura e inventario clave
+3) Dependencias y configuración
+4) Interfaz del sistema (endpoints/CLI/integraciones)
+5) Datos y persistencia
+6) Grafo y acoplamientos
+7) Calidad y mantenibilidad
+8) Seguridad
+9) Observabilidad y operación
+10) Documentación y DX
+11) Plan de acción priorizado
+
+Comienza confirmando si detectas al menos: lenguaje(s) principal(es), punto(s) de entrada, dependencias y uso de variables de entorno. Luego desarrolla las secciones.

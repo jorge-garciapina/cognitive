@@ -1,0 +1,33 @@
+INTRODUCCIÓN — Cómo trabajaremos en este hilo
+
+Objetivo
+Busco obtener, en dos pasos, un entendimiento técnico, claro y verificable sobre una IDEA específica, visto desde el punto de vista (POV) del proyecto al que pertenece este chat. Para lograrlo, te enviaré dos prompts secuenciales: primero uno para describir el CONTEXTO de este proyecto; después otro para que analices la IDEA (adjuntaré imágenes y/o archivo).
+
+Flujo (dos pasos)
+1) CONTEXTO DEL PROYECTO (próximo mensaje):
+   - Te pediré una narración profunda que describa cómo funciona **[el proyecto de chatgpt que contiene este chat]** en su **estilo nativo** (mismo tono, estructura y convenciones que usa este proyecto).
+   - La salida debe ser **texto plano** y comenzar con las líneas literales:
+     “Proyecto: …” y “Alcance: …”.
+   - Después de esas dos líneas, desarrolla una pieza continua (sin listas de requisitos) que explique la **lógica operativa**: cómo interpreta su propio prompt/instrucciones, cómo decide, cómo gestiona ambigüedades/errores y qué forma de salida privilegia. Si el estilo no está explícito, **infierelo de lo visible** en este chat y mantenlo **consistente**.
+
+2) ANÁLISIS DE LA IDEA DESDE ESTE PROYECTO (mensaje siguiente con adjuntos):
+   - Te enviaré uno o varios artefactos (imágenes y/o un archivo) que contienen la IDEA.
+   - Tu tarea será producir un **análisis profundo y cohesivo** de la IDEA usando **explícitamente el marco de este proyecto** (su prompt, documentos y convenciones). No describas cada artefacto por separado: **integra** toda la evidencia en una lectura única y ordenada.
+
+Criterios generales (aplican a ambos pasos)
+- Solo **texto plano**, en español técnico y claro. Evita emojis y adornos innecesarios.
+- No introduzcas información externa: trabaja únicamente con lo que esté disponible en este chat (tu propio prompt/estilo/documentos del proyecto) y, en el segundo paso, con lo que aporten los artefactos adjuntos.
+- Prioriza la coherencia, el orden y la completitud; evita contradicciones con el **estilo** y las **políticas** que rigen este proyecto.
+- Mantén **consistencia terminológica** a lo largo de todo el texto.
+- Si algo no aplica o no está disponible, indícalo explícitamente y explica por qué.
+
+Forma de las salidas (resumen)
+- Paso 1 (Contexto): empieza con “Proyecto: …” y “Alcance: …”; luego, una **narrativa profunda en el estilo del proyecto** que explique su lógica operativa, sus reglas de decisión y su forma típica de salida.
+- Paso 2 (Análisis de la IDEA): debe comenzar con la línea literal “IDEA_REF: <identificador de la idea>” y presentar:
+  (a) el marco de interpretación del proyecto,
+  (b) una lectura profunda e integrada de la IDEA bajo ese marco,
+  (c) reglas/umbrales observables (si existen),
+  (d) limitaciones o vacíos de información.
+
+Importante
+- No necesitas hacer nada con esta INTRODUCCIÓN más que tenerla como guía. En el siguiente mensaje te enviaré el prompt del PASO 1 (Contexto). Después te enviaré el prompt del PASO 2 (Análisis de la IDEA) con los artefactos adjuntos.

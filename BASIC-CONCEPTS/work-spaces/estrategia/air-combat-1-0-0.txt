@@ -1,0 +1,174 @@
+# ============================================================
+# EJEMPLO APLICADO — "COMBATE AÉREO 7-MAY-2025 (PAKISTÁN–INDIA)"
+# Conforme a la PLANTILLA GENERAL DE ESTRATEGIA v1.0 (sin siglas)
+# Autosuficiente: instancia la plantilla a un caso histórico concreto.
+# ============================================================
+
+@metadata: {
+  identificador: "EJEMPLO_ESTRATEGIA_COMBATE_AEREO_2025@v1.0",
+  modelo_base: "ESTRATEGIA_GENERAL@v1.0",
+  dominio: "operaciones aéreas",
+  teatro: "frontera indo-paquistaní",
+  fecha_evento: "2025-05-07",
+  version_de_esquema: "1.0.0"
+}
+
+# ------------------------------------------------------------
+# A) DEFINICIÓN Y TEORÍA DE LA VICTORIA (NIVEL ESTRATÉGICO)
+# ------------------------------------------------------------
+estrategia: {
+  fin_principal: "Negar al adversario libertad de acción en el espacio aéreo de la zona de crisis, proteger infraestructura y fuerza propia, y evitar la escalada política manteniendo las operaciones desde el propio espacio aéreo.",
+  medio_dominante: "Combate más allá del alcance visual, priorizando la sorpresa informacional y el primer disparo efectivo.",
+  modo_de_ejecucion: "Separar quién detecta de quién dispara; mantener silencio de emisiones en los aviones tiradores; usar guía externa para las armas; volar bajo aprovechando el relieve para reducir la detección.",
+  teoria_de_la_victoria: "Primero ver, primero disparar, primero acertar, minimizando la exposición de las plataformas críticas y sin cruzar la frontera."
+}
+
+# ------------------------------------------------------------
+# B) INVARIANTES (NO NEGOCIABLES; SU RUPTURA BLOQUEA ACCIONES)
+# ------------------------------------------------------------
+invariantes: [
+  "Disciplina estricta de emisiones: los aviones tiradores no activan sus radares salvo orden expresa; el seguimiento recae en el avión de alerta temprana y en los radares terrestres.",
+  "Integridad de la red de detección, seguimiento y mando: sin red estable no se autoriza lanzamiento.",
+  "Cumplimiento de las reglas de enfrentamiento: no cruzar la línea de control y no comprometer la plataforma de alerta temprana sin escolta y cobertura electrónica.",
+  "Trazabilidad táctica: todas las asignaciones de blancos, ventanas de tiro y abortajes quedan registradas de forma determinista."
+]
+
+# ------------------------------------------------------------
+# C) PORTAFOLIO DE ARQUITECTURAS UTILIZADAS (FORMAS REUSABLES)
+# ------------------------------------------------------------
+arquitecturas: [
+  {
+    id: "ARQUITECTURA_FUSION_SENSORIAL_Y_GUIA_EXTERNA",
+    descripcion: "La detección y el seguimiento se delegan a sensores que no son el tirador (avión de alerta temprana y radares en tierra). El avión tirador lanza el arma con su radar apagado y recibe actualizaciones desde la red hasta la fase final del impacto.",
+    condiciones_de_uso: [
+      "Disponibilidad de avión de alerta temprana con órbitas seguras.",
+      "Enlace de datos estable entre sensores, mando y tiradores.",
+      "Adiestramiento para disparos coordinados sin iluminación del blanco por el tirador."
+    ],
+    riesgos: [
+      "Dependencia del avión de alerta temprana: si el adversario degrada su protección, la ventaja se erosiona.",
+      "Vulnerabilidad del enlace: interferencia, saturación o engaño degradan la guía en ruta."
+    ]
+  },
+  {
+    id: "ARQUITECTURA_MOVILIDAD_EN_CORREDORES",
+    descripcion: "Escalonamiento de patrullas y reposicionamiento rápido para abrir ventanas de lanzamiento desde sectores inesperados, sin cruzar la frontera.",
+    condiciones_de_uso: [ "Relieve favorable y cobertura de combustible y escoltas." ],
+    riesgos: [ "Previsibilidad de las órbitas si no se varían los patrones." ]
+  },
+  {
+    id: "ARQUITECTURA_REDUCCION_SELECTIVA_DE_NODOS",
+    descripcion: "Neutralización de activos críticos del adversario (paquetes de superioridad aérea, radares clave) con munición de largo alcance.",
+    condiciones_de_uso: [ "Identificación positiva y ventana cinemática suficiente." ],
+    riesgos: [ "Gasto elevado de armas y exposición del patrón de empleo." ]
+  }
+]
+
+# ------------------------------------------------------------
+# D) ADAPTADORES ESTRATÉGICOS (PARAMETRIZACIÓN DEL CONTEXTO)
+# ------------------------------------------------------------
+adaptadores: {
+  entorno_estructural: [
+    "Frontera con fuerte sensibilidad política y riesgo de escalada.",
+    "Relieve apto para ocultamiento a baja cota."
+  ],
+  tecnologia_dominante: [
+    "Avión de alerta temprana en órbita segura.",
+    "Radares terrestres integrados por enlace de datos.",
+    "Misiles aire-aire de largo alcance con buscador activo.",
+    "Medios de guerra electrónica para proteger la red."
+  ],
+  horizonte_temporal: [
+    "Ventanas de horas dentro de una crisis de pocos días; cada ciclo de patrulla exige sincronía entre detección, asignación, lanzamiento y reposición."
+  ],
+  legitimidad_objetivo: [
+    "Evitar cruzar la frontera y reducir daños colaterales para limitar la escalada diplomática."
+  ],
+  restriccion_principal: [
+    "Proteger el avión de alerta temprana y la estabilidad del enlace de datos."
+  ]
+}
+
+# ------------------------------------------------------------
+# E) ORQUESTADOR DE PESOS (LAS PRIORIDADES DEBEN SUMAR 1.0)
+# ------------------------------------------------------------
+orquestador_de_pesos: {
+  dimensiones: [
+    "rapidez_de_decision",
+    "costo_operativo",
+    "calidad_y_confiabilidad_de_la_red",
+    "flexibilidad_de_reposicionamiento",
+    "legitimidad_y_contencion_politica",
+    "aprendizaje_por_ciclo"
+  ],
+  pesos_sugeridos: {
+    rapidez_de_decision: 0.25,
+    costo_operativo: 0.10,
+    calidad_y_confiabilidad_de_la_red: 0.30,
+    flexibilidad_de_reposicionamiento: 0.10,
+    legitimidad_y_contencion_politica: 0.15,
+    aprendizaje_por_ciclo: 0.10
+  },
+  regla: "Si la suma de los pesos es distinta de 1.0 se bloquea la operación hasta corregir.",
+  reponderacion: "Los pesos pueden cambiar tras cada ciclo en función de evidencia: pérdidas, latencia del enlace, consumo de armas, intentos del adversario de cazar el avión de alerta temprana."
+}
+
+# ------------------------------------------------------------
+# F) CONTRATOS MÍNIMOS (INTERFACES QUE DEBEN CUMPLIRSE)
+# ------------------------------------------------------------
+contratos: [
+  {
+    id: "CONTRATO_VIGILANCIA_Y_CONTROL",
+    campos_obligatorios: [
+      "sectores_cubiertos_por_la_orbita_de_alerta_temprana",
+      "niveles_de_reserva_de_combustible_por_paquete_aereo",
+      "canales_de_enlace_principal_y_de_respaldo",
+      "criterios_de_asignacion_de_blancos",
+      "umbrales_de_abortaje"
+    ],
+    validaciones: [
+      "La cobertura real del avión de alerta temprana coincide con los sectores declarados.",
+      "Existe canal de respaldo probado para el enlace de datos."
+    ],
+    bloqueos: [
+      "Si falta canal de respaldo verificado, no se autoriza la salida."
+    ]
+  },
+  {
+    id: "CONTRATO_DE_TIRO_DE_LARGO_ALCANCE",
+    campos_obligatorios: [
+      "pista_estable_del_blanco",
+      "ventana_cinematica_suficiente",
+      "ruta_de_vuelo_libre_de_interferencias",
+      "autoridad_de_actualizacion_desde_la_red",
+      "requisitos_de_identificacion_positiva",
+      "separacion_de_aliados"
+    ],
+    validaciones: [
+      "Confirmación de que el tirador puede mantener radar apagado hasta la fase final.",
+      "Criterios de seguridad cumplidos para plataformas propias y neutrales."
+    ],
+    bloqueos: [
+      "Si la pista no es estable o la red no puede actualizar el arma, se prohíbe el lanzamiento."
+    ]
+  },
+  {
+    id: "CONTRATO_PROTECCION_DE_PLATAFORMA_CRITICA",
+    campos_obligatorios: [
+      "numero_de_escoltas",
+      "patron_de_orbita",
+      "umbrales_de_amenaza_para_cambio_de_orbita",
+      "procedimientos_de_guerra_electronica"
+    ],
+    validaciones: [
+      "Las escoltas pueden llegar a cualquier punto de la órbita dentro del tiempo de reacción establecido."
+    ],
+    bloqueos: [
+      "Sin escoltas o sin procedimientos de guerra electrónica activos, la órbita se suspende."
+    ]
+  }
+]
+
+# ------------------------------------------------------------
+# G) REGLAS SI–ENTONCES (GOBERNANZA OPERATIVA)
+# -----

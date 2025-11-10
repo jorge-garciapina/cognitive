@@ -1,0 +1,199 @@
+TÍTULO: Snapshot de Entendimiento Fractal (SEF) — Estado actual de ideas en este chat
+VERSIÓN: 1.0 (autosuficiente; reproducible; con contratos e invariantes)
+AUTOR: [tu nombre o equipo]
+PROPÓSITO: Registrar de forma precisa, auditable y reutilizable el entendimiento actual sobre tu visión de “sistemas fractales gobernados por contratos e invariantes”, la elevación de nivel de conversación y el uso del Orquestador de Pesos/Presets; dejarlo listo para instanciar en nuevos dominios como ejemplo autónomo.
+
+──────────────────────────────────────────────────────────────────────────────
+1) ALCANCE Y CONTEXTO (qué cubre este SEF)
+──────────────────────────────────────────────────────────────────────────────
+Cubre: 
+• La visión fractal de sistemas como metamodelo: una forma estable (plantilla A–I) aplicada recursivamente (sistema → subsistema).  
+• El mecanismo de elevación de nivel: ver cada caso como manifestación de una estructura primaria y preguntarse por el orquestador, invariantes y contratos.  
+• El Orquestador de Pesos/Presets: un motor de políticas que prioriza dimensiones con reglas “si–entonces” y bloqueos por evidencia insuficiente.  
+• La relación Metáfora y Meta-Metáfora: de analogías útiles a protocolo operativo con pruebas, umbrales y trazabilidad.  
+• La jerarquía típica usada en negocio y su fractalidad en marketing, conversión, logística y otros dominios.
+
+Fuera de alcance (en esta versión): datos externos, nombres de empresas, métricas históricas o cifras reales. Este SEF describe forma y protocolo, no afirma hechos de terceros.
+
+──────────────────────────────────────────────────────────────────────────────
+2) ENTENDIMIENTO NUCLEAR (15 ideas sin ambigüedad)
+──────────────────────────────────────────────────────────────────────────────
+1. Un mismo metamodelo gobierna todos los dominios: una forma estable con campos obligatorios.  
+2. La forma estable es la plantilla A–I: Propósito, Invariantes, Objetos, Interfaces, Métrica faro, Validaciones duras, Cadencia, Aprendizaje, Trazabilidad.  
+3. Todo sistema es hijo de otro sistema y hereda invariantes del padre; no puede romperlos.  
+4. La fractalidad significa que la misma forma A–I se aplica en cada nivel y subnivel.  
+5. La elevación de nivel reescribe un problema local como política del orquestador: ¿qué invariantes, qué contratos, qué pesos gobiernan arriba?  
+6. El Orquestador de Pesos/Presets es un motor de políticas: vector de prioridades, reglas “si–entonces”, bloqueos, y promoción condicionada por evidencia.  
+7. Separación forma–contenido: la forma no cambia; cambian contenidos, catálogos, campañas, escenas, stacks, manos de póker.  
+8. Diseño por contrato: no se ejecuta sin entradas completas, tipos definidos y umbrales claros.  
+9. Evidencia primero: no hay promoción de cambios sin telemetría suficiente.  
+10. Determinismo operativo: entradas equivalentes producen salidas equivalentes.  
+11. Accesibilidad, veracidad y legalidad son invariantes globales.  
+12. Trazabilidad total: cada entidad porta un identificador compuesto con cadena de pertenencia y versión.  
+13. Métrica faro local por nivel y agregación ascendente hacia métricas de sistema.  
+14. Anti-patrones prohibidos: poesía sin prueba, promesa sin palanca real, confusión de niveles, explotación sin muestra mínima.  
+15. El SEF es un artefacto estándar para “congelar” comprensión presente y hacerla re-utilizable sin contexto externo.
+
+──────────────────────────────────────────────────────────────────────────────
+3) MAPA JERÁRQUICO (pertenencia y capas de gobierno)
+──────────────────────────────────────────────────────────────────────────────
+• Nivel Estratégico: intencionalidad, límites de riesgo, presupuesto, política de presets.  
+• Nivel Táctico (Orquestador): definición de dimensiones, presets, reglas “si–entonces”, umbrales de promoción y bloqueos.  
+• Nivel Operativo: contratos mínimos, validaciones duras, accesibilidad, publicación, ejecución.  
+• Nivel Evidencia/Aprendizaje: medición, diagnóstico causal, reponderación de presets, bitácora y versionado.
+
+Ejemplo de pertenencia con forma estable (negocio genérico):
+Holding → Marca → Colección/Línea → Territorio/País → Plaza → Estrato → Nicho → SMCP — Sistema Multimodal de Conversión Publicitaria → Canal → Formato → Activo
+Nota: La misma forma se replica en marketing, conversión, logística, póker, storytelling, inversiones (contenido distinto, forma idéntica).
+
+──────────────────────────────────────────────────────────────────────────────
+4) DICCIONARIO OPERATIVO (términos con definición exacta)
+──────────────────────────────────────────────────────────────────────────────
+• Metamodelo: definición de la forma estable (plantilla A–I), más políticas de invariantes, contratos y orquestación.  
+• Plantilla A–I: nueve campos obligatorios; base de toda instancia.  
+• Invariantes: reglas no negociables (éticas, legales, técnicas, de marca, accesibilidad).  
+• Contrato: interfaz con campos obligatorios, tipos y umbrales; sin contrato no hay ejecución.  
+• Métrica faro: indicador principal que gobierna decisiones locales (una por nivel).  
+• Orquestador de Pesos/Presets: motor de políticas que define dimensiones, pesos, reglas “si–entonces” y bloqueos.  
+• Evidencia: mediciones y telemetría que autorizan decisiones.  
+• Bloqueo: mecanismo que impide publicar o promover si falla un invariante o falta evidencia.  
+• Trazabilidad (ID compuesto): identidad con cadena de pertenencia y versión, más bitácora de cambios.
+
+──────────────────────────────────────────────────────────────────────────────
+5) INVARIANTES (no negociables en este SEF)
+──────────────────────────────────────────────────────────────────────────────
+Globales:
+1) Legalidad y ética.  
+2) Accesibilidad (contraste mínimo, subtítulos, texto alternativo cuando aplique).  
+3) Veracidad afirmada con evidencia.  
+4) Determinismo operativo.  
+5) Trazabilidad total (IDs compuestos y bitácora).  
+6) Herencia estricta (ningún hijo viola al padre).
+
+Específicos de dominio (ejemplos típicos):
+• Conversión publicitaria: prohibida la escasez sin palanca real (stock/ventana/acceso/distribución/precio).  
+• Logística: no se prometen ventanas críticas con OTIF — On Time In Full por debajo de umbral.  
+• Póker: gestión de banca y coherencia matemática (pot odds e implied odds).  
+• Storytelling: no se contradicen invariantes éticos de marca/obra.
+
+──────────────────────────────────────────────────────────────────────────────
+6) CONTRATOS DE USO (qué se requiere para reusar este entendimiento)
+──────────────────────────────────────────────────────────────────────────────
+Contrato mínimo al instanciar el SEF en un caso:
+{ Nivel, Propósito, DimensionesDelOrquestador, PresetInicial, Umbrales, CamposObligatoriosPorInterfaz, EvidenciaMínima, MétricaFaro, Accesibilidad, PlanDeMedición, PlanDeRollback }
+
+Validaciones duras:
+• Todos los campos anteriores deben existir y cumplir tipo/umbral.  
+• Accesibilidad y legalidad deben pasar antes de publicar.  
+• Evidencia mínima debe existir para cambiar preset (promoción).
+
+──────────────────────────────────────────────────────────────────────────────
+7) REGLAS “SI–ENTONCES” (promoción, bloqueos, revisión)
+──────────────────────────────────────────────────────────────────────────────
+1) Si falta un campo obligatorio del contrato, entonces bloquear ejecución y devolver lista de faltantes.  
+2) Si una decisión rompe un invariante (global o de dominio), entonces rechazar incluso si mejora una métrica local.  
+3) Si la evidencia no alcanza el umbral mínimo, entonces no promover cambio de preset y mantener el preset anterior.  
+4) Si la métrica faro no mejora en dos ciclos consecutivos, entonces abrir diagnóstico causal y reponderar el preset con foco en el cuello de botella real.  
+5) Si accesibilidad falla, entonces bloquear cualquier publicación.  
+6) Si el cuello de botella es operativo (stock, distribución, precio, tiempo), entonces corregir operación antes de iterar creatividades o copy.  
+7) Si el diagnóstico muestra mejora secundaria a costa de colapso de la métrica faro, entonces revertir y ajustar política de pesos.
+
+──────────────────────────────────────────────────────────────────────────────
+8) MÉTRICAS DE VALIDEZ (cómo se sabe que este SEF “sirve”)
+──────────────────────────────────────────────────────────────────────────────
+• Utilidad observable (se puede instanciar en un dominio y completar A–I sin ambigüedad).  
+• Consistencia inter-evaluador (dos lectores llegan a la misma plantilla A–I y al mismo contrato).  
+• Cobertura de esenciales (A–I completos, invariantes claros, contratos definidos, orquestador habilitado).  
+• Costo cognitivo razonable (campos suficientes, no redundantes).  
+• Reproducibilidad (con la misma entrada, el mismo SEF produce la misma salida dentro de una tolerancia explícita).
+
+──────────────────────────────────────────────────────────────────────────────
+9) EVIDENCIA BASE (anclaje local de este snapshot)
+──────────────────────────────────────────────────────────────────────────────
+Este SEF se sustenta en: 
+• Discusión sobre visión fractal: forma estable A–I, herencia de invariantes, determinismo, trazabilidad.  
+• Elevación de nivel: reescritura de casos como políticas del orquestador y contratos.  
+• Orquestador de Pesos/Presets: ejemplos con Atención, Relato, Emoción; Logística; Póker; Storytelling.  
+• Anti-patrones identificados: poesía sin prueba, promesa sin palanca, confusión de niveles.
+
+──────────────────────────────────────────────────────────────────────────────
+10) SUPUESTOS Y HUECOS (lo que asumo y lo que falta)
+──────────────────────────────────────────────────────────────────────────────
+Supuestos:
+• Los dominios objetivos permiten medir y versionar.  
+• Hay capacidad de instrumentación para evidencias mínimas.
+
+Huecos:
+• Definiciones numéricas de umbrales por dominio (por ejemplo, cuánto es suficiente para “muestra mínima”).  
+• Catálogos concretos de objetos por dominio (por ejemplo, listas de palancas operativas específicas).
+
+──────────────────────────────────────────────────────────────────────────────
+11) DELTAS VS VERSIÓN ANTERIOR (qué cambió y por qué)
+──────────────────────────────────────────────────────────────────────────────
+• Consolidación del metamodelo como protocolo operativo (no solo metáfora “clase–instancia”).  
+• Inclusión explícita de reglas “si–entonces” y bloqueos.  
+• Clarificación de la elevación de nivel como procedimiento para ir del caso local a la política del orquestador.  
+• Enfoque en accesibilidad, veracidad y trazabilidad como invariantes globales.
+
+──────────────────────────────────────────────────────────────────────────────
+12) TRAZABILIDAD (identificadores y bitácora)
+──────────────────────────────────────────────────────────────────────────────
+Esquema de identificador compuesto:
+ID_SEF = [Proyecto/Ámbito/Nivel/Instancia]@v1.0
+
+Bitácora mínima por ciclo:
+{ ID_SEF, Fecha, Preset, Cambios, ValidacionesPasadas, Evidencia, Resultado, PróximaAcción }
+
+──────────────────────────────────────────────────────────────────────────────
+13) PLANTILLA A–I RELLENADA PARA ESTE SEF
+──────────────────────────────────────────────────────────────────────────────
+A) Propósito: “Congelar y hacer reutilizable el entendimiento actual como artefacto autosuficiente, listo para instanciar en cualquier dominio sin dependencias externas.”  
+B) Invariantes: Legalidad, Ética, Accesibilidad, Veracidad, Determinismo, Trazabilidad, Herencia.  
+C) Objetos: Este SEF, Orquestador (dimensiones y presets), Contratos mínimos por interfaz, Reglas “si–entonces”, Checklists, Anti-patrones, Ejemplos patrón.  
+D) Interfaces:
+   Entradas: { Caso a instanciar, Dimensiones del orquestador, Umbrales, Campos obligatorios, Evidencia mínima }  
+   Salidas: { Plantilla A–I completada, Contrato verificado, Preset seleccionado, Reglas activas, Métrica faro, Plan de medición, Bitácora }
+E) Métrica faro: “Instanciabilidad sin ambigüedad” (porcentaje de casos en que un tercero rellena A–I y ejecuta un ciclo sin requerir contexto externo).  
+F) Validaciones duras: Contrato completo, Accesibilidad verificada, Evidencia mínima presente, IDs y versionado activos.  
+G) Cadencia: Revisión y ajuste al cerrar cada ciclo de uso (por ejemplo, semanal o por proyecto).  
+H) Aprendizaje: Ajuste de reglas “si–entonces”, reponderación de presets, actualización de ejemplos patrón y contra-ejemplos.  
+I) Trazabilidad: ID_SEF y bitácora por ciclo; cambios versionados con resumen de deltas.
+
+──────────────────────────────────────────────────────────────────────────────
+14) CHECKLIST DE PUBLICACIÓN (dar por vigente este SEF)
+──────────────────────────────────────────────────────────────────────────────
+[ ] A–I completos y coherentes.  
+[ ] Invariantes verificados y no contradichos.  
+[ ] Contrato mínimo del SEF definido y validado.  
+[ ] Preset inicial del orquestador declarado (con dimensiones y suma de pesos = 1.0).  
+[ ] Reglas “si–entonces” activas y testeadas.  
+[ ] Trazabilidad por ID y bitácora en marcha.  
+[ ] Anti-patrones listados y entendidos.  
+[ ] Plan de medición y de rollback claros.
+
+──────────────────────────────────────────────────────────────────────────────
+15) ANTI-PATRONES (a evitar en uso del SEF)
+──────────────────────────────────────────────────────────────────────────────
+• Poesía sin prueba y sin contrato.  
+• Prometer mecanismos sin palanca operativa real.  
+• Cambiar presets sin evidencia mínima.  
+• Confundir niveles (culpar al copy cuando falla stock o logística).  
+• Publicar sin accesibilidad o sin trazabilidad.
+
+──────────────────────────────────────────────────────────────────────────────
+16) PRÓXIMAS PRUEBAS (cómo tensionaremos este entendimiento)
+──────────────────────────────────────────────────────────────────────────────
+• Instanciar el SEF en un dominio nuevo de tu elección y completar la A–I.  
+• Definir umbrales numéricos por dominio (muestra mínima, OTIF, accesibilidad).  
+• Ejecutar un ciclo completo con bitácora y decidir promoción o bloqueo.  
+• Documentar deltas y proponer la versión 1.1 del SEF.
+
+──────────────────────────────────────────────────────────────────────────────
+17) MÓDULO DE MICRO-EJEMPLOS (aplicación inmediata del SEF)
+──────────────────────────────────────────────────────────────────────────────
+• Conversión publicitaria (SMCP): Preset (Atención, Relato, Emoción) = (0.45, 0.35, 0.20); Contrato de Escasez con stock y ventana; Métrica faro: Conversión; Bloqueo si accesibilidad falla.  
+• Logística: Preset (Velocidad, Confiabilidad, Costo, Flexibilidad, Sostenibilidad) balanceado; Contrato “Entrega garantizada”; Métrica faro: OTIF; Bloqueo si inventario no está reservado.  
+• Póker: Preset (GTO, Explotación, Agresividad, Varianza, ICM) con prioridad a equilibrio; Contrato Exploit con muestra mínima; Métrica faro: bb/100; Bloqueo por banca.  
+• Storytelling: Preset (Hook, Coherencia, Ritmo, Emoción, Claridad) balanceado; Contrato de escena; Métrica faro: retención 3–10 segundos; Bloqueo por accesibilidad.
+
+FIN DEL SNAPSHOT (SEF v1.0) — Documento autosuficiente: lista la forma A–I, los invariantes, los contratos, el orquestador y el procedimiento para instanciar y auditar el entendimiento actual sin dependencias externas.

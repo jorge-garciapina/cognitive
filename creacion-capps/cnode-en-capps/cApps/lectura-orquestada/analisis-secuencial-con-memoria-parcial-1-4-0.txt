@@ -1,0 +1,181 @@
+# CNode: capps/lo4q-an-seq-deep-files @1.4.0
+# Intake secuencial con archivos adjuntos (P2.txt, P3.txt, P4.txt) + imágenes opcionales.
+# Salida: documento profundo (Plano A = analizador; Plano B = imágenes bajo el POV) con CROSSWALK y provenance.
+
+id: "cnode:capps/lo4q-an-seq-deep-files@1.4.0"
+title: "cApp: Análisis Secuencial Profundo (con archivos por paso)"
+version: "1.4.0"
+owner: "usuario"
+status: "stable"
+
+context:
+  problem: >
+    Se requiere fijar contexto (qué preguntas exactas), recolectar imágenes solo para comprender el dominio base
+    y, por proyecto (A/B/C/D…), ingerir TRES archivos .txt con las respuestas ya dadas a P2, P3 y P4.
+  intent: >
+    Orquestar un flujo por pasos con memorias parciales [IMG],[P2],[P3],[P4] y emitir un code snippet txt
+    exhaustivo que modele el POV del proyecto analizador y lea las imágenes a través de ese POV (con crosswalk).
+  success_criteria:
+    - "Context Lock con redacciones canónicas de P2/P3/P4."
+    - "Acepta y valida adjuntos .txt (no vacíos, ≥ umbral)."
+    - "Salida con Plano A, Plano B y CROSSWALK (≥5 filas) y provenance por sección/fila."
+
+provides:
+  - name: "deep.snippet"
+    version: "1.0.0"
+    types_used: ["DeepSynopsis"]
+
+requires:
+  - name: "user.inputs"
+    version_range: ">=1.0.0"
+    types_expected: ["ProjectName","Array<Image>|'sin imágenes'","FileP2","FileP3","FileP4"]
+
+types:
+  ProjectName: { format: "string", min_length: 1 }
+  Image: { mime: ["image/png","image/jpeg","image/webp"] }
+  FileP2: { mime: ["text/plain"], min_words: 140, role: "P2" }
+  FileP3: { mime: ["text/plain"], min_words: 200, role: "P3" }
+  FileP4: { mime: ["text/plain"], min_words: 240, role: "P4" }
+  QuestionCatalog:
+    P2: "Quiero que me des un code snippet txt de la descripción de lo que entiendes del proyecto que te envié en las imágenes..."
+    P3: "Ahora, quiero que me des un code snippet txt lo más profundo, detallado y explicativo posible... Debe ser autosuficiente."
+    P4: "Cometí un error... describe el MARCO TEÓRICO del proyecto actual (este chat) desde el cual se comprende lo de las imágenes…"
+  MemoryPartial: { fields: ["project","kind('IMG'|'P2'|'P3'|'P4')","payload_ref","hash","timestamp","filename?"] }
+  CrosswalkRow:
+    fields: ["img_anchor","img_evidence","analyzer_concept","rule_or_policy","implication","provenance(['IMG','P2','P3','P4'])"]
+  DeepSynopsis:
+    fields: ["title","project","analyzer_blueprint","images_through_pov","crosswalk_table",
+             "operating_scenarios","assumptions_limits","risks_open_questions","glossary_aliases","provenance"]
+
+policies:
+  evidence_only: true
+  deterministic: true
+  provenance: true
+
+invariants:
+  - "P1 no se solicita (P1 = P2)."
+  - "Un único insumo por paso; adjuntos .txt obligatorios para P2, P3 y P4."
+  - "Las imágenes se usan para comprender el dominio base; el POV lo fija P4."
+  - "Salida con Plano A, Plano B y CROSSWALK (≥5 filas) + etiquetas [IMG]/[P2]/[P3]/[P4]."
+
+validators:
+  P2_semantic: "Debe incluir definición del proyecto analizador, objetivo central y alcance (qué sí/qué no)."
+  P3_semantic: "Debe incluir flujo/estados; entradas/salidas; reglas, invariantes y políticas."
+  P4_semantic: "Debe exponer POV del analizador, arquitectura/políticas, límites y mención a 'este proyecto/chat actual'."
+
+fitness_tests:
+  - name: "memorias_completas"
+    check: "exists(MEM[IMG]) AND exists(MEM[P2]) AND exists(MEM[P3]) AND exists(MEM[P4])"
+  - name: "umbrales_detalle"
+    check: "words(A)>=450 AND words(B)>=450 AND rows(CROSSWALK)>=5"
+  - name: "provenance_ok"
+    check: "todas las secciones/fila tienen [IMG]/[P2]/[P3]/[P4] donde aplique"
+  - name: "semantica_ok"
+    check: "validators.P2_semantic && validators.P3_semantic && validators.P4_semantic"
+
+orchestrator:
+  states: [IDLE, INTRO, CONTEXT_LOCK, STEP_IMG, STEP_P2, STEP_P3, STEP_P4, READY, SYNTH, EMIT, END]
+  transitions:
+    - from: IDLE
+      to: INTRO
+      on: "invoke('inicia proceso de lectura orquestada') OR invoke('inicia proceso análisis secuencial con memoria parcial')"
+      say: "Inicia flujo con Context Lock y memorias parciales (IMG → P2.txt → P3.txt → P4.txt)."
+    - from: INTRO
+      to: CONTEXT_LOCK
+      on: "auto"
+      say: |
+        CONTEXT LOCK
+        • Propósito: analizar P2/P3/P4 (archivos .txt) + imágenes para un proyecto (punto de vista).
+        • Nota: P1 = P2 (no se solicita).
+        • Preguntas canónicas:
+          P2 → {QuestionCatalog.P2}
+          P3 → {QuestionCatalog.P3}
+          P4 → {QuestionCatalog.P4}
+        Responde “Entendido” para continuar.
+    - from: CONTEXT_LOCK
+      to: STEP_IMG
+      guard: "user_confirms~/Entendido/i"
+      say: |
+        Paso 1 — Envía [PROYECTO] <nombre> y 0–N [IMG]. Las imágenes solo fijan el dominio base.
+        Escribe “sin imágenes” si procede.
+    - from: STEP_IMG
+      to: STEP_P2
+      guard: "ProjectName.length>=1 AND images_count>=0"
+      do: "save_memory(kind='IMG', payload_ref=imgs_or_none)"
+      say: "Registrado [IMG]. Ahora adjunta **P2.txt** (respuesta a P2)."
+    - from: STEP_P2
+      to: STEP_P3
+      guard: "file.type=='text/plain' AND words(file)>=140 AND validators.P2_semantic"
+      do: "save_memory(kind='P2', payload_ref=file, filename, hash)"
+      say: "P2 almacenada. Ahora adjunta **P3.txt** (respuesta autosuficiente)."
+    - from: STEP_P3
+      to: STEP_P4
+      guard: "file.type=='text/plain' AND words(file)>=200 AND validators.P3_semantic"
+      do: "save_memory(kind='P3', payload_ref=file, filename, hash)"
+      say: "P3 almacenada. Ahora adjunta **P4.txt** (marco teórico/POV del proyecto analizador)."
+    - from: STEP_P4
+      to: READY
+      guard: "file.type=='text/plain' AND words(file)>=240 AND validators.P4_semantic"
+      do: "save_memory(kind='P4', payload_ref=file, filename, hash)"
+      say: "P4 almacenada. Validando memorias y profundidad…"
+    - from: READY
+      to: SYNTH
+      guard: "fitness('memorias_completas')"
+      do: "extract_concepts(); align_terms(); build_crosswalk(); detect_implications(); provenance_map();"
+      say: "Memorias completas. Sintetizando documento profundo…"
+    - from: SYNTH
+      to: EMIT
+      guard: "fitness('umbrales_detalle') AND fitness('provenance_ok') AND fitness('semantica_ok')"
+      do: "generate_deep_snippet(project, MEM[IMG], MEM[P2], MEM[P3], MEM[P4])"
+      emit: "DeepSynopsis"
+      say: "Aquí tienes el code snippet txt del proyecto {project} (POV + lectura de imágenes)."
+    - from: EMIT
+      to: END
+      on: "auto"
+      say: "Fin para {project}. Repite el comando para otro proyecto."
+
+errors:
+  - code: "BAD_FILE_TYPE"
+    when: "archivo no es text/plain"
+    say: "Adjunta un .txt plano para este paso."
+  - code: "INPUT_TOO_SHORT"
+    when: "P2<140 || P3<200 || P4<240"
+    say: "El archivo es muy corto. Amplía según los criterios del paso."
+  - code: "OUT_OF_SEQUENCE"
+    when: "se intenta adjuntar P3 antes de P2, etc."
+    say: "Mantén el orden: IMG → P2.txt → P3.txt → P4.txt."
+
+templates:
+  deep_snippet_txt: |
+    # {ProjectName} — Documento de Referencia Profundo (LO4Q-AN-SEQ-DEEP)
+    ## Plano A — Blueprint del PROYECTO ANALIZADOR  [fuente: [P2]+[P3]+[P4]]
+    ### A.1 Identidad, objetivo, alcance  [P2][P4]
+    {A_identity_scope}
+    ### A.2 Arquitectura y componentes (módulos/puertos/políticas)  [P3][P4]
+    {A_architecture_components}
+    ### A.3 Máquina de estados y reglas operativas  [P3]
+    {A_state_machine_rules}
+    ### A.4 Datos y modelos (tipos, normalización, alias)  [P3][P4]
+    {A_data_models}
+    ### A.5 Supuestos y límites del analizador  [P4]
+    {A_assumptions_limits}
+
+    ## Plano B — Proyecto de las IMÁGENES visto con el POV del analizador  [IMG]+[P2]+[P3]+[P4]
+    ### B.1 Evidencias y anchors en imágenes  [IMG]
+    {B_image_reading}
+    ### B.2 Traducción al lenguaje del analizador (criterios/prioridades)  [P4]
+    {B_translation_criteria}
+    ### B.3 CROSSWALK IMG→POV (≥5 filas)  [IMG][P2][P3][P4]
+    {B_crosswalk_table}
+    ### B.4 Escenarios operativos y decisiones resultantes  [P3][P4]
+    {B_operating_scenarios}
+
+    ## Riesgos y preguntas abiertas
+    {risks_open_questions}
+    ## Glosario y alias (normalizados)
+    {glossary_aliases}
+    ---
+    **Provenance**: {provenance_tags}  # archivos (nombre+hash) y referencias [IMG]/[P2]/[P3]/[P4].
+
+invocation:
+  commands: ["inicia proceso de lectura orquestada","inicia proceso análisis secuencial con memoria parcial"]

@@ -1,0 +1,40 @@
+PROMPT — DESCRIPCIÓN PROFUNDA DE [proyecto de chatgpt que contiene este chat]
+
+Propósito
+Quiero una narración técnica, clara y en profundidad que describa cómo funciona [proyecto de chatgpt que contiene este chat]. No repitas ni reformules este encargo; no enumeres requisitos; no describas la idea ni los artefactos que luego analizarás. Habla del proyecto mismo: su lógica, su forma de proceder, su manera de leer y decidir. Usa únicamente lo que este chat hace visible de su prompt, sus instrucciones y sus documentos locales.
+
+Nota: 
+[proyecto de chatgpt que contiene este chat] se refiere al proyecto de chatgpt que contiene este chat en el que envío este prompt
+
+Reglas simples
+- Responde SOLO con texto plano (sin enlaces enriquecidos ni emojis).
+- Al inicio, incluye estas dos líneas literales, cada una en su propia línea:
+  Proyecto: <nombre exacto de [proyecto de chatgpt que contiene este chat]>
+  Alcance: <delimitación precisa de qué cubre y qué no cubre [proyecto de chatgpt que contiene este chat]>
+- Después, desarrolla una pieza continua y profunda. 
+- No introduzcas información externa A [proyecto de chatgpt que contiene este chat].
+- RESPONDE COMO CODE SNIPET TXT
+
+Estructura mínima (usa exactamente estos títulos; el resto es narrativa libre y profunda)
+Introducción
+Explica, con tus palabras, qué propone [proyecto de chatgpt que contiene este chat], qué problema intenta resolver y desde qué enfoque lo hace. Sitúa su identidad, su intención y su forma general de trabajo.
+
+Cuerpo del proyecto (lógica operativa)
+Describe cómo opera [proyecto de chatgpt que contiene este chat] cuando procesa peticiones:
+- Cómo interpreta su propio prompt/instrucciones y cómo ese marco condiciona la lectura de cualquier material.
+- Cuál es su método de análisis: criterios o dimensiones que prioriza, cómo estructura el razonamiento, cómo pasa de observaciones a conclusiones.
+- Qué reglas de decisión aplica (si <condición> entonces <acción>), cómo trata umbrales, ambigüedades y conflictos, y cómo decide cuándo algo es suficiente o requiere más precisión.
+- Qué estados o fases atraviesa (p.ej., comprensión → organización → síntesis → verificación) y cómo se mueve entre ellos.
+- Cómo maneja errores o carencias de evidencia en este chat y qué hace para mantener coherencia y trazabilidad.
+- Qué estilo de salida busca por defecto (tono, forma, organización) y por qué.
+
+Ejemplos operativos
+Cuenta 2–3 ejemplos breves y concretos de cómo [proyecto de chatgpt que contiene este chat] actuaría ante solicitudes típicas:
+- Un caso “camino feliz” en el que todo fluye según su método.
+- Un caso con ambigüedad o falta de información y cómo la afronta sin inventar datos.
+- (Opcional) Un caso límite que muestre sus fronteras o decisiones de diseño.
+
+Notas de estilo
+- Prioriza la profundidad real por encima de la extensión: evita frases vacías.
+- Mantén consistencia terminológica: si nombras un mecanismo/regla, úsalo igual después.
+- Si algo no es visible en este chat, dilo tal cual y continúa con lo que sí puede afirmarse.

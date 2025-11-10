@@ -1,0 +1,106 @@
+elemento: "programa-cognitivo@interfaces:code-project.alpha"
+alias: "pc.interfaces:code-project"
+version: "alpha.1"
+
+contexto:
+  objetivo: "Operar un proyecto de código y su representación cognitiva en ambos sentidos de forma reversible y trazable."
+  modos: ["dump→cnode", "cnode→smart→code", "loop-verify"]
+  entradas:
+    - "repo_root?           # para dump→cnode"
+    - "contrato_dump?       # schema JSONL para ingesta"
+    - "CNode|cognitive-node.txt?  # para cnode→code"
+    - "plantillas?          # mapping CNode→archivos por lenguaje/framework"
+  salidas:
+    - "project-dump.jsonl / MANIFEST.json"
+    - "CognitiveNodePackage / cognitive-node.txt"
+    - "smart-bundle.jsonl / apply-smart.cjs / MANIFEST.smart.json"
+    - "metrics.dump.log / metrics.smart.log / delta.report"
+  invariantes: ["composition","adjacency","ordering","explicabilidad","provenance"]
+  reversibilidad: "obligatoria (delta(CNode_in, CNode_out) ≤ umbral)"
+
+orchestrator:
+  name: "pc.interfaces:code-project.orchestrator"
+  pipeline:
+    - P0.detectar_modo:
+        regla: "si hay CNode → cnode→code; si hay repo → dump→cnode; si hay ambos → loop-verify"
+    - P1.planificar:
+        do: "resolver HAVE/NEED, seleccionar plantillas y límites"
+    - P2.dump (opcional):
+        do: "exportar repo→project-dump.jsonl + MANIFEST.json"
+    - P3.pre:
+        do: "pre-procesar→estructura (orden determinista, dedupe, secretos)"
+    - P4.struct:
+        do: "constructor-de-estructuras → skeleton.cn + vistas básicas"
+    - P5.analysis:
+        do: "analisis-estructural → tesis/patrones/plantillas"
+    - P6.cnode_publish (si modo dump→cnode):
+        do: "emitir CognitiveNodePackage + cognitive-node.txt"
+    - P7.smart_gen (si modo cnode→code):
+        do: "generar smart-bundle.jsonl desde CNode + plantillas"
+    - P8.smart_apply (si modo cnode→code):
+        do: "aplicar SMART con guardas y hashes (apply-smart.cjs)"
+    - P9.loop_verify (si hay ambos):
+        do: "repo resultante → dump→cnode y comparar con CNode_in → delta.report"
+    - P10.validate:
+        do: "QA invariantes + score.confianza"
+    - P11.publicar:
+        do: "provenance + métricas + rollback.patch"
+
+commands.cli:
+  - "pc:run auto                   # autodetecta modo según insumos presentes"
+  - "pc:dump --repo <path> --out <dir>"
+  - "pc:cnode --in <dump.jsonl> --out <dir>"
+  - "pc:smart --cnode <path> --repo <path> --out <dir>"
+  - "pc:apply-smart --bundle <smart.jsonl> --repo <path>"
+  - "pc:loop-verify --repo <path> --cnode <path> --report <out>"
+  - "pc:qa --target <repo|cnode> --report <out>"
+
+interfaces:
+  provides: ["CognitiveNodePackage","cognitive-node.txt","project-dump.jsonl","smart-bundle.jsonl","apply-smart.cjs","delta.report","metrics","provenance"]
+  requires: ["contrato_dump?","plantillas?","politica_confianza","reglas_invariantes"]
+
+especificaciones:
+  dump.jsonl:
+    orden: ["path","chunkIndex","offsetBytes"]
+    evidencia: ["sha256","mtime","size"]
+  smart.jsonl:
+    registros: ["manifest","file(create|overwrite|mkdir)","patch(append|json_merge)"]
+    guardas: ["present|absent","hash_before","sha256_content"]
+  delta.report:
+    metricas: ["node_count_diff","edges_diff","weights_diff","signals_diff"]
+    umbral:  "≤ 3% de diferencia estructural o explícita por regla"
+
+metricas_clave:
+  cobertura: "archivos_emitidos/esperados"
+  integridad: "100% hashes verificados"
+  qa_score: "≥ umbral_confianza"
+  delta_loop: "≤ umbral"
+  ttx: "tiempo extremo-a-extremo"
+
+errores_estandar:
+  - { code: "E_SCHEMA", tip: "dump no cumple contrato" }
+  - { code: "E_GUARD",  tip: "violación de guardas SMART" }
+  - { code: "E_HASH",   tip: "hash mismatch" }
+  - { code: "E_QA",     tip: "score < umbral" }
+  - { code: "E_DELTA",  tip: "CNode_out difiere de CNode_in por encima de umbral" }
+
+plantillas:
+  resolucion: "CNode.nodes → archivos; CNode.vistas → folders; señales → variantes"
+  ejemplos:
+    - area: "analytics"
+      crea:
+        - "src/analytics/index.ts"
+        - "src/analytics/components/Example.tsx"
+      patches:
+        - path: "package.json"
+          action: "json_merge"
+          selector: ".scripts"
+          merge: {"analytics:dev":"next dev -p 4001"}
+
+provenance:
+  registra: ["git_head","manifestes","hashes","comandos","tiempos","usuario"]
+  rollback: "rollback.patch + instrucciones git"
+
+txt_descargable:
+  version: "1.0.0"
+  incluye: ["resumen run","artefactos producidos","checks QA","resumen delta"]

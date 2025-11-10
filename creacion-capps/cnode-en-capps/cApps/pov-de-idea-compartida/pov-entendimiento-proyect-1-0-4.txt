@@ -1,0 +1,281 @@
+# CNode: capps/pov-entendimiento-proyecto @1.0.4
+# cApp para ENTENDER el “punto de vista” (POV) que un [PROYECTO_REFERENCIA] tiene sobre una [IDEA_REFERENCIA].
+# Flujo de 2 pasos: CONTEXTO DEL [PROYECTO_REFERENCIA] → POV DEL [PROYECTO_REFERENCIA] SOBRE LA [IDEA_REFERENCIA].
+# Salida ÚNICA: code snippet txt con Contexto, POV, Matriz Contexto↔POV (implicaciones), Glosario (opcional) y Provenance.
+# NO compara proyectos; solo produce el entendimiento de UN proyecto por ejecución.
+
+id: "cnode:capps/pov-entendimiento-proyecto@1.0.4"
+title: "cApp: Entendimiento de POV de un Proyecto (anti-ambigüedad nominal — externo, binario)"
+version: "1.0.4"
+status: "stable"
+owner: "usuario"
+
+# ---------- TERMINOLOGÍA CANÓNICA (ANTI-AMBIGÜEDAD) ----------
+# [PROYECTO_EJECUCION]: proyecto de ChatGPT donde SE EJECUTA esta cApp (el del chat actual). Orquesta el flujo (validar, sintetizar, emitir). No aporta la lente.
+# [PROYECTO_REFERENCIA]: proyecto de ChatGPT EXTERNO (completamente AJENO al [PROYECTO_EJECUCION]) cuyo POV queremos capturar. Su marco (criterios/reglas/estilo) proviene SOLO del CONTEXTO.
+# [CONTEXTO]: bloque/archivo que describe QUÉ ES y CÓMO OPERA el [PROYECTO_REFERENCIA]. Debe iniciar con “Proyecto:” y “Alcance:”.
+# [IDEA_REFERENCIA]: objeto/evidencia que es LEÍDO BAJO LA LENTE del [PROYECTO_REFERENCIA] y que **EXISTE EN ESTA cApp ÚNICAMENTE A TRAVÉS DEL POV** (no es un tercer insumo). Se identifica en el POV con “IDEA_REF: <id>”.
+# [POV]: lectura/interpretación de la [IDEA_REFERENCIA] hecha por el [PROYECTO_REFERENCIA], coherente con su CONTEXTO.
+#
+# Reglas nominales, ajeneidad y unicidad de entradas:
+# - 'proyecto' ≡ [PROYECTO_REFERENCIA] en todo el flujo, salvo mención explícita de [PROYECTO_EJECUCION].
+# - El [PROYECTO_REFERENCIA] es SIEMPRE externo/ajeno al [PROYECTO_EJECUCION]; no se hereda estilo/criterios del [PROYECTO_EJECUCION] al POV.
+# - La [IDEA_REFERENCIA] **no** se entrega como insumo separado: **solo** existe y se referencia dentro del POV (línea IDEA_REF + cuerpo).
+# - Si el CONTEXTO declara un NombreCanónico del [PROYECTO_REFERENCIA], ese NOMBRE CANÓNICO prevalece; el alias (si existe) es informativo.
+
+# ---------- ACTIVACIÓN ----------
+invocation:
+  commands:
+    - "Activa la cApp Entendimiento de POV"
+    - "inicia entendimiento de punto de vista"
+  description: >
+    Recibe (1) el CONTEXTO de un [PROYECTO_REFERENCIA] externo y (2) el POV de ese [PROYECTO_REFERENCIA] sobre una [IDEA_REFERENCIA]
+    (donde la [IDEA_REFERENCIA] existe SOLO a través del POV), y emite un único code snippet txt con el marco (Contexto),
+    la lectura (POV), una Matriz Contexto↔POV→Implicación, Glosario (opcional) y Provenance. Esta cApp NO compara.
+
+# ---------- POLÍTICAS / SESIÓN / INVARIANTES ----------
+policies:
+  evidence_only: true
+  deterministic: true
+  provenance: true
+
+session:
+  mode: "NEW_ONLY"
+  confirm: false
+
+invariants:
+  - "SINGLE_ARTIFACT_OUTPUT: EMIT produce un solo artefacto: POVSynopsis"
+  - "NO_EARLY_OUTPUT: no se emiten contenidos antes de EMIT"
+  - "BINARY_INPUT_FLOW: SOLO hay dos insumos: CONTEXTO y POV; **NO** se acepta un tercer insumo para la idea."
+  - "DETERMINISMO: misma entrada (Contexto, POV, IDEA_REF) ⇒ misma salida"
+  - "EVIDENCE_ONLY: cada afirmación del snippet debe anclarse a [CONTEXT] o [POV]"
+  - "AJENEIDAD: el [PROYECTO_EJECUCION] nunca aporta la lente; únicamente ejecuta."
+
+# ---------- CONTEXTO / ALCANCE ----------
+context:
+  mission: >
+    Entender y documentar, con trazabilidad, el punto de vista que UN [PROYECTO_REFERENCIA] externo adopta sobre una [IDEA_REFERENCIA]
+    (consignada únicamente dentro del POV). El resultado es un documento estable y homogéneo utilizable para comparaciones fuera de esta cApp.
+  scope:
+    includes: ["CONTEXTO (archivo .txt o bloque textual)", "POV (archivo .txt o bloque textual con IDEA_REF)", "POVSynopsis (único artefacto)"]
+
+# ---------- ARTIFACTOS / PLANTILLAS ----------
+artifacts:
+  POVSynopsis:
+    template: "pov_synopsis_txt"
+
+# ---------- TIPOS / ENTRADAS ----------
+types:
+  ContextInput:
+    mime: ["text/plain", "text/block"]
+    min_words: 200
+    role: "CONTEXT"
+    must_contain:
+      - "Proyecto:"    # nombre canónico del [PROYECTO_REFERENCIA]; puede incluir alias entre paréntesis.
+      - "Alcance:"     # delimitación de lo que cubre y NO cubre el [PROYECTO_REFERENCIA]
+  POVInput:
+    mime: ["text/plain", "text/block"]
+    min_words: 240
+    role: "POV"
+    must_mention_idea_ref: true  # debe aparecer línea IDEA_REF: y el identificador debe usarse en el cuerpo
+
+# ---------- EXTRACCIÓN DE CAMPOS (normalización) ----------
+extractors:
+  project_name:  "regex:^\\s*Proyecto:\\s*(?P<name>[^\\(\\r\\n]+)(?:\\s*\\(alias:\\s*[^\\)]+\\))?\\s*$"
+  project_alias: "regex:^\\s*Proyecto:\\s*[^\\(\\r\\n]+\\(alias:\\s*(?P<alias>[^\\)]+)\\)\\s*$"
+  scope_text:    "regex:^\\s*Alcance:\\s*(?P<scope>.+)$"
+  idea_ref:      "regex:^\\s*IDEA_REF:\\s*(?P<id>[^\\r\\n]+)$"
+
+# ---------- VALIDADORES SEMÁNTICOS ----------
+validators:
+  context_semantic: >
+    El CONTEXTO debe describir al [PROYECTO_REFERENCIA] EXTERNO: identidad (nombre canónico), alcance,
+    políticas/arquitectura relevantes, supuestos y limitaciones, dejando explícita su ajeneidad al [PROYECTO_EJECUCION].
+  pov_semantic: >
+    El POV debe declarar criterios/dimensiones con los que el [PROYECTO_REFERENCIA] lee la idea, su lectura nuclear,
+    umbrales o reglas (si existen) y limitaciones/evidencia faltante, usar la línea IDEA_REF y referir ese identificador en el cuerpo.
+  idea_ref_ok: "IDEA_REF debe existir (línea 'IDEA_REF: <id>') y el identificador debe aparecer al menos una vez en el cuerpo del POV."
+
+# ---------- UI / ENTRADAS LEGALES Y MENSAJES ----------
+legal_inputs:
+  STEP_CONTEXT: ["file:text/plain", "text:block"]
+  STEP_POV:     ["file:text/plain", "text:block"]
+
+say_templates:
+  intro: |
+    Entendimiento de POV — v1.0.4
+    Proceso: 1) CONTEXTO del [PROYECTO_REFERENCIA] externo → 2) POV del [PROYECTO_REFERENCIA] sobre la [IDEA_REFERENCIA] (incluida SOLO dentro del POV, vía IDEA_REF).
+    Entrega única: POVSynopsis (code snippet txt) con Contexto, POV, Matriz Contexto↔POV, Glosario (opcional) y Provenance.
+    Esta cApp no compara; solo entiende el POV de un [PROYECTO_REFERENCIA] ajeno al proyecto donde se ejecuta la cApp. Responde “Entendido” para comenzar.
+  ask_context: |
+    Paso 1 — CONTEXTO del [PROYECTO_REFERENCIA] (EXTERNO al [PROYECTO_EJECUCION]).
+    Envía un .txt o pega un bloque (≥200 palabras) que incluya explícitamente:
+    “Proyecto: <nombre canónico del [PROYECTO_REFERENCIA]> (opcional: alias entre paréntesis)”
+    y “Alcance: <delimitación>”, más políticas/arquitectura y supuestos/limitaciones.
+    Debe quedar claro que este [PROYECTO_REFERENCIA] es AJENO al [PROYECTO_EJECUCION] (este chat).
+  ask_pov: |
+    Paso 2 — POV del [PROYECTO_REFERENCIA] sobre la [IDEA_REFERENCIA] (**no envíes archivos adicionales**).
+    Envía un .txt o pega un bloque (≥240 palabras) que:
+    (a) incluya literalmente “IDEA_REF: <identificador>” y lo mencione en el cuerpo,
+    (b) defina criterios/dimensiones de lectura propios del [PROYECTO_REFERENCIA],
+    (c) exponga lectura nuclear, reglas/umbrales (si existen) y limitaciones/evidencia faltante.
+  synth: "Sintetizando (Contexto, POV, Matriz Contexto↔POV, Glosario opcional, Provenance)…"
+  emit:  "Entrega única: POVSynopsis (code snippet txt)."
+
+# ---------- ORQUESTADOR (FSM) ----------
+orchestrator:
+  states: [IDLE, INTRO, STEP_CONTEXT, STEP_POV, READY, SYNTH, EMIT, END]
+  transitions:
+    - from: IDLE
+      to: INTRO
+      on: "invoke(commands)"
+      say: "{say_templates.intro}"
+
+    - from: INTRO
+      to: STEP_CONTEXT
+      guard: "user_confirms~/Entendido/i"
+      say: "{say_templates.ask_context}"
+
+    - from: STEP_CONTEXT
+      to: STEP_POV
+      guard: "has_text_or_file AND words(content)>=types.ContextInput.min_words AND validators.context_semantic"
+      do: "extract('project_name'); extract('project_alias'); extract('scope_text'); save_memory(kind='CONTEXT', payload_text, sha256, size_bytes, word_count, project_name, project_alias, scope_text)"
+      say: "{say_templates.ask_pov}"
+      on_missing_file: "ERROR:MISSING_CONTEXT -- Falta CONTEXTO (archivo o bloque)."
+      on_too_short: "ERROR:INPUT_TOO_SHORT -- CONTEXTO debe tener ≥200 palabras."
+      on_semantic_fail: "ERROR:CONTEXT_SEMANTIC -- CONTEXTO debe describir un [PROYECTO_REFERENCIA] EXTERNO con Proyecto/Alcance/Políticas/Supuestos."
+
+    - from: STEP_POV
+      to: READY
+      guard: "has_text_or_file AND words(content)>=types.POVInput.min_words AND has_literal('IDEA_REF:') AND validators.idea_ref_ok AND validators.pov_semantic"
+      do: "extract('idea_ref'); save_memory(kind='POV', payload_text, sha256, size_bytes, word_count, idea_ref)"
+      say: "POV registrado. Validaciones completas."
+      on_missing_file: "ERROR:MISSING_POV -- Falta POV (archivo o bloque)."
+      on_too_short: "ERROR:INPUT_TOO_SHORT -- POV debe tener ≥240 palabras."
+      on_missing_idea_ref: "ERROR:MISSING_IDEA_REF -- Incluye 'IDEA_REF: <identificador>' y mención explícita en el texto."
+      on_semantic_fail: "ERROR:POV_SEMANTIC -- POV debe incluir criterios/dimensiones, lectura nuclear, reglas/umbrales (si existen) y limitaciones."
+
+    - from: READY
+      to: SYNTH
+      guard: "fitness('memorias_completas')"
+      do: "extract_context_dims(); extract_pov_dims(); normalize_terms(); build_context_pov_matrix(); provenance_map();"
+      say: "{say_templates.synth}"
+      block_early_output: true
+
+    - from: SYNTH
+      to: EMIT
+      guard: "fitness('shape_ok') AND fitness('matrix_min_rows') AND fitness('provenance_ok') AND linter('output_ok') AND linter('no_ambiguous_project_terms') AND linter('no_third_input_requests')"
+      do: "generate_pov_synopsis(project_name=MEM.CONTEXT.project_name, idea_ref=MEM.POV.idea_ref, project_alias=MEM.CONTEXT.project_alias)"
+      emit: "POVSynopsis"
+      say: "{say_templates.emit}"
+
+    - from: EMIT
+      to: END
+      on: "auto"
+      say: "Fin. Para otro [PROYECTO_REFERENCIA], invoca el comando nuevamente."
+
+# ---------- FITNESS TESTS / LINTER ----------
+fitness_tests:
+  - id: "memorias_completas"
+    must_pass: true
+    check: "exists(MEM[CONTEXT]) AND exists(MEM[POV])"
+  - id: "shape_ok"
+    must_pass: true
+    check: "has_sections(['1) CONTEXTO DEL PROYECTO','2) POV — LECTURA DE LA IDEA','3) MATRIZ CONTEXTO ↔ POV','PROVENANCE'])"
+  - id: "matrix_min_rows"
+    must_pass: true
+    check: "rows(CONTEXT_POV_MATRIX)>=5 OR note('Matriz corta: justificar límites del caso en sección 3)')"
+  - id: "provenance_ok"
+    must_pass: true
+    check: "sha256_present(CONTEXT,POV) AND word_counts_present(CONTEXT,POV)"
+
+output_linter:
+  forbid_patterns:
+    - "^ID:\\s"
+    - "^TITLE:\\s"
+    - "^TRIGGER_PHRASE:\\s"
+    - "UPDATED\\s?CNODE"
+    - "Executive Summary"
+    - "Gaps\\s?&\\s?Risks"
+    - "Proposed Fixes"
+  on_violation:
+    error: "ERROR:FORBIDDEN_OUTPUT_KEY"
+    action: "abort_emit"
+  extra_rules:
+    - id: "no_ambiguous_project_terms"
+      description: "Evitar ambigüedad: no usar 'este proyecto' o 'proyecto' sin estar claro que refiere al [PROYECTO_REFERENCIA]."
+      forbid_regex:
+        - "\\beste proyecto\\b"
+      advisory: "Si necesitas referirte al host, usa [PROYECTO_EJECUCION]; para el externo, usa su nombre o '[PROYECTO_REFERENCIA]'."
+    - id: "no_third_input_requests"
+      description: "Evitar que la salida pida/espere un tercer insumo (artefactos de idea fuera del POV)."
+      forbid_regex:
+        - "\\b(Adjunta|Envía|Proporciona)\\b.*\\b(artefacto|archivo|imagen|PDF|documento)\\b.*\\b(idea|IDEA)\\b"
+      advisory: "La [IDEA_REFERENCIA] existe únicamente dentro del POV (línea IDEA_REF + cuerpo). No se solicitan terceros insumos."
+
+# ---------- ERRORES GLOBALES ----------
+errors:
+  - code: "MISSING_CONTEXT"
+    say: "Falta el CONTEXTO del [PROYECTO_REFERENCIA] (externo). Adjunta .txt o pega un bloque ≥200 palabras con Proyecto/Alcance/Políticas/Supuestos."
+  - code: "MISSING_POV"
+    say: "Falta el POV del [PROYECTO_REFERENCIA] (externo) sobre la [IDEA_REFERENCIA] (adjunta .txt o bloque ≥240 palabras con criterios/lectura/limitaciones + IDEA_REF)."
+  - code: "MISSING_IDEA_REF"
+    say: "Incluye una línea 'IDEA_REF: <identificador>' y mención explícita a esa IDEA dentro del POV."
+  - code: "INPUT_TOO_SHORT"
+    say: "El contenido no cumple el mínimo de palabras requerido."
+  - code: "CONTEXT_SEMANTIC"
+    say: "CONTEXTO incompleto: describe un [PROYECTO_REFERENCIA] EXTERNO con identidad, alcance, políticas/arquitectura y supuestos/limitaciones."
+  - code: "POV_SEMANTIC"
+    say: "POV incompleto: añade criterios/dimensiones, lectura nuclear, reglas/umbrales (si existen) y limitaciones/evidencia faltante."
+  - code: "FORBIDDEN_OUTPUT_KEY"
+    say: "Se detectó una clave/plantilla prohibida en la salida (anti-deriva). Emisión abortada."
+
+# ---------- PLANTILLA DE SALIDA (ÚNICO ARTEFACTO) ----------
+templates:
+  pov_synopsis_txt: |
+    # Proyecto: {project_name} — POV sobre {idea_ref}
+
+    ## 1) CONTEXTO DEL PROYECTO  [CONTEXT]
+    - Identidad (nombre canónico{?project_alias: , alias={project_alias}}) y alcance:
+      {ctx_identity_scope}
+    - Arquitectura/Políticas relevantes:
+      {ctx_arch_policies}
+    - Supuestos y limitaciones declarados:
+      {ctx_assumptions_limits}
+    - Estilo/Preferencias de respuesta:
+      {ctx_style_preferences}
+    - Nota nominal:
+      En este documento, “PROYECTO” ≡ [PROYECTO_REFERENCIA] (externo al [PROYECTO_EJECUCION]).
+      La [IDEA_REFERENCIA] existe **solo** a través del POV (IDEA_REF + cuerpo); no hay insumos de idea fuera del POV.
+
+    ## 2) POV — LECTURA DE LA IDEA  [POV]
+    - Marco de interpretación (criterios/dimensiones):
+      {pov_criteria}
+    - Lectura nuclear (qué se ve/prioriza):
+      {pov_core_reading}
+    - Reglas/umbrales aplicados (si existen):
+      {pov_rules_thresholds}
+    - Limitaciones y evidencia faltante:
+      {pov_limits_missing}
+
+    ## 3) MATRIZ CONTEXTO ↔ POV → IMPLICACIÓN  [CONTEXT][POV]
+    | Dimensión de Contexto | Manifestación en el POV | Implicación/Decisión | Procedencia |
+    | --- | --- | --- | --- |
+    {context_pov_matrix_rows}  # ≥5 filas cuando aplique; si no, explica por qué la matriz es corta
+
+    ## 4) GLOSARIO / ALIAS (opcional)
+    {glossary_aliases}
+
+    ---
+    ## PROVENANCE
+    CONTEXT: {ctx_size_bytes} bytes, {ctx_word_count} palabras, sha256={ctx_sha256}
+    POV: {pov_size_bytes} bytes, {pov_word_count} palabras, sha256={pov_sha256}
+    IDEA_REF: {idea_ref}
+    REPORT: generated_at={generated_at_iso}, cApp={version}
+
+# ---------- NOTAS ----------
+notes:
+  - "Esta cApp solo entiende el POV de UN [PROYECTO_REFERENCIA] por ejecución. Para comparar entre proyectos, ejecuta la cApp varias veces y compara las POVSynopsis fuera de esta cApp."
+  - "Puedes enviar CONTEXTO y POV como archivos .txt o bloques de texto; se calcularán hashes sobre el contenido normalizado."
+  - "IDEA_REF debe ser estable: por ejemplo, 'IDEA_REF: Arquitectura-Fractal-v3' o con hash/URL."
+# ---------- FIN DEL CNODE ----------

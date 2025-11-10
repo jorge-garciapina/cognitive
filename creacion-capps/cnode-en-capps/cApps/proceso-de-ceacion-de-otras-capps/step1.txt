@@ -1,0 +1,47 @@
+POST-MORTEM ESTRUCTURAL (PETICIÓN ENTENDIDA) — cApp Context→POV
+
+Qué me pides
+- Un análisis de nivel SISTEMA sobre los problemas que surgieron al construir la cApp anterior (Contexto→POV).
+- No es un análisis lingüístico ni de estilo; es un diagnóstico arquitectónico/operativo.
+- Usar tus notas manuscritas como pistas, pero elevarlas a problemas estructurales generalizables.
+
+Unidad de análisis
+- Diseño de arquitectura, flujo de estados, contratos de entrada/salida, control de estado, responsabilidades, validación y trazabilidad.
+
+Problemas que esperas que identifique (tipología estructural)
+1) Objetivo/resultado no fijado:
+   - Síntoma: dudas sobre qué produce exactamente la cApp.
+   - Efecto: salidas variables y esfuerzo disperso.
+
+2) Ambigüedad en conceptos núcleo por falta de glosario operativo:
+   - Síntoma: “proyecto” y otros términos con múltiples lecturas válidas.
+   - Efecto: decisiones inconsistentes y contradicciones en el flujo.
+
+3) Contratos de entrada/salida incompletos:
+   - Síntoma: qué entra, con qué forma y qué está prohibido no estaban cerrados.
+   - Efecto: entradas heterogéneas, validación débil y errores aguas abajo.
+
+4) Exceso de responsabilidades (violación de Single Responsibility):
+   - Síntoma: un mismo flujo intentaba entender, comparar, sintetizar y evaluar.
+   - Efecto: complejidad innecesaria y puntos de fallo múltiples.
+
+5) Secuenciación y control de estado insuficientes:
+   - Síntoma: pasos fuera de orden, reentradas, fuga de contexto entre ejecuciones.
+   - Efecto: no determinismo y resultados no repetibles.
+
+6) Validación semántica y fitness tests insuficientes:
+   - Síntoma: se aceptaban entradas “válidas” pero semánticamente huecas.
+   - Efecto: salidas superficiales o incongruentes.
+
+7) Trazabilidad/explicabilidad pobre:
+   - Síntoma: conclusiones sin rastro de cómo se derivaron del contexto.
+   - Efecto: difícil auditar o replicar la lectura.
+
+Forma de salida esperada
+- Una lista razonada de PROBLEMAS ESTRUCTURALES (síntoma, causa raíz, impacto), independiente del dominio, útil como PATRÓN para futuras cApps.
+
+Qué NO esperas
+- Reformulaciones de prompts, glosarios exhaustivos de términos o comparativas de estilo.
+- Resúmenes narrativos de la conversación.
+
+Listo para elaborar el diagnóstico estructural con ese marco.

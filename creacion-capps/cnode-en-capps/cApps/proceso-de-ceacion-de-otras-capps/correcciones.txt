@@ -1,0 +1,110 @@
+# Método general para crear cApps — de lo particular a lo replicable
+
+1) Qué cambian tus correcciones (y por qué importa para la generalidad)
+- Del caso particular al patrón general: varios pasos (polisemia de “proyecto”, fijación literal de P2/P3/P4, “crosswalk ≥5”,etc.) fueron soluciones situacionales.
+Lo valioso no es repetirlos tal cual, sino abstraer el problema que resolvieron y convertirlo en principios (anti-ambigüedad, contratos de entrada, explicabilidad, aislamiento de sesión, etc.).
+*-ES IMPORTANTE QUE COMENCEMOS A DEFINIR CÚALES SON ESTOS PRINCIPIOS, Y CÓMO LLAMAR A LA CATEGORÍA QUE CONTIENE A DICHOS PRINCIPIOS, LA RAZÓN DE ESTO ES QUE SI NO LO HACEMOS 
+CAEREMOS DE NUEVO EN EL PROBLEMA DE AMBIGUEDAD, POR ESO ES NECESARIO DESCRIBIR TODO USANDO NOMBRES ADECUADOS. (QUE DESCRIBES EN LA PARTE "Anti-ambigüedad como regla universal" ALGUNAS LÍNEAS MÁS ABAJO ) -*
+- Entrada y salida primero: cualquier cApp debe diseñarse desde el propósito (qué quiere lograr) y, a partir de ahí, fijar entrada, salida y cómo (flujo/estados).
+*-CUANDO USAS "y cómo" SE PRESTA A ERRORES Y AMBIGUEDADES, QUIERO QUE EN ESTA Y PARECIDAS, EXPLIQUES A QUÉ SE REFIERE DICHO "cómo"-*
+  Enfoque: de “qué hicimos aquí” → “cómo diseñar cApps correctas en general”.
+- Anti-ambigüedad como regla universal: lo que empezó como confusión con “proyecto” se vuelve doctrina: nombrar lo confuso temprano (nombres canónicos, ajeneidad, alias) y prohibir términos flotantes mediante linters.
+*-NO SÉ QUÉ ES UN "TÉRMINO FLOTANTE" NI TAMPOCO QUÉ ES UN "LINTER". Y CON ESTO TENEMOS UN HECHO QUE DEBEMOS TENER SIEMPRE EN CUENTA: ES IMPORTANTE SIEMPRE MANTENER EL VOCABULARIO DENTRO DEL CONTEXTO DEL TRABAJO QUE SE DESARROLLA, ASÍ SE EVITARÁ CREAR UNA NUEVA CURVA DE APRENDIZAJE (PALABRAS, CONCEPTOS, ETC) CADA VEZ. NO DIGO QUE NO DEBAN DEFINIRSE COSAS NUEVAS, PERO EN EL CASO DE QUE ASÍ SE HAGA, ENTONCES DEBE EXISTIR UNA JJUSTIFICACIÓN Y DESCRIPCIÓN-+
+- Explicabilidad obligatoria: en lugar de resúmenes, rastros de derivación CONTEXTO→POV y matrices de mecanismos. Exigencia portable a cualquier dominio.
+*-ASÍ CÓMO LO PONES, ESTO ME PARECE MÁS UNA FORMA DE DECIR CÓMO INTERACTÚAN LAS ENTRADAS AL SISTEMA. LO MENCIONO PORQUE PUEDO PENSAR EN VARIOS CASOS EN LOS QUE LAS ENTRADAS SON INDEPENDIENTES (ENTONCES NO HABRÁ TRAZABILIDAD, PERO AÚN ASÍ PUEDEN COMPARARSE O USARSE COMO ENTRADAS)-*
+
+2) Método general para diseñar cApps (estructura que se recicla)
+(A) Propósito y límite
+- Define UNA misión (una cApp = un objetivo).
+- Declara anti-objetivos (lo que no hará) para frenar deriva de alcance.
+
+(B) Entradas como contratos
+- Para cada entrada: emisor esperado, marcas literales mínimas (líneas canónicas), semántica mínima (qué debe contener) y lo que NO debe traer.
+*-NO SÉ A QUÉ TE REFIERES CON "marcas literales mínimas (líneas canónicas)". TAMPOCO SÉ A QUÉ TE REFIERES CON semántica mínima (qué debe contener). 
+ESTO DE NUEVO NOS LLEVA AL PROBLEMA DE QUE AL USAR CONCEPTOS NO DEFINIDOS PREVIAMENTE COMENZAMOS A TENER AMBIGUEDAD: PUEDE SER QUE YO ENTIENDA UNA COSA Y TÚ OTRA. 
+ES MEJOR QUE SE USEN DESCRIPCIONES, EN VEZ DE CONCEPTOS NUEVOS, ASÍ LA PROBABILIDAD DE QUE APAREZCAN AMBIGUEDADES REDUCE. -*
+- Si hay alias vs nombre canónico: fija precedencia y formato de impresión (“Proyecto: Canónico (alias: …)”).
+*-ESTO NO ES VITAL, AL MENOS EN ESTA FASE, PRIMERO -*
+- Prohíbe el “tercer insumo fantasma” con linters (si la idea solo existe dentro del POV, no se piden PDFs/imagenes externos).
+*-AQUÍ DE NUEVO TE ESTÁS ADELANTANDO: PRIMERO SE DEBE DEFINIR QUÉ SE QUIERE. PRIMERO SE DEBE ENTENDER EL PROBLEMA DEL USUARIO Y YA DESPUÉS ENFOCARNOS EN PARTICULARIDADES-*
+----------------------------
+CREO QUE A PARTIR DE ESTE PUNTO PODEMOS CONSIDERAR QUE TERMINA LA FASE DE SABER LO QUE EL USUARIO QUIERE, Y COMIENZA LA PARTE DE CÓMO SE CONSEGUIRÁ DICHA FUNCIONALIDAD.
+----------------------------
+(C) Orquestación por estados
+*-ESTO SE PUEDE CONSIDERAR EL CÓMO SE LLEGARÁ DE LA ENTRADA A LA SALIDA. QUIERO QUE CONSULTES CON EL DOCUMENTO cognitive-apps-cognitive-nodes.txt PARA COMPARAR LO QUE AHÍ SE DICE CON LO QUE AFIRMAS AQUÍ-*
+- FSM mínima: IDLE → INTRO → INPUT_1 → INPUT_2 → READY → SYNTH → EMIT → END.
+- Cada transición con guards (tamaño, marcas, semántica) y errores accionables.
+*-AQUÍ VUELVE A HABER AMBIGUEDAD: QUÉ ES guard? PARA QUÉ SIRVE? A QUÉ TE REFIERES CON LOS CONCEPTOS: tamaño, marcas, sempantica? DE LA ENTRADA? DE LA SALIDA? DEL PROCESO? TOMA ESTO COMO EJEMPLO DE CÓMO ES QUE COMIENZA A MANIFESTARSE LA AMBIGUEDAD-*
+
+(D) Explicabilidad estructural (obligatoria)
+- Rastro de derivación: pasos numerados que muestren qué cláusula del CONTEXTO activa qué regla/criterio y cómo conduce a la conclusión.
+- Matriz de mecanismos: CONTEXTO ↔ (regla/criterio) ↔ tipo de mecanismo (umbral/estilo/política/procedimiento) ↔ efecto operativo.
+*-NO ENTIENDO ABSOLUTAMENTE NADA DE LO QUE DICES EN EL PUNTO DE ARRIBA. DE NUEVO: CUANDO NO SE EXPLICA QUÉ ES CADA COSA, ENTONCES COMENZAMOS A TENER AMBIGUEDAD-*
+- Matriz Contexto↔Salida→Implicación: puente entre marco y decisión.
+*-LO MISMO QUE EN MI CORRECCIÓN DE ARRIBA-*
+
+(E) Anti-ambigüedad operativa
+- Glosario ejecutable (no decorativo): define roles (p. ej., [PROYECTO_EJECUCION] vs [PROYECTO_REFERENCIA]), ajeneidad y qué existe en cada entrada.
+- Linters que bloqueen frases ambiguas (“este proyecto”) y chequeen consistencia nominal.
+
+(F) Aislamiento y determinismo
+
+- Session Lock / NEW_ONLY y nombres de memoria con namespace.
+- Determinismo de forma: mismas entradas ⇒ misma estructura de salida.
+
+(G) Forma de salida cerrada
+*-AQUÍ HUBIERA SIDO BUENO QUE UTILIZARAS LO DE NIVEL LINGUISTICO Y NIVEL ESTRUCTURAL. PARA ENTENDER DEBES CONSIDERAR LO SIGUIENTE: LA NECESIDAD DE CREAR UNA CaPP SE ORIGINA
+POR UNA ESTRUCTURA: EL USUARIO QUIERE DESARROLLAR UNA FUNCIONALIDAD COMO PARTE DE UN PROYECTO "MÁS GRANDE", EN ESTE CASO, LA CaPP TIENE EL NIVEL LINGUISTICO YA QUE LA TAREA DEL USUARIO SERÁ 
+LA ESTRUCTURA, Y LA CaPP LO QUE CAMBIA RÁPIDO
+-*
+- Un solo artefacto, texto plano, títulos fijos y seguro de “code snippet txt”.
+
+3) Cómo los “ejemplos de estructura” nutren este método
+- Marketing de contenidos: “título con anzuelo”, narrativa, triggers heurísticos = mecanismos explícitos; cada pieza sirve a un objetivo superior (marca, confianza, adquisición). Enseña a codificar módulos y su función dentro de una estrategia (marco).
+- Póker: estrategia/estilo/perfil = CONTEXTO; movimientos guiados por la estrategia = POV; rastro = “regla de preflop → efecto en rango → acción”. Lección: separar arquitectura (marco) de decisiones (acción) y documentar el camino entre ambas con pasos y matrices.
+LO IMPORTANTE DE LOS EJEMPLOS NO SON LOS EJEMPLOS EN SÍ, SINO LO QUE ENSEÑAN. QUE ME DES ESTA RESPUESTA ME INDICA QUE NO ESTÁS USANDO BIEN LOS CONCEPTOS QUE QUIERO, ASÍ QUE ES NECESARIO QUE LOS ENTIENDAS COMO 
+PARTE DE UNA ESTRUCTURA. CADA EJEMPLO ES NIVEL LINGUISTI
+
+4) Rediseño de entrada/salida en clave general
+*-AQUÍ TE LIMITAS A LOS EJEMPLOS QUE ESTAMOS TRABAJANDO, PERO QUIERO QUE ELEVES DE NIVEL LA DISCUSIÓN, LOS EJEMPLOS TIENEN [NIVEL LINGUISTICO] BUSCAMOS DISCUTIR EN UN NIVEL ESTRUCTURAL-*
+- Entrada: elige mínimo binario/ternario y ciérralo como contrato; en cApp POV, “CONTEXTO + POV” es suficiente.
+- Salida: exige derivación, no resumen; la forma obliga a mostrar cómo se llega a cada conclusión.
+- Prompts-contrato: pre-formatean insumos (en estilo del origen) para alinearlos al contrato de la cApp.
+
+5) Módulos reusables (lo que realmente reciclas)
+*-MISMOS ERRORES: AL USAR CONCEPTOS/TÉRMINOS NUEVOS SIN DESCRIBIR QUÉ SON, AUMENTAMOS AMBIGUEDAD. ESTOS TÉRMINOS E IDEAS SON POSIBLES ÚNICAMENTE DESPUÉS QUE EL USUARIO Y CHATGPT HAN ESTABLECIDO LO QUE SE BUSCA CREAR-*
+- Normalizadores/Extractores (regex por líneas canónicas: “Proyecto:”, “Alcance:”, “IDEA_REF:”).
+- Validadores semánticos (identidad, alcance, criterios/reglas, límites).
+- Linters anti-deriva (prohibidos términos ambiguos, prohibido tercer insumo).
+- Constructor de rastro (formato “Paso n — [CONTEXT] → [Regla] → [Efecto] → [Conclusión]”).
+- Constructor de matrices (Mecanismos y Contexto↔Salida→Implicación).
+- Seguro de forma (salida única, code snippet txt).
+- Session Lock y namespace de memorias.
+
+6) Checklist general para nuevas cApps
+- Propósito único y anti-objetivos explícitos.
+- Glosario operativo con ajeneidad y nombres canónicos.
+- Contratos de entrada (marcas literales + semántica mínima + restricciones).
+- FSM con guards y errores claros.
+- Explicabilidad: rastro de derivación + matrices.
+- Linters que bloqueen lo que históricamente se rompe.
+- Determinismo de forma y salida plana única.
+- Aislamiento de sesión.
+
+7) Fallos típicos y prevención
+- Polisemia de términos → Glosario + linters (bloqueo de “este proyecto”).
+- Objetivo difuso → Una cApp = un fin; comparaciones en otra cApp.
+- Entrada mal formada → contratos con marcas y validadores semánticos.
+- Resúmenes sin rastro → exigir DERIVACIÓN con mínimo de pasos (≥5) y anclaje a CONTEXTO.
+- Fuga de estado → NEW_ONLY + namespaces.
+- Deriva de formato → seguro de salida “code snippet txt” y títulos fijos.
+
+Cierre
+Separar el “nivel lingüístico” (dominio y estilo de cada cApp) de la “estructura de ingeniería” (método repetible) es la clave. Lo que consolidamos —binario CONTEXTO+POV, ajeneidad explícita, rastro de derivación, matrices, linters, salida única— es la estructura reciclable. Úsala como esqueleto para nuevos dominios; ajusta solo el idioma, las secciones y los thresholds a cada caso. El método estable es: nombrar lo confuso, contractualizar entradas, exigir explicabilidad, bloquear la deriva y aislar sesiones.
+
+
+**********************
+NOTAS GLOBALES:
+- SI ALGUIEN ES AJENO AL PROYECTO, TENDRÍA MUCHOS PROBLEMAS ENTENDIENDO MUCHAS DE LAS SECCIONES Y DE LOS CONCEPTOS QUE USAS. MIRA LAS CORRECCIONES EN DETALLE PARA ENTENDER ESTO.
+- CONSIDERA QUE LA FRACTALIDAD ESTÁ PRESENTE SIEMPRE: ALGO CONSIDERADO "ESTRUCTURAL" PUEDE SER "LINGUISTICO" PARA UN NIVEL SUPERIOR. 
+- CONSIDERA QUE LA CAPP QUE TRATAMOS DE ESCRIBIR ES MÁS BIEN CENTRADA EN CONSTRUIR LA META META-METÁFORA DE UNA IDEA: EL USUARIO TIENE UNA IDEA (SEMILLA) Y QUIERE CONSTRUIR UNA CaPP A PARTIR DE DICHA IDEA. LA NUEVA CaPP QUE TRATAMOS DE DESARROLLAR GUIARÁ AL USUARIO PARA CREAR UNA META METÁFORA QUE LE PERMITIRÁ CREAR LA CaPP DESEADA A PARTIR DE LA IDEA

@@ -1,0 +1,217 @@
+TÍTULO: Metamodelo Fractal Operativo — De Metáfora a Meta-Metáfora (plantilla A–I + Orquestador)
+VERSIÓN: 1.0 (autosuficiente; listo para instanciar en cualquier dominio)
+AUTOR: [tu nombre o equipo]
+PROPÓSITO: Proveer un artefacto único, preciso y reproducible para diseñar, ejecutar, medir y mejorar cualquier sistema como instancia de un METAMODELO FRACTAL, con invariantes, contratos explícitos, validaciones duras, trazabilidad por identificadores compuestos e intervención del Orquestador de Pesos/Presets (motor de políticas si–entonces).
+
+──────────────────────────────────────────────────────────────────────────────
+1) DICCIONARIO MÍNIMO (Metáfora → Meta-Metáfora)
+──────────────────────────────────────────────────────────────────────────────
+• Sistema = Instancia del METAMODELO FRACTAL (la “forma” común aplicada a un caso concreto).
+• Invariantes = Reglas no negociables (éticas, legales, técnicas, de marca) que ningún subsistema puede violar.
+• Contrato = Interfaz con campos obligatorios, tipos, umbrales y precondiciones; sin contrato completo no hay ejecución.
+• Preset = Vector de pesos del Orquestador que prioriza dimensiones (por ejemplo: Atención, Relato, Emoción) bajo reglas si–entonces.
+• Evidencia = Telemetría/mediciones que habilitan decisiones; sin evidencia suficiente no hay promoción de cambios.
+• Bloqueo = Mecanismo que impide publicar/ejecutar si se viola un invariante o falta un campo crítico del contrato.
+• ID compuesto = Identificador con cadena de pertenencia y versión: [Padre/Hijo/Subhijo/.../Objeto]@vX.Y.
+
+──────────────────────────────────────────────────────────────────────────────
+2) META-ESTRUCTURA (la clase real es un METAMODELO + POLÍTICAS)
+──────────────────────────────────────────────────────────────────────────────
+El metamodelo define una PLANTILLA FRACTAL A–I que todo sistema debe completar:
+A) PROPÓSITO: Resultado observable que el sistema persigue (formato: “Incrementar X en Y% durante Z, sujeto a invariantes W”).
+B) INVARIANTES: Reglas no negociables del sistema padre y locales (ética, legal, accesibilidad, seguridad, veracidad).
+C) OBJETOS: Inventario explícito de artefactos y recursos que “viven” en el sistema (catálogos, rangos, manuales, activos).
+D) INTERFACES: Entradas/Salidas con tipos y reglas (quién provee, en qué formato, con qué periodicidad y validador).
+E) MÉTRICA FARO: Indicador único que gobierna decisiones locales (ej.: Conversión en nicho, OTIF — On Time In Full, bb/100 — big blinds por 100 manos).
+F) VALIDACIONES DURAS: Chequeos automáticos que bloquean si fallan (contrato incompleto, ausencia de evidencia, promesa sin palanca real).
+G) CADENCIA: Ritmo de decisión/revisión (diario/semanal/mensual/por temporada/por sesión).
+H) APRENDIZAJE: Mecanismo que transforma telemetría en cambios de parámetros (ajuste de presets, de precios, de creatividades, de rangos).
+I) TRAZABILIDAD: Política de identificadores, versionado y bitácora (qué cambió, cuándo, por quién y con qué evidencia).
+
+Notas de fractalidad:
+• La misma A–I se aplica a cada nivel (sistema → subsistema → sub-subsistema), heredando invariantes del padre.
+• La “forma” (A–I) es estable; el “contenido” (productos, campañas, stacks, escenas) cambia sin romper la forma.
+
+──────────────────────────────────────────────────────────────────────────────
+3) ORQUESTADOR DE PESOS/PRESETS (motor de políticas si–entonces)
+──────────────────────────────────────────────────────────────────────────────
+Definición: Mecanismo transversal que re-prioriza dimensiones clave según el contexto y la evidencia, sin violar invariantes.
+
+Ejemplos de dimensiones por dominio (se eligen las que apliquen y suman 1.0):
+• Conversión publicitaria (SMCP — Sistema Multimodal de Conversión Publicitaria):
+  AAS — Attention Activation Score (atención), NRS — Narrative Relevance Score (relato), EAS — Emotion Activation Score (emoción).
+• Logística y suministro:
+  Velocidad, Costo, Confiabilidad, Flexibilidad, Sostenibilidad.
+• Póker (estrategia):
+  GTO — Game Theory Optimal (equilibrio teórico) vs EXP — Exploit (explotación), Agresividad, Presupuesto de riesgo, Tolerancia a varianza, ICM — Independent Chip Model (presión por saltos de premio).
+• Storytelling:
+  Hook (gancho), Coherencia causal, Ritmo, Carga emocional, Claridad simbólica.
+
+Presets (ilustrativos; personalizar pesos):
+• BALANCEADO: pesos distribuidos homogéneamente.
+• ATENCIÓN-DOMINANTE (o Velocidad-Dominante, o GTO-PRIORITY, etc.): el nombre expresa qué dimensión sube.
+• EMOCIÓN-DOMINANTE / CONFIABILIDAD-DOMINANTE / EXPLOIT-PRIORITY: ajustar según cuello de botella identificado.
+
+Reglas si–entonces del Orquestador (universales; ampliar con dominio):
+1) Si la métrica faro no mejora dos ciclos consecutivos y hay cuello de botella en interacción, entonces aumentar el peso de “reducción de fricción” y revisar formatos.
+2) Si se detecta promesa de escasez pero no existe palanca real (stock/ventana/acceso), entonces bloquear comunicación de escasez.
+3) Si la evidencia es insuficiente para explotación (EXP), entonces usar preset de equilibrio (por ejemplo, GTO-PRIORITY o Balanceado).
+4) Si la confiabilidad logística (OTIF) cae por debajo de umbral, entonces prohibir mecanismos comerciales que dependan de tiempo estricto hasta restituir OTIF.
+5) Si accesibilidad (contraste, subtítulos, texto alternativo) falla, entonces bloquear publicación del activo.
+
+──────────────────────────────────────────────────────────────────────────────
+4) CONTRATOS ENTRE NIVELES (interfaces con campos obligatorios)
+──────────────────────────────────────────────────────────────────────────────
+Contrato mínimo (ejemplos; adaptar nombres de campos a cada dominio):
+
+• Publicación de “Escasez” en Conversión:
+  { SKU, StockVerificado, VentanaInicio, VentanaFin, Plaza, Canal, SLA — Service Level Agreement, PolíticaDeDevoluciones, Responsable, Evidencia }
+  Validaciones duras: StockVerificado > 0; VentanaFin > VentanaInicio; SLA acorde a promesa; Evidencia adjunta.
+
+• Activación “Exploit” en Póker:
+  { Modalidad, StackEfectivo, MuestraMinima, LeakConfirmado, Fase/ICM, PresetAnterior, Evidencia }
+  Validaciones duras: MuestraMinima ≥ umbral; LeakConfirmado con estadístico; coherencia con fase/ICM.
+
+• “Entrega garantizada” en Logística:
+  { Ruta, VentanaDespacho, Capacidad, SLA, InventarioAsignado, PlanDeContingencia, Evidencia }
+  Validaciones duras: Capacidad ≥ demanda; InventarioAsignado reservado; SLA y contingencia documentados.
+
+Criterio universal: Sin contrato completo + validaciones pasadas, el sistema bloquea la ejecución.
+
+──────────────────────────────────────────────────────────────────────────────
+5) INVARIANTES (globales y específicos de dominio)
+──────────────────────────────────────────────────────────────────────────────
+Globales (siempre activos):
+• Legalidad y ética; veracidad afirmada con evidencia.
+• Accesibilidad (contraste mínimo, subtítulos, texto alternativo cuando aplique).
+• Determinismo: entradas equivalentes producen decisiones equivalentes.
+• Trazabilidad: todo objeto tiene ID compuesto y versión.
+• Herencia: ningún hijo puede violar invariantes del padre.
+
+Ejemplos por dominio:
+• Conversión: Prohibido prometer sin palanca real; prohibido atribuir causalidad sin diseño de medición.
+• Logística: No se anuncian ventanas críticas si la confiabilidad (OTIF) está bajo umbral.
+• Póker: Gestión de banca obligatoria; coherencia matemática (pot odds e implied odds).
+• Storytelling: No se usan símbolos o claims que contradigan invariantes éticos de marca/obra.
+
+──────────────────────────────────────────────────────────────────────────────
+6) REGLAS SI–ENTONCES (bloqueos y garantías operativas)
+──────────────────────────────────────────────────────────────────────────────
+1) Si falta un campo obligatorio del contrato, entonces bloquear ejecución y devolver lista de faltantes.
+2) Si una decisión rompe un invariante (global o de dominio), entonces rechazar incluso si mejora una métrica local.
+3) Si la evidencia no alcanza el umbral mínimo, entonces no se promueve el cambio de preset y se mantiene el preset anterior.
+4) Si la métrica secundaria mejora a costa de colapsar la métrica faro, entonces revertir a preset previo y abrir diagnóstico.
+5) Si el canal o formato no cumple accesibilidad, entonces bloquear publicación del activo.
+6) Si el cuello de botella no está en el mensaje sino en disponibilidad (stock/distribución/precio), entonces priorizar corrección operativa antes de iterar creatividades.
+7) Si dos ciclos sucesivos no alcanzan objetivo, entonces convocar revisión de contrato e invariantes antes de reponderar pesos.
+
+──────────────────────────────────────────────────────────────────────────────
+7) PLANTILLA A–I APLICADA (ejemplo patrón único, neutro de dominio)
+──────────────────────────────────────────────────────────────────────────────
+Caso tipo: “Nicho X” (puede representar un segmento de mercado, una mesa de póker, una ruta logística o una escena narrativa).
+
+A) Propósito:
+   “Alcanzar Conversión≥C% en 14 días en la Plaza P y Canal K, manteniendo Accesibilidad y Veracidad, y sin violar OTIF logístico.”
+B) Invariantes:
+   Ética/legal, accesibilidad AA, promesas con palanca real, determinismo de decisión, trazabilidad por ID.
+C) Objetos:
+   Catálogo/Oferta, Palancas (Stock/Tiempo/Acceso/Distribución/Precio), Activos/Creatividades, Presets del Orquestador.
+D) Interfaces:
+   Entradas: { Brief, ContratoMínimo, MétricasPrevias, CapacidadOperativa }. 
+   Salidas: { EspecificaciónDeActivos, Reglas de Publicación, Plan de Medición, Reporte de Resultados }.
+E) Métrica faro:
+   Conversión (o bb/100, o OTIF, según el dominio donde se instancie).
+F) Validaciones duras:
+   Contrato completo; palanca verificada; accesibilidad OK; canal/formatos con “safe areas” definidos; evidencia mínima.
+G) Cadencia:
+   Semanal (plan–ejecución–medición–diagnóstico–ajuste).
+H) Aprendizaje:
+   Ajuste de presets; actualización de contratos; librería de patrones (qué funcionó, dónde y por qué).
+I) Trazabilidad:
+   ID = [Holding/Marca/Colección/País/Plaza/Estrato/Nicho/Orquestador/Mecanismo/Palanca/Canal/Formato/Activo]@v1.0
+   Bitácora con fecha, preset, cambios, validaciones, evidencia y resultados.
+
+──────────────────────────────────────────────────────────────────────────────
+8) MÉTRICAS: LOCAL VS SISTEMA Y AGREGACIÓN
+──────────────────────────────────────────────────────────────────────────────
+• Métrica faro local (una por nivel): ejemplo Conversión en Nicho; bb/100 en mesa; OTIF en ruta.
+• Métricas de sistema: ROIC — Return On Invested Capital; LTV/CAC — Lifetime Value / Customer Acquisition Cost; Margen; Liquidez.
+• Agregación ascendente: Instancia → Campaña/Módulo → Marca/Área → Sistema.
+• Gobernanza descendente: Objetivos y límites bajan sin contradicción a contratos locales.
+
+──────────────────────────────────────────────────────────────────────────────
+9) IDENTIFICADORES COMPUESTOS Y BITÁCORA MÍNIMA
+──────────────────────────────────────────────────────────────────────────────
+Esquema de ID (personalizable por dominio):
+• ID_OBJETO = [Padre/Hijo/Subhijo/.../Objeto]@vX.Y
+Ejemplos:
+• ID_ACTIVO = [H/Marca/Col/País/Plaza/Estrato/Nicho/Orq/Mec/Pal/Capa/Canal/Formato/SKU]@v1.2.3
+• ID_PRESET = [Dominio/Contexto/Dimensiones/NombrePreset]@v1.0
+• ID_DECISIÓN = [Fecha/Instancia/Entrada→Salida/Pesos]@v1.0
+
+Bitácora mínima por ciclo:
+{ ID, Contexto, Preset, Cambios, ValidacionesPasadas, Evidencia, Resultado, PróximaAcción }
+
+──────────────────────────────────────────────────────────────────────────────
+10) PROCEDIMIENTO OPERATIVO (P1–P9)
+──────────────────────────────────────────────────────────────────────────────
+P1. Declarar Propósito y Alcance (nivel y contexto donde se instancia).
+P2. Seleccionar Preset inicial (vector de pesos) y registrar ID_PRESET.
+P3. Completar Contrato mínimo (entradas/salidas y campos obligatorios).
+P4. Verificar Invariantes (globales y de dominio).
+P5. Ejecutar con Validaciones duras activas (bloqueos habilitados).
+P6. Medir Métrica faro y secundarias (telemetría confiable).
+P7. Diagnosticar cuellos de botella (mensaje vs palanca vs canal vs logística).
+P8. Reponderar Preset o bloquear/revertir; anotar evidencia y decisión.
+P9. Registrar en Bitácora (IDs, cambios, resultado, siguiente experimento).
+
+──────────────────────────────────────────────────────────────────────────────
+11) CHECKLIST DE PUBLICACIÓN (antes de “subir a producción”)
+──────────────────────────────────────────────────────────────────────────────
+[ ] Contrato completo y validado.
+[ ] Invariantes verificados (ética/legal/accesibilidad/veracidad).
+[ ] Preset seleccionado y documentado (pesos suman 1.0).
+[ ] Evidencia mínima instrumentada (métricas, eventos, etiquetas).
+[ ] Métrica faro definida y método de atribución acordado.
+[ ] Canales y formatos cumplen requisitos técnicos (incluye safe areas).
+[ ] Palancas reales verificadas cuando se prometen (stock/tiempo/acceso/distribución/precio).
+[ ] Plan de rollback y contingencia definido.
+[ ] IDs compuestos asignados y versioneado activado.
+[ ] Aprobación responsable registrada (quién, cuándo, por qué).
+
+──────────────────────────────────────────────────────────────────────────────
+12) ANTI-PATRONES (prohibidos)
+──────────────────────────────────────────────────────────────────────────────
+• Poesía sin prueba: afirmaciones no respaldadas por evidencia.
+• Violación de invariante por ganar una métrica local.
+• Explotación sin muestra suficiente (cambio de preset sin datos).
+• Confusión de niveles (atribuir al mensaje lo que es falla de palanca o logística).
+• Publicar activos sin accesibilidad o sin contrato mínimo completo.
+• Ausencia de trazabilidad (sin IDs y bitácora).
+
+──────────────────────────────────────────────────────────────────────────────
+13) MÓDULO DE MICRO-EJEMPLOS (misma forma, contenidos distintos)
+──────────────────────────────────────────────────────────────────────────────
+A) Negocio/Marketing → Nicho con SMCP:
+   Preset(AAS,NRS,EAS) = (0.45,0.35,0.20); Contrato de Escasez con stock/ventana; Métrica faro: Conversión; Bloqueo si OTIF < umbral.
+
+B) Logística → Ruta crítica:
+   Preset(Velocidad,Confiabilidad,...) = (0.50,0.30,0.20); Contrato “Entrega garantizada”; Métrica faro: OTIF; Bloqueo si InventarioAsignado no está reservado.
+
+C) Póker → Mesa 6-max:
+   Preset(GTO,EXP,Agresividad,Varianza,ICM) = (0.5,0.2,0.2,0.1,0.0); Contrato Exploit con muestra mínima; Métrica faro: bb/100; Bloqueo por banca.
+
+D) Storytelling → Escena:
+   Preset(Hook,Coherencia,Ritmo,Emoción,Claridad) balanceado; Contrato de escena (objetivo, símbolos, ritmo); Métrica faro: retención 3–10 segundos; Bloqueo por accesibilidad.
+
+──────────────────────────────────────────────────────────────────────────────
+14) GUÍA DE INSTANTIACIÓN RÁPIDA (cómo usar este archivo)
+──────────────────────────────────────────────────────────────────────────────
+1) Copiar este texto como archivo base del proyecto.
+2) Rellenar A–I en el nivel elegido (sistema/subsistema) con contenidos del dominio.
+3) Elegir Preset inicial y registrar su ID.
+4) Completar contratos y activar validaciones/bloqueos.
+5) Ejecutar un ciclo, medir, diagnosticar y reponderar si procede.
+6) Mantener bitácora y versiones para reproducibilidad y auditoría.
+
+FIN DEL ARTEFACTO (v1.0) — Este documento es autosuficiente: describe la forma (A–I), los contratos mínimos, las reglas de gobierno (Orquestador + si–entonces), la trazabilidad por IDs y el procedimiento operativo para instanciarlo en cualquier dominio sin dependencias externas.

@@ -1,0 +1,38 @@
+PROMPT — DESCRIPCIÓN PROFUNDA DE [proyecto de chatgpt que contiene este chat] (identidad + lógica + líneas de investigación)
+
+Propósito
+Quiero una narración técnica, clara y en profundidad que describa QUÉ ES y CÓMO FUNCIONA [proyecto de chatgpt que contiene este chat]. No repitas ni reformules este encargo; no listes requisitos; no describas la IDEA ni los artefactos que luego se analizarán. Usa únicamente lo visible en este chat (prompt/instrucciones/documentos locales). Redacta en el estilo nativo del proyecto: tono, estructura, marcas y convenciones propias.
+
+Encabezado obligatorio (dos líneas, cada una en su propia línea)
+Proyecto: <nombre exacto de [proyecto de chatgpt que contiene este chat]>
+Alcance: <qué cubre y qué NO cubre [proyecto de chatgpt que contiene este chat]>
+
+Estructura mínima (títulos fijos; narrativa libre y profunda en el estilo del proyecto)
+
+Introducción — Identidad y misión
+Describe la naturaleza del proyecto: qué es este proyecto, qué estudia/investiga o desarrolla, para quién crea valor y por qué existe. Explica su misión, su objetivo general y su enfoque (marco conceptual de alto nivel). Si el proyecto tiene un nombre canónico (p.ej., “Investment”), úsalo en esta sección.
+
+Cuerpo del proyecto — LÓGICA OPERATIVA (cómo procede)
+Explica cómo opera cuando procesa peticiones: cómo interpreta su propio prompt/instrucciones; qué criterios/dimensiones usa para leer problemas; qué reglas/umbrales aplica (si <condición> entonces <acción>); cómo trata ambigüedades y conflictos; qué fases atraviesa (p.ej., comprensión → organización → síntesis → verificación); cómo maneja errores o carencias de evidencia; qué forma de salida prefiere y por qué.
+
+Programa de investigación — QUÉ INVESTIGA (qué propone, qué NO, y cómo lo delimita)
+Detalla el objeto de estudio y las líneas de trabajo del proyecto:
+- Temas/Nichos principales (qué investiga/desarrolla) y subtemas.
+- Preguntas guía (qué intenta responder) y supuestos/hypótesis de partida.
+- Marcos/escuelas/metodologías que orientan la lectura (explica la lente).
+- Señales, variables o fuentes válidas que acepta (y cuáles excluye).
+- Criterios de inclusión/exclusión de casos (qué entra/qué queda fuera y por qué).
+- Entregables típicos (formatos, niveles de profundidad, destino de uso).
+- Límites temáticos y anti-objetivos (lo que explícitamente NO hace).
+
+Ejemplos operativos (en el estilo del proyecto)
+Incluye 2–3 ejemplos breves y concretos que muestren:
+- Un caso “camino feliz”: problema alineado con el objeto de estudio → decisión → salida típica.
+- Un caso limítrofe: tema relacionado pero fuera del alcance y cómo el proyecto lo trata (redirige, acota, rechaza).
+- (Opcional) Un caso con ambigüedad donde el proyecto explicita supuestos y qué evidencia faltaría.
+
+Notas de estilo
+- Prioriza contenido sustantivo sobre extensión vacía; evita frases genéricas.
+- Mantén consistencia terminológica; si introduces un término o línea de trabajo, úsalo igual el resto del texto.
+- Si algo no es visible en este chat, dilo tal cual (“No visible en este chat”) y continúa con lo que sí pueda afirmarse.
+- Responde como code snippet txt (solo texto plano).

@@ -1,0 +1,225 @@
+TÍTULO (autosuficiente): ARQUITECTURA DE CARTERA EN TRES CAPAS — NÚCLEO / PUENTES / ALAS BETA
+Versión del documento: 1.0 — Descripción exhaustiva, operacional y con ejemplos
+Nota de uso: Este texto es independiente; no requiere contexto previo. Está pensado para “pegar y funcionar” como base conceptual y operativa en cualquier proyecto de discusión financiera.
+
+──────────────────────────────────────────────────────────────────────────────
+0) IDEA MADRE (EN UNA FRASE)
+“Diseñar una cartera como un sistema con capas y contratos explícitos: una base que conserva (NÚCLEO), una bisagra que conecta de forma controlada (PUENTES) y un ala que acelera cuando conviene (ALAS BETA); las ganancias suben rápido, pero siempre regresan a la base.”
+
+Finalidad: proteger poder adquisitivo y estabilidad en entornos de inflación, devaluación, volatilidad e incertidumbre, sin renunciar a oportunidades de crecimiento.
+
+──────────────────────────────────────────────────────────────────────────────
+1) MARCO DE SISTEMAS: DOS NIVELES QUE NO SE DEBEN CONFUNDIR
+1.1 Nivel lingüístico (lo que cambia a menudo)
+    Qué es: el vocabulario e inventario de instrumentos: acciones, bonos, criptomonedas, fondos cotizados, etc.
+    Rasgo: mutable por naturaleza (nuevos ETF, nuevas emisoras, rotaciones sectoriales, modas).
+    Analogía: el “código” que editas todos los días.
+
+1.2 Nivel estructural (lo que debe permanecer estable)
+    Qué es: la arquitectura de la cartera, sus roles, reglas y umbrales; define para qué existe cada capa y cómo interactúan.
+    Rasgo: cambia poco; se actualiza cuando aprende (mejor conocimiento de tasas, inflación, correlaciones, liquidez).
+    Analogía: el “sistema operativo” y su orquestación; el código (instrumentos) sirve a esta arquitectura, no al revés.
+
+La traducción a inversión: separar claramente “QUÉ compro” (lingüístico) de “PARA QUÉ y CÓMO lo uso” (estructural).
+
+──────────────────────────────────────────────────────────────────────────────
+2) LA ARQUITECTURA: TRES CAPAS CON CONTRATOS
+2.1 Capa 1 — NÚCLEO (≈ 60% de la cartera)
+    Misión: Resguardar valor y estabilizar el sistema.
+    Amenazas objetivo: inflación, devaluación, choques de volatilidad, incertidumbre.
+    Criterios: baja volatilidad/β, liquidez suficiente, correlación contenida con renta variable.
+    Instrumentos prototípicos:
+      • Oro (exposición física o financiera).
+      • TIPS — Treasury Inflation-Protected Securities (bonos del Tesoro de Estados Unidos indexados a inflación).
+      • Efectivo / vehículos de liquidez (p. ej., money market o “SmartCash” en brokers locales).
+    Contratos de uso:
+      • No se usa para especular.
+      • Recibe ganancias realizadas desde “Alas Beta” y, en menor medida, desde “Puentes”.
+      • Mantiene un mínimo estructural (p. ej., 50–70%) que no se quiebra salvo evento extremo.
+
+2.2 Capa 2 — PUENTES (≈ 25% de la cartera)
+    Misión: Conectar el Núcleo con oportunidades temáticas/sectoriales en forma diversificada y con sensibilidad (β) controlada.
+    Instrumentos típicos:
+      • ETF sectoriales/temáticos (Exchange-Traded Fund: fondo cotizado que replica un índice o canasta).
+      • Bonos de vencimientos objetivo (para apuestas de curva y sensibilidad a tasas).
+      • Vehículos tokenizados con respaldo (p. ej., PAXG: oro tokenizado) como puente entre custodias.
+    Ventajas:
+      • Menor riesgo idiosincrático que una acción individual (diversificación interna).
+      • β (beta) generalmente cercana a un promedio ponderado de sus componentes.
+    Advertencias y matices:
+      • ETF apalancados (2x/3x) o inversos: amplifican movimientos y riesgo.
+      • ETF ultra-concentrados o con derivados (overlays): pueden elevar β.
+      • ETF equal-weight (igual ponderación): suelen aumentar β si sube el peso de small/mid caps.
+    Contratos de uso:
+      • Límites de posición por cada puente y por conjunto de puentes.
+      • Hipótesis documentada (por qué estar, qué invalida, cuándo reducir).
+      • Parte de las ganancias se transfiere periódicamente al Núcleo.
+
+2.3 Capa 3 — ALAS BETA (≈ 15% de la cartera)
+    Misión: Capturar aceleración —activos con β altas que se mueven rápido en entornos favorables— y repatriar ganancias al Núcleo.
+    Instrumentos típicos:
+      • Criptomonedas líquidas (ej.: LINK, AAVE) con movimientos amplificados.
+      • Acciones individuales de alta volatilidad (small caps, growth con catalizadores).
+    Contratos de uso:
+      • Porcentaje acotado “duro” (ej.: ≤15%). Si una tesis falla, el daño es limitado “por diseño”.
+      • Reglas explícitas de salida: stop-loss, take-profit, time-stop.
+      • “Ganar y volver al Núcleo”: cristalizar y consolidar.
+
+──────────────────────────────────────────────────────────────────────────────
+3) CONCEPTOS TÉCNICOS CLAVE (DEFINIDOS EN CASTELLANO)
+3.1 ETF — Exchange-Traded Fund
+    Definición: fondo que cotiza en bolsa y replica un índice/canasta (sectorial, temático, de factores, de bonos, etc.).
+    Propiedades:
+      • Diversificación automática dentro del tema/sector.
+      • Metodología de ponderación: por capitalización (cap-weighted) o igual ponderación (equal-weight).
+      • Riesgos: tracking error, costos, concentración, liquidez, apalancamiento/derivados cuando aplica.
+
+3.2 TIPS — Treasury Inflation-Protected Securities
+    Definición: bonos del Tesoro de EUA cuyo principal se ajusta por inflación (Índice de Precios al Consumidor de EUA).
+    Beneficio: protegen poder adquisitivo; combinan cupón con ajuste real.
+    Riesgos: sensibilidad a tasas reales; si suben tasas reales, su precio puede caer.
+
+3.3 Beta (β)
+    Definición: sensibilidad promedio del rendimiento de un activo respecto a un índice de referencia (p. ej., S&P 500).
+    Interpretación: β=1 se mueve similar al índice; β>1 amplifica; β<1 atenúa.
+    Uso en la arquitectura:
+      • Núcleo: busca β baja y correlaciones contenidas.
+      • Puentes: β moderada, controlada y conocida.
+      • Alas Beta: β altas por definición; solo con límites y reglas.
+
+3.4 Mecánica bono-tasas (intuición imprescindible)
+    Regla simple:
+      • Si la autoridad monetaria baja tasas, los bonos existentes con cupones “altos” ganan atractivo → suben de precio.
+      • Si sube tasas, esos bonos pierden atractivo → bajan de precio.
+    Consecuencia: la curva de rendimientos y el tipo de bono importan para posicionar defensivamente (TIPS) u oportunistamente (tramos específicos).
+
+──────────────────────────────────────────────────────────────────────────────
+4) POLÍTICAS OPERATIVAS (QUE HACEN QUE EL DISEÑO “VIVA”)
+4.1 Asignación objetivo (plantilla)
+    • Núcleo: 60% (rango de seguridad 50–70%).
+    • Puentes: 25% (rango 15–30%).
+    • Alas Beta: 15% (tope duro ≤15%; ideal 10–15%).
+    Notas:
+      – Es una guía; se valida vs métricas reales y se ajusta.
+      – La suma debe ser 100%; el efectivo dentro del Núcleo cuenta como parte de su porcentaje.
+
+4.2 Rebalanceo (dos vías)
+    • Periódico: mensual o trimestral según volatilidad del régimen.
+    • Por evento: decisiones de tasas (FOMC), shocks geopolíticos, volatilidad extrema (p. ej., VIX>umbral).
+    Reglas tipo:
+      – Si “Alas Beta” > 15% por apreciación, tomar beneficios y enviar excedente al Núcleo.
+      – Si “Puentes” pierden la tesis (invalidador disparado), reducir y reforzar Núcleo o rotar a otro puente.
+
+4.3 Flujo de ganancias (“de arriba hacia abajo”)
+    1) Las Alas capturan aceleración → venden parcial/total en objetivos → ganancias viajan al Núcleo.
+    2) Los Puentes, cuando maduran la tesis, también remiten parte de beneficios al Núcleo.
+    Resultado: el Núcleo engorda con el tiempo; el sistema se vuelve más robusto.
+
+4.4 Gestión del riesgo (plantilla práctica)
+    • Stop-loss por posición de Alas (p. ej., −8% a −15% según volatilidad).
+    • Take-profit escalonado (p. ej., +15%, +30%, +50%), con traslados al Núcleo.
+    • Time-stop: si la tesis no valida en X semanas/meses, revisar/reducir.
+    • Límite de correlaciones: evitar que Alas y Puentes sean, en la práctica, la misma apuesta duplicada.
+
+4.5 Métricas y tableros (KPI operativos)
+    • Drawdown máximo (cartera y Núcleo).
+    • Beta agregada por capa y total (estimada por regresión simple o proxies).
+    • Liquidez: % movilizable en 1–3 días sin impacto significativo.
+    • “Cobertura anti-inflación”: peso combinado TIPS + Oro vs expectativas de inflación.
+    • Eficiencia de Puentes: rendimiento/volatilidad frente a benchmark del sector.
+    • Convexidad capturada en Alas: beneficios netos realizados − pérdidas (rolling 3–6–12 meses).
+
+4.6 Diario de hipótesis (memoria estructural)
+    Para cada posición: Tesis (por qué), Invalidador (qué la mata), Gestión (stops/targets), Horizonte (tiempo), Relación con capas (por qué está en esa capa y no en otra).
+
+──────────────────────────────────────────────────────────────────────────────
+5) EJEMPLOS ILUSTRATIVOS (NO SON RECOMENDACIONES; SOLO MUESTRAN LA LÓGICA)
+5.1 Núcleo (prototipo)
+    • 25% Oro (vehículo líquido).
+    • 25% TIPS (mixto por vencimientos).
+    • 10% Efectivo de oportunidad (colchón y munición).
+    Expectativa: si el mercado accionario cae fuerte o sube la inflación implícita, la base amortigua.
+
+5.2 Puentes (prototipo)
+    • 10% ETF de mineras de oro (diversifica empresas de extracción).
+    • 10% ETF sectorial defensivo (salud o consumo básico).
+    • 5% Bono a 10 años (apuesta táctica de tasas cuando procede).
+    Expectativa: exponen a temas con β moderada y menos idiosincrasia que acciones sueltas.
+
+5.3 Alas Beta (prototipo)
+    • 8% Cripto líquidas de alta beta (ej.: LINK/AAVE con reglas de salida).
+    • 7% Acciones individuales volátiles (small cap con catalizador).
+    Expectativa: capturar tramos potentes; realizar y regresar al Núcleo.
+
+Flujo en un ciclo alcista:
+    – Alas suben → ventas parciales → Núcleo incrementa.
+Flujo en un ciclo bajista:
+    – Alas reducen por stops/time-stops; Puentes amortiguan; Núcleo sostiene.
+
+──────────────────────────────────────────────────────────────────────────────
+6) PLAYBOOKS DE EVENTO (QUÉ HACER CUANDO “ALGO PASA”)
+6.1 Decisión de tasas (comité monetario)
+    • Antes: medir β por capa; stress test sencillo con ±50 pb.
+    • Después (baja de tasas): revisar bonos/TIPS (beneficio de precio); evaluar reducir Puentes si rally se extiende; trasladar ganancia al Núcleo.
+    • Después (suba de tasas): vigilar caídas en bonos; reforzar tesis de Núcleo (oro/TIPS) si inflación no cede.
+
+6.2 Shock geopolítico o de volatilidad (p. ej., salto de VIX)
+    • Activar rebalanceo por evento; revisar stops en Alas; asegurar liquidez de Núcleo.
+    • Si la dislocación ofrece “precio”, entrar por Puentes con β moderada; nunca desvestir el Núcleo para apostar.
+
+6.3 Inflación sorpresa al alza
+    • Revaluar peso de TIPS/Oro; aumentar si la tasa real se mantiene contenida y la inflación implícita sube.
+    • Evitar Alas altamente sensibles si no hay soporte de flujo.
+
+──────────────────────────────────────────────────────────────────────────────
+7) MINI-ALGORITMOS (PSEUDOCÓDIGO) PARA AUTOMATIZAR DISCIPLINA
+7.1 Rebalanceo por bandas
+    if peso_Alas > 0.15: vender_exceso(); transferir(Núcleo)
+    if peso_Núcleo < 0.50: redirigir_beneficios_hacia(Núcleo)
+    if pérdida_posición_Alas <= -0.10: ejecutar_stop(); registrar_diario()
+
+7.2 Gestión de beneficios escalonada
+    for target in [0.15, 0.30, 0.50]:
+        if rendimiento_posición >= target:
+            vender_parcial(25%); transferir(Núcleo); elevar_stop()
+
+7.3 Diario de hipótesis automático
+    on_nueva_posición:
+        guardar({tesis, invalidador, stop, targets, capa, horizonte})
+    on_evento_importante:
+        anexar({evento, impacto, acción_tomada})
+
+──────────────────────────────────────────────────────────────────────────────
+8) GLOSARIO (DEFINICIONES CLARAS EN CASTELLANO)
+    • ETF (Exchange-Traded Fund): fondo que cotiza en bolsa y replica un índice o canasta (sector, tema, factor, bonos); facilita diversificación inmediata.
+    • TIPS (Treasury Inflation-Protected Securities): bonos del Tesoro de EUA que ajustan su principal por inflación; ayudan a preservar poder adquisitivo.
+    • Beta (β): medida de sensibilidad del rendimiento de un activo respecto a un índice; >1 amplifica; <1 atenúa.
+    • Drawdown: caída desde un máximo previo hasta un mínimo posterior; mide pérdida potencial en un tramo.
+    • Equal-weight: metodología de índice/ETF que asigna pesos iguales a cada componente; suele aumentar exposición a small/mid caps.
+    • Apalancado/inverso (ETF): instrumento diseñado para multiplicar (o invertir) el movimiento diario del índice; más riesgo y dependencia del camino (path-dependency).
+    • Liquidez: facilidad para comprar/vender sin mover demasiado el precio; vital en estrés.
+
+──────────────────────────────────────────────────────────────────────────────
+9) PRINCIPIOS QUE NUNCA ROMPER
+    1) El Núcleo no se toca para especular.
+    2) Las Alas Beta jamás superan su tope; si crecen por apreciación, se recorta y se envía al Núcleo.
+    3) Todo puente tiene hipótesis, invalidador y calendario de revisión.
+    4) Las ganancias viajan hacia abajo (Alas → Puentes → Núcleo), no al revés.
+    5) Liquidez planificada: el efectivo es parte de la estrategia, no un residuo.
+
+──────────────────────────────────────────────────────────────────────────────
+10) LÍNEAS DE TRABAJO (CÓMO PROFUNDIZAR SIN CAMBIAR LA ESENCIA)
+    • Catálogo elegible por capa: lista viva con criterios de entrada/salida y métricas mínimas (liquidez, costos, dispersión).
+    • Backtesting simple: simular “ganancias → Núcleo” vs “quedarse en Alas” y medir drawdowns y estabilidad.
+    • Tablero de control: beta por capa, drawdown, liquidez, “cobertura anti-inflación”, y cronograma de eventos macro.
+    • Protocolos de evento: plantillas para FOMC (comité de tasas), sorpresa inflacionaria, shock geopolítico.
+
+──────────────────────────────────────────────────────────────────────────────
+11) CIERRE (QUÉ HACE ÚNICO A ESTE ENFOQUE)
+No es una lista de activos. Es una coreografía:
+    • NÚCLEO = preserva y estabiliza.
+    • PUENTES = conectan oportunidades con disciplina y β controlada.
+    • ALAS BETA = aceleran cuando el viento sopla a favor, pero regresan ganancias a casa.
+La arquitectura NO depende de adivinar siempre; depende de resistir siempre y de capturar cuando corresponde, consolidando lo ganado en la base. Ese es el verdadero motor de la robustez.
+
+(Descargo general: esto es un marco educativo y operativo. No constituye asesoría financiera personalizada. Los ejemplos son ilustrativos; cada lector debe evaluar regulación local, costos, impuestos, perfil de riesgo y horizonte temporal antes de implementar.)

@@ -1,0 +1,41 @@
+TITLE: COMPANY CODE — Cognitive Artifact System for Code Generation, Analysis, and Materialization
+SUBTITLE: Complete theoretical and operational framework of the ChatGPT project that contains this conversation
+
+OVERVIEW
+This project defines a deterministic, auditable ecosystem for handling software repositories as “artifacts” — textual representations of codebases in JSONL format — and transforming them through a reproducible three-phase cycle: **Generation → Analysis → Materialization**.  
+Its goal is to establish a rigorous standard that allows ChatGPT (as GPT-5) and the human operator to collaborate on codebases **without ever sharing or exposing entire repositories or secrets**, yet with full parity, traceability, and reversibility of every change.
+
+The system formalizes a bidirectional process:
+- **From code to artifact:** converting a repository into a structured, line-by-line JSONL inventory.
+- **From artifact to insight:** analyzing that JSONL to produce reports, diagnostics, and improvement plans.
+- **From artifact back to code:** reconstructing (“materializing”) the original or a refined project.
+
+This structure makes the project both a **theoretical framework** and an **operational protocol** for cognitive cooperation between human and model in software reasoning.
+
+------------------------------------------------------------
+SECTION 1 — ARCHITECTURAL PHILOSOPHY
+------------------------------------------------------------
+1.1 Fundamental principles
+- **Evidence-only:** All transformations operate strictly on textual evidence within the artifact; speculation is forbidden.
+- **Determinism:** Identical input artifact → identical output report or materialized code.
+- **Provenance:** Every action must be traceable; outputs reference line ranges and file paths.
+- **Round-trip symmetry:** A project can move freely between text files ↔ JSONL artifacts without information loss (except intentionally excluded binaries or secrets).
+- **Reproducibility:** Anyone following the same steps should obtain identical results, ensuring auditability and version-control compatibility.
+
+1.2 Conceptual lineage
+The framework extends “Cognitive Node” theory: every project becomes a node (CNode) with clear **interfaces**, **invariants**, and **provenance**.  
+Within this ChatGPT environment, each node can be analyzed, refactored, or re-materialized as a self-contained unit, enabling “cognitive graph” composition — i.e., a network of interoperable, always-integratable modules.
+
+------------------------------------------------------------
+SECTION 2 — THE THREE MAIN PHASES
+------------------------------------------------------------
+2.1 GENERATION (artifact-description.txt)
+Purpose: to extract a repository into an **artifact**—a `.artifact.jsonl` file.
+
+Each line of the artifact contains:
+```json
+{
+  "path": "src/module/file.ts",
+  "kind": "text",
+  "content": "... full UTF-8 source code ..."
+}

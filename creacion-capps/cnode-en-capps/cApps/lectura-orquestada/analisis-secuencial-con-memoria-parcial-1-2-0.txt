@@ -1,0 +1,263 @@
+# CNode: capps/lo4q-an-seq-deep (Lectura Orquestada 4Q — Análisis Secuencial con Memoria Parcial, Versión Profunda) @1.2.0
+# Propósito: Ejecutar un intake por pasos (IMG+Proyecto → P2 → P3 → P4), almacenar MEMORIAS PARCIALES por paso y
+# sintetizar SOLO al final un "code snippet txt" EXHAUSTIVO con dos planos obligatorios:
+# (A) Blueprint profundo del PROYECTO ANALIZADOR (A, B, C, …) y
+# (B) Descripción del PROYECTO EN LAS IMÁGENES visto "a través de los ojos" del analizador,
+# incluyendo un CROSSWALK formal (mapeo IMG→POV del analizador), escenarios, decisiones y limitaciones.
+
+id: "cnode:capps/lo4q-an-seq-deep@1.2.0"
+title: "cApp: Lectura Orquestada 4Q — Análisis Secuencial Profundo (LO4Q-AN-SEQ-DEEP)"
+version: "1.2.0"
+owner: "usuario"
+license: "internal-use"
+status: "stable"
+
+# ---------- CONTEXTO ----------
+context:
+  problem: >
+    Las salidas superficiales no sirven como referencia. Se requiere una síntesis final con dos planos acoplados:
+    (A) un blueprint exhaustivo del proyecto analizador (objetivos, alcance, arquitectura, estados, políticas),
+    y (B) una traducción rigurosa de lo que muestran las imágenes al lenguaje y criterios del analizador,
+    con mapeos explícitos, implicaciones y decisiones operativas.
+  intent: >
+    Orquestar, por proyecto, la recolección secuencial de insumos (IMG+PROYECTO → P2 → P3 → P4), crear memorias parciales,
+    y generar un "code snippet txt" canónico y profundo que integre ambos planos con trazabilidad completa.
+  success_criteria:
+    - "El snippet final incluye los DOS PLANOS completos (Analizador y Visto a través del Analizador)."
+    - "Existe un CROSSWALK IMG→POV con entradas mínimas y referencias de procedencia."
+    - "Cada sección supera umbrales de detalle (palabras mínimas) y contiene etiquetas de provenance."
+    - "El lenguaje es técnico y autosuficiente; no hay resúmenes genéricos."
+
+# ---------- INTERFAZ (EXPORT SURFACE) ----------
+provides:
+  - name: "lo4q-an-seq-deep.snippet"
+    version: "1.0.0"
+    types_used: ["DeepSynopsis"]
+    description: "Code snippet TXT por proyecto con blueprint del analizador + interpretación profunda de las imágenes bajo ese POV."
+requires:
+  - name: "user.step_inputs"
+    version_range: ">=1.0.0"
+    types_expected: ["ProjectName","Array<Image>|'sin imágenes'","AnswerP2","AnswerP3","AnswerP4"]
+    optional: false
+  - name: "chat.context"
+    version_range: ">=1.0.0"
+    types_expected: ["ProjectContext"]
+    optional: true
+
+types:
+  ProjectName: { format: "string", min_length: 1 }
+  Image: { mime: ["image/png","image/jpeg","image/webp"] }
+  AnswerP2: { format: "text/plain", min_words: 120, describes: "definición + objetivo central + alcance (qué sí/qué no)" }
+  AnswerP3: { format: "text/plain", min_words: 180, describes: "flujo de trabajo, estados, entradas, salidas, reglas e invariantes" }
+  AnswerP4: { format: "text/plain", min_words: 220, describes: "punto de vista, arquitectura, políticas y reencuadre al proyecto/chat actual" }
+  ProjectContext: { fields: ["prompt_global?:string","archivos_de_proyecto?:string[]"] }
+  MemoryPartial: { fields: [ "project", "kind('IMG'|'P2'|'P3'|'P4')", "payload", "hash", "timestamp" ] }
+  CrosswalkRow:
+    fields: [ "img_anchor", "img_evidence", "analyzer_concept", "rule_or_policy", "implication", "provenance(['IMG','P2','P3','P4'])" ]
+  DeepSynopsis:
+    fields:
+      - title: "string"
+      - project: "string"
+      - analyzer_blueprint: "string"               # Plano A
+      - images_through_pov: "string"               # Plano B
+      - crosswalk_table: "string"                  # Tabla formateada
+      - operating_scenarios: "string"
+      - assumptions_limits: "string"
+      - risks_open_questions: "string"
+      - glossary_aliases: "string"
+      - provenance: "string"
+
+# ---------- POLÍTICAS E INVARIANTES ----------
+policies:
+  evidence_only: true
+  deterministic: true
+  provenance: true
+  merge_policy:
+    upsert_only: true
+    conflict: "prefer-specificity"
+    id_collision: "namespaced-rename"
+    provenance: "record"
+invariants:
+  - "P1 no se solicita (P1 = P2)."
+  - "Un único insumo por paso; se rechazan paquetes múltiples."
+  - "El snippet final debe contener ambos planos (A y B) y una tabla CROSSWALK."
+  - "Cada sección incluye etiquetas de procedencia [IMG]/[P2]/[P3]/[P4] cuando corresponda."
+  - "El idioma sigue el del usuario; se evitan abreviaturas sin definir."
+fitness_tests:
+  - name: "memorias_completas"
+    check: "exists(MEM[IMG]) AND exists(MEM[P2]) AND exists(MEM[P3]) AND exists(MEM[P4])"
+  - name: "umbrales_detalle_por_seccion"
+    check: |
+      words(A.analyzer_blueprint) >= 400 AND
+      words(B.images_through_pov) >= 400 AND
+      rows(CROSSWALK) >= max(5, min(12, detected_img_anchors))
+  - name: "cobertura_provenance"
+    check: "todas las secciones contienen marcas [IMG]/[P2]/[P3]/[P4] y cada fila del CROSSWALK incluye 'provenance'"
+  - name: "punto_de_vista_explicito"
+    check: "analyzer_blueprint menciona 'este proyecto/chat actual' y expone políticas y reglas del analizador"
+  - name: "consistencia_glosario"
+    check: "los términos usados en CROSSWALK aparecen normalizados en 'glossary_aliases'"
+
+# ---------- ORQUESTADOR (SECUENCIAL CON MEMORIA PARCIAL) ----------
+orchestrator:
+  states:
+    - IDLE
+    - INTRO
+    - STEP_IMG_PROJECT
+    - STEP_P2
+    - STEP_P3
+    - STEP_P4
+    - READY_TO_SYNTH
+    - SYNTHESIZE_DEEP
+    - EMIT
+    - END
+  transitions:
+    - from: IDLE
+      to: INTRO
+      on: "invoke('inicia proceso de lectura orquestada')"
+      say: |
+        LO4Q-AN-SEQ-DEEP: Analizaré tu proyecto en cuatro pasos con memorias parciales.
+        Produzco un documento profundo con (A) blueprint del analizador y (B) lectura de imágenes bajo ese POV.
+    - from: INTRO
+      to: STEP_IMG_PROJECT
+      on: "auto"
+      say: |
+        Paso 1 — Envía NOMBRE DEL PROYECTO y 0–N IMÁGENES.
+        Formato:
+        [PROYECTO] <nombre>
+        [IMG] <adjuntos>  (o escribe: sin imágenes)
+    - from: STEP_IMG_PROJECT
+      to: STEP_P2
+      guard: "ProjectName.length>=1 AND (images_count>=0)"
+      do: "save_memory(kind='IMG', project, payload={imgs or 'sin imágenes'});"
+      say: |
+        Registrado [IMG] del proyecto {project}.
+        Paso 2 — Envía únicamente la RESPUESTA A LA PREGUNTA 2 (definición, objetivo, alcance).
+        Formato:
+        [P2]
+        <tu texto>
+    - from: STEP_P2
+      to: STEP_P3
+      guard: "words(P2)>=120"
+      do: "save_memory(kind='P2', project, payload=P2);"
+      say: |
+        P2 registrada.
+        Paso 3 — Envía únicamente la RESPUESTA A LA PREGUNTA 3 (flujo, estados, reglas).
+        Formato:
+        [P3]
+        <tu texto>
+    - from: STEP_P3
+      to: STEP_P4
+      guard: "words(P3)>=180"
+      do: "save_memory(kind='P3', project, payload=P3);"
+      say: |
+        P3 registrada.
+        Paso 4 — Envía únicamente la RESPUESTA A LA PREGUNTA 4 (punto de vista, arquitectura, políticas, reencuadre).
+        Formato:
+        [P4]
+        <tu texto>
+    - from: STEP_P4
+      to: READY_TO_SYNTH
+      guard: "words(P4)>=220"
+      do: "save_memory(kind='P4', project, payload=P4);"
+      say: "P4 registrada. Validando memorias y preparando síntesis profunda…"
+    - from: READY_TO_SYNTH
+      to: SYNTHESIZE_DEEP
+      guard: "fitness('memorias_completas')"
+      do: "extract_concepts(); align_terms(); build_crosswalk(); detect_implications(); provenance_map();"
+      say: "Memorias completas. Sintetizando documento profundo con ambos planos…"
+    - from: SYNTHESIZE_DEEP
+      to: EMIT
+      do: "generate_deep_snippet(project, MEM[IMG], MEM[P2], MEM[P3], MEM[P4]);"
+      emit: "DeepSynopsis"
+      say: "Aquí tienes el code snippet txt profundo del proyecto {project}."
+    - from: EMIT
+      to: END
+      on: "auto"
+      say: "Proceso finalizado para {project}. Repite el comando para otro proyecto cuando desees."
+  errors:
+    - code: "MISSING_PROJECT"
+      when: "ProjectName vacío"
+      say: "Falta el nombre del proyecto. Envía [PROYECTO] <nombre>."
+    - code: "INPUT_TOO_SHORT"
+      when: "P2<120 palabras o P3<180 o P4<220"
+      say: "La respuesta es muy corta. Amplíala con ejemplos y reglas concretas."
+    - code: "OUT_OF_SEQUENCE"
+      when: "el usuario envía P3 antes que P2, etc."
+      say: "Mantén el orden del flujo. Ahora toca {step_actual}."
+    - code: "DEPTH_TEST_FAIL"
+      when: "falla umbrales_detalle_por_seccion o faltan filas CROSSWALK"
+      say: "La síntesis no alcanza la profundidad requerida. Se solicitarán ampliaciones específicas."
+
+# ---------- PLANTILLAS DE SÍNTESIS (SNIPPET PROFUNDO) ----------
+templates:
+  deep_snippet_txt: |
+    # {ProjectName} — Documento de Referencia Profundo (LO4Q-AN-SEQ-DEEP)
+
+    ## Plano A — Blueprint del PROYECTO ANALIZADOR  [fuente: [P2] + [P3] + [P4]]
+    ### A.1 Identidad, objetivo y alcance
+    {A_identity_scope}   # >=120 palabras, define objetivo, límites y métricas de éxito. [P2][P4]
+    ### A.2 Arquitectura y componentes (módulos, puertos, políticas)
+    {A_architecture_components}   # describe módulos, entradas/salidas, políticas de evidencia, invariantes. [P3][P4]
+    ### A.3 Máquina de estados y reglas operativas
+    {A_state_machine_rules}   # estados, transiciones, validaciones, errores y recuperación. [P3]
+    ### A.4 Datos y modelos (tipos, normalización, alias)
+    {A_data_models}   # tipos canónicos, alias/glosario, mapeos de términos. [P3][P4]
+    ### A.5 Supuestos y límites del analizador
+    {A_assumptions_limits}    # condiciones de validez y exclusiones. [P4]
+
+    ## Plano B — Proyecto de las IMÁGENES visto a través del POV del analizador  [fuente: [IMG] + [P2] + [P3] + [P4]]
+    ### B.1 Lectura detallada de evidencias en imágenes
+    {B_image_reading}   # describe lo observado y su relevancia bajo el POV. [IMG]
+    ### B.2 Traducción al lenguaje del analizador (criterios y prioridades)
+    {B_translation_criteria}  # cómo el analizador prioriza, clasifica y decide. [P4]
+    ### B.3 CROSSWALK IMG→POV (mapeo formal con implicaciones)
+    {B_crosswalk_table} # tabla obligatoria (>=5 filas): img_anchor | evidencia | concepto_analizador | regla/política | implicación | provenance
+    ### B.4 Escenarios operativos y decisiones resultantes
+    {B_operating_scenarios}  # casos “si-entonces”, umbrales, rutas de acción. [P3][P4]
+
+    ## Riesgos y preguntas abiertas
+    {risks_open_questions}
+
+    ## Glosario y alias (normalizados)
+    {glossary_aliases}
+
+    ---
+    **Provenance**: {provenance_tags}   # ej.: [P2]=secc. A.1; [P3]=A.3,B.4; [P4]=A.2,A.5,B.2; [IMG]=B.1,CROSSWALK.
+
+# ---------- REGLAS DE SÍNTESIS Y CRUZADO (CROSSWALK) ----------
+synthesis_rules:
+  - "El CROSSWALK debe tener al menos 5 filas y cubrir los anchors principales detectados en imágenes."
+  - "Cada fila incluye: img_anchor, evidencia concreta, concepto del analizador, regla/política asociada, implicación operativa, provenance."
+  - "Si no hay imágenes (modo 'sin imágenes'), la sección B.1 explica la ausencia y B.3 incluye un CROSSWALK mínimo basado en descripciones textuales."
+  - "El plano A siempre antecede al B; las decisiones del B deben referenciar reglas del A."
+  - "Los términos usados en CROSSWALK deben aparecer en 'glossary_aliases' con su forma canónica."
+
+# ---------- PROVENANCE Y MEMORIAS PARCIALES ----------
+provenance:
+  record:
+    - "project_name"
+    - "mem_partials: ['IMG','P2','P3','P4'] con hashes y timestamps"
+    - "words_count: {p2,p3,p4}"
+    - "crosswalk_stats: {rows, anchors_detected}"
+  emit:
+    - "lo4q-an-seq-deep.report.json": >
+        { project:"{ProjectName}",
+          words:{p2:W2,p3:W3,p4:W4},
+          mem:{IMG:exists, P2:exists, P3:exists, P4:exists},
+          crosswalk:{rows:R, anchors:A},
+          checks:{memorias_completas:OK, umbrales_detalle_por_seccion:OK, cobertura_provenance:OK,
+                  punto_de_vista_explicito:OK, consistencia_glosario:OK} }
+
+# ---------- INVOCACIÓN ----------
+invocation:
+  command: "inicia proceso de lectura orquestada"
+  description: "Arranca el flujo secuencial profundo con memorias parciales y síntesis de dos planos + crosswalk."
+
+# ---------- NOTAS ----------
+notes:
+  - "Este CNode endurece profundidad con umbrales por sección; si no se alcanzan, falla con DEPTH_TEST_FAIL."
+  - "Repite el comando por cada proyecto para obtener documentos homogéneos y comparables."
+  - "El CROSSWALK es obligatorio incluso con pocas imágenes; captura la lógica de traducción IMG→POV."
+
+# ---------- FIN DEL CNODE ----------

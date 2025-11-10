@@ -1,0 +1,302 @@
+# CNode: capps/lo4q-an-seq-deep (Lectura Orquestada 4Q — Análisis Secuencial Profundo con Context Lock) @1.3.0
+# Propósito: Ejecutar un intake por pasos (IMG+Proyecto → P2 → P3 → P4), con BLOQUEO DE CONTEXTO al inicio,
+# memorias parciales por paso y, solo al final, un "code snippet txt" EXHAUSTIVO con:
+# (A) Blueprint del PROYECTO ANALIZADOR (A, B, C, …) y (B) lectura del PROYECTO EN LAS IMÁGENES “a través de los ojos” del analizador,
+# incluyendo un CROSSWALK IMG→POV con implicaciones operativas y trazabilidad.
+
+id: "cnode:capps/lo4q-an-seq-deep@1.3.0"
+title: "cApp: Lectura Orquestada 4Q — Análisis Secuencial Profundo (CON CONTEXT LOCK)"
+version: "1.3.0"
+owner: "usuario"
+license: "internal-use"
+status: "stable"
+
+# ---------- CONTEXTO ----------
+context:
+  problem: >
+    El asistente pedía insumos sin entender el marco teórico ni la redacción de las preguntas. Esto generaba salidas superficiales
+    y poco trazables. Se requiere fijar (bloquear) el contexto, guiar el intake paso a paso, validar semánticamente cada respuesta
+    y producir un documento profundo con dos planos y un crosswalk obligatorio.
+  intent: >
+    Al invocar la cApp, se presenta un “Context Lock” (propósito, alcance y Catálogo de Preguntas). Tras la confirmación del usuario,
+    la cApp recolecta IMG+PROYECTO → P2 → P3 → P4 (P1 = P2), guarda memorias parciales y, cumplidos los tests de profundidad,
+    emite un code snippet txt exhaustivo, comparable entre proyectos.
+  success_criteria:
+    - "El usuario confirma el Context Lock antes de iniciar."
+    - "Se captura una única entrada por paso, con memoria parcial etiquetada [IMG]/[P2]/[P3]/[P4]."
+    - "Validaciones semánticas por pregunta (no solo longitud)."
+    - "Salida con Plano A (analizador), Plano B (imágenes vistas con el POV del analizador) y CROSSWALK (≥5 filas)."
+    - "Todas las secciones con etiquetas de procedencia y glosario normalizado."
+
+# ---------- INTERFAZ ----------
+provides:
+  - name: "lo4q-an-seq-deep.snippet"
+    version: "1.0.0"
+    types_used: ["DeepSynopsis"]
+    description: "Documento profundo por proyecto: blueprint del analizador + lectura de imágenes bajo ese POV + crosswalk."
+requires:
+  - name: "user.step_inputs"
+    version_range: ">=1.0.0"
+    types_expected: ["ProjectName","Array<Image>|'sin imágenes'","AnswerP2","AnswerP3","AnswerP4"]
+    optional: false
+  - name: "chat.context"
+    version_range: ">=1.0.0"
+    types_expected: ["ProjectContext"]
+    optional: true
+
+types:
+  ProjectName: { format: "string", min_length: 1 }
+  Image: { mime: ["image/png","image/jpeg","image/webp"] }
+  # Catálogo de Preguntas (redacciones canónicas)
+  QuestionCatalog:
+    P2: "Describe detallada y profundamente lo que entiendes del proyecto mostrado en las IMÁGENES. Usa el mayor número de tokens razonable. Incluye: definición del proyecto, objetivo central y alcance (qué sí/qué no)."
+    P3: "Genera un code snippet txt más profundo aún: flujo de trabajo, estados, entradas, salidas, reglas, invariantes y políticas. Debe ser autosuficiente."
+    P4: "Corrige y reencuadra: describe el MARCO TEÓRICO desde el cual este chat/proyecto actual comprende el proyecto de las imágenes (punto de vista, arquitectura del analizador, políticas y límites)."
+  AnswerP2: { format: "text/plain", min_words: 140 }
+  AnswerP3: { format: "text/plain", min_words: 200 }
+  AnswerP4: { format: "text/plain", min_words: 240 }
+  ProjectContext: { fields: ["prompt_global?:string","archivos_de_proyecto?:string[]"] }
+  MemoryPartial: { fields: [ "project", "kind('IMG'|'P2'|'P3'|'P4')", "payload", "hash", "timestamp" ] }
+  CrosswalkRow:
+    fields: [ "img_anchor", "img_evidence", "analyzer_concept", "rule_or_policy", "implication", "provenance(['IMG','P2','P3','P4'])" ]
+  DeepSynopsis:
+    fields:
+      - title: "string"
+      - project: "string"
+      - analyzer_blueprint: "string"          # Plano A
+      - images_through_pov: "string"          # Plano B
+      - crosswalk_table: "string"
+      - operating_scenarios: "string"
+      - assumptions_limits: "string"
+      - risks_open_questions: "string"
+      - glossary_aliases: "string"
+      - provenance: "string"
+
+# ---------- POLÍTICAS, INVARIANTES Y COMANDOS ----------
+policies:
+  evidence_only: true
+  deterministic: true
+  provenance: true
+  merge_policy: { upsert_only: true, conflict: "prefer-specificity", id_collision: "namespaced-rename", provenance: "record" }
+invariants:
+  - "P1 no se solicita: P1 = P2."
+  - "Se pide un único insumo por paso; se rechazan paquetes múltiples."
+  - "El documento final DEBE contener Plano A, Plano B y CROSSWALK (≥5 filas)."
+  - "Todas las secciones llevan etiquetas [IMG]/[P2]/[P3]/[P4] cuando corresponda."
+commands:
+  - "mostrar estado"       # imprime memorias parciales presentes y paso actual
+  - "repetir pregunta"     # reimprime la redacción canónica de la pregunta del paso actual
+  - "corregir paso <P2|P3|P4|IMG>"  # sobrescribe memoria parcial
+  - "cambiar proyecto"     # cierra sesión actual y reinicia en INTRO
+
+# ---------- VALIDACIONES SEMÁNTICAS ----------
+validators:
+  P2_semantic: >
+    Debe contener (a) definición del proyecto analizador, (b) objetivo central, (c) alcance (qué sí/qué no).
+    Falla si cualquiera de los tres está ausente.
+  P3_semantic: >
+    Debe describir (a) flujo/estados, (b) entradas/salidas, (c) reglas/invariantes/políticas.
+    Falla si falta alguno.
+  P4_semantic: >
+    Debe exponer (a) punto de vista del analizador, (b) arquitectura y políticas, (c) mención explícita a
+    “este proyecto/chat actual” y (d) límites. Falla si falta alguno.
+
+fitness_tests:
+  - name: "memorias_completas"
+    check: "exists(MEM[IMG]) AND exists(MEM[P2]) AND exists(MEM[P3]) AND exists(MEM[P4])"
+  - name: "umbrales_detalle_por_seccion"
+    check: |
+      words(A.analyzer_blueprint) >= 450 AND
+      words(B.images_through_pov) >= 450 AND
+      rows(CROSSWALK) >= max(5, min(12, detected_img_anchors))
+  - name: "cobertura_provenance"
+    check: "todas las secciones contienen marcas [IMG]/[P2]/[P3]/[P4] y cada fila del CROSSWALK incluye 'provenance'"
+  - name: "punto_de_vista_explicito"
+    check: "A.analyzer_blueprint y B.images_through_pov mencionan 'este proyecto/chat actual'"
+  - name: "consistencia_glosario"
+    check: "términos del CROSSWALK existen en 'glossary_aliases' con forma canónica"
+  - name: "semantica_ok"
+    check: "validators.P2_semantic && validators.P3_semantic && validators.P4_semantic"
+
+# ---------- ORQUESTADOR (SECUENCIAL CON CONTEXT LOCK) ----------
+orchestrator:
+  states:
+    - IDLE
+    - INTRO
+    - CONTEXT_LOCK
+    - STEP_IMG_PROJECT
+    - STEP_P2
+    - STEP_P3
+    - STEP_P4
+    - READY_TO_SYNTH
+    - SYNTHESIZE_DEEP
+    - EMIT
+    - END
+  transitions:
+    # Disparadores aceptados
+    - from: IDLE
+      to: INTRO
+      on: "invoke('inicia proceso de lectura orquestada') OR invoke('inicia proceso análisis secuencial con memoria parcial')"
+      say: |
+        LO4Q-AN-SEQ-DEEP: Analizaré tu proyecto en 4 pasos con memorias parciales y emitiré un documento profundo (2 planos + crosswalk).
+    - from: INTRO
+      to: CONTEXT_LOCK
+      on: "auto"
+      say: |
+        CONTEXT LOCK — Marco de operación de esta cApp
+        • Propósito: analizar respuestas previas (P2, P3, P4) + imágenes para un proyecto y generar un documento de referencia profundo.
+        • Nota: P1 = P2, por diseño no se solicita P1.
+        • Catálogo de Preguntas:
+          P2 → {QuestionCatalog.P2}
+          P3 → {QuestionCatalog.P3}
+          P4 → {QuestionCatalog.P4}
+        Responde: "Entendido" para continuar o "Ajusta el contexto: <cambios>".
+    - from: CONTEXT_LOCK
+      to: STEP_IMG_PROJECT
+      guard: "user_confirms~/Entendido/i"
+      say: |
+        Paso 1 — Envía NOMBRE DEL PROYECTO y 0–N IMÁGENES.
+        Formato:
+        [PROYECTO] <nombre>
+        [IMG] <adjuntos>  (o escribe: sin imágenes)
+    - from: STEP_IMG_PROJECT
+      to: STEP_P2
+      guard: "ProjectName.length>=1 AND (images_count>=0)"
+      do: "save_memory(kind='IMG', project, payload={imgs or 'sin imágenes'}); emit_hypotheses_from_images();"
+      say: |
+        Registrado [IMG] del proyecto {project}. Anchors preliminares listos.
+        Paso 2 — (P2) {QuestionCatalog.P2}
+        Formato:
+        [P2]
+        <tu texto>
+    - from: STEP_P2
+      to: STEP_P3
+      guard: "words(P2)>=140 AND validators.P2_semantic"
+      do: "save_memory(kind='P2', project, payload=P2);"
+      say: |
+        P2 registrada. 
+        Paso 3 — (P3) {QuestionCatalog.P3}
+        Formato:
+        [P3]
+        <tu texto>
+    - from: STEP_P3
+      to: STEP_P4
+      guard: "words(P3)>=200 AND validators.P3_semantic"
+      do: "save_memory(kind='P3', project, payload=P3);"
+      say: |
+        P3 registrada.
+        Paso 4 — (P4) {QuestionCatalog.P4}
+        Formato:
+        [P4]
+        <tu texto>
+    - from: STEP_P4
+      to: READY_TO_SYNTH
+      guard: "words(P4)>=240 AND validators.P4_semantic"
+      do: "save_memory(kind='P4', project, payload=P4);"
+      say: "P4 registrada. Validando memorias y profundidad requerida…"
+    - from: READY_TO_SYNTH
+      to: SYNTHESIZE_DEEP
+      guard: "fitness('memorias_completas')"
+      do: "extract_concepts(); align_terms(); build_crosswalk(); detect_implications(); provenance_map();"
+      say: "Memorias completas. Sintetizando documento profundo (2 planos + crosswalk)…"
+    - from: SYNTHESIZE_DEEP
+      to: EMIT
+      guard: "fitness('umbrales_detalle_por_seccion') AND fitness('cobertura_provenance') AND fitness('punto_de_vista_explicito') AND fitness('consistencia_glosario') AND fitness('semantica_ok')"
+      do: "generate_deep_snippet(project, MEM[IMG], MEM[P2], MEM[P3], MEM[P4]);"
+      emit: "DeepSynopsis"
+      say: "Aquí tienes el code snippet txt profundo del proyecto {project}."
+    - from: EMIT
+      to: END
+      on: "auto"
+      say: "Proceso finalizado para {project}. Usa 'cambiar proyecto' para iniciar otro."
+  errors:
+    - code: "MISSING_PROJECT"
+      when: "ProjectName vacío"
+      say: "Falta el nombre del proyecto. Envía [PROYECTO] <nombre>."
+    - code: "INPUT_TOO_SHORT"
+      when: "P2<140 palabras o P3<200 o P4<240"
+      say: "La respuesta es corta. Amplía con los elementos semánticos exigidos y vuelve a enviarla."
+    - code: "SEMANTIC_FAIL"
+      when: "algún validador semántico falla"
+      say: "Faltan elementos obligatorios en tu respuesta. Indica lo que falta según la definición del paso actual."
+    - code: "OUT_OF_SEQUENCE"
+      when: "el usuario envía P3 antes que P2, etc."
+      say: "Mantén el orden del flujo. Ahora toca {step_actual}."
+    - code: "DEPTH_TEST_FAIL"
+      when: "no se alcanzan umbrales o falta crosswalk"
+      say: "La síntesis no cumple los mínimos de profundidad. Se pedirán ampliaciones puntuales."
+
+# ---------- PLANTILLA DE SALIDA (DOCUMENTO PROFUNDO) ----------
+templates:
+  deep_snippet_txt: |
+    # {ProjectName} — Documento de Referencia Profundo (LO4Q-AN-SEQ-DEEP)
+
+    ## Plano A — Blueprint del PROYECTO ANALIZADOR  [fuente: [P2] + [P3] + [P4]]
+    ### A.1 Identidad, objetivo y alcance
+    {A_identity_scope}   # ≥140 palabras. [P2][P4]
+    ### A.2 Arquitectura y componentes (módulos, puertos, políticas)
+    {A_architecture_components}   # módulos, entradas/salidas, políticas de evidencia e invariantes. [P3][P4]
+    ### A.3 Máquina de estados y reglas operativas
+    {A_state_machine_rules}   # estados, transiciones, validaciones, errores, recuperación. [P3]
+    ### A.4 Datos y modelos (tipos, normalización, alias)
+    {A_data_models}   # tipos canónicos, alias/glosario, mapeos de términos. [P3][P4]
+    ### A.5 Supuestos y límites del analizador
+    {A_assumptions_limits}    # condiciones de validez y exclusiones. [P4]
+
+    ## Plano B — Proyecto de las IMÁGENES visto con el POV del analizador  [fuente: [IMG] + [P2] + [P3] + [P4]]
+    ### B.1 Lectura de evidencias en imágenes (anchors y relevancia)
+    {B_image_reading}   # ≥200 palabras. [IMG]
+    ### B.2 Traducción al lenguaje del analizador (criterios y prioridades)
+    {B_translation_criteria}  # cómo el analizador prioriza, clasifica y decide. [P4]
+    ### B.3 CROSSWALK IMG→POV (mapeo formal con implicaciones)
+    {B_crosswalk_table} # tabla (≥5 filas): img_anchor | evidencia | concepto_analizador | regla/política | implicación | provenance
+    ### B.4 Escenarios operativos y decisiones resultantes
+    {B_operating_scenarios}  # casos “si–entonces”, umbrales, rutas de acción. [P3][P4]
+
+    ## Riesgos y preguntas abiertas
+    {risks_open_questions}
+
+    ## Glosario y alias (normalizados)
+    {glossary_aliases}
+
+    ---
+    **Provenance**: {provenance_tags}   # [P2]=A.1; [P3]=A.3,B.4; [P4]=A.2,A.5,B.2; [IMG]=B.1,B.3.
+
+# ---------- REGLAS DE SÍNTESIS Y CROSSWALK ----------
+synthesis_rules:
+  - "El Plano A antecede al Plano B; las decisiones de B referencian reglas de A."
+  - "El CROSSWALK cubre los anchors principales detectados; cada fila tiene implicación operativa y ‘provenance’."
+  - "Si hay ‘sin imágenes’, B.1 explica límites y B.3 incluye un crosswalk mínimo derivado de texto."
+  - "Todos los términos del crosswalk aparecen en el glosario con forma canónica y alias conocidos."
+  - "La salida evita abreviaturas no definidas y mantiene tono técnico."
+
+# ---------- PROVENANCE Y MEMORIAS ----------
+provenance:
+  record:
+    - "project_name"
+    - "mem_partials: ['IMG','P2','P3','P4'] con hashes y timestamps"
+    - "words_count: {p2,p3,p4}"
+    - "crosswalk_stats: {rows, anchors_detected}"
+  emit:
+    - "lo4q-an-seq-deep.report.json": >
+        { project:"{ProjectName}",
+          words:{p2:W2,p3:W3,p4:W4},
+          mem:{IMG:exists,P2:exists,P3:exists,P4:exists},
+          crosswalk:{rows:R,anchors:A},
+          checks:{memorias_completas:OK,umbrales_detalle_por_seccion:OK,cobertura_provenance:OK,
+                  punto_de_vista_explicito:OK,consistencia_glosario:OK,semantica_ok:OK} }
+
+# ---------- INVOCACIÓN ----------
+invocation:
+  commands:
+    - "inicia proceso de lectura orquestada"
+    - "inicia proceso análisis secuencial con memoria parcial"
+  description: "Arranca el flujo con Context Lock, intake secuencial, memorias parciales y síntesis profunda (2 planos + crosswalk)."
+
+# ---------- NOTAS ----------
+notes:
+  - "Usa 'mostrar estado', 'repetir pregunta', 'corregir paso <...>' o 'cambiar proyecto' según necesites."
+  - "Si un paso falla semánticamente, la cApp devuelve instrucciones precisas de ampliación antes de continuar."
+  - "Repite la invocación para crear documentos homogéneos por proyecto y poder compararlos después."
+
+# ---------- FIN DEL CNODE ----------

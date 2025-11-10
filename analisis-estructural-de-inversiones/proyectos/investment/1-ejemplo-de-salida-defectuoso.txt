@@ -1,0 +1,98 @@
+ID: LO4Q-AN-SEQ → Proyecto "Investment"
+MODO: Análisis secuencial con memoria parcial (IMG → P2 → P3 → P4)
+ESTADO: COMPLETO (todas las memorias parciales presentes)
+
+────────────────────────────────────────────────────────────────
+A) RESUMEN EJECUTIVO
+────────────────────────────────────────────────────────────────
+Este proyecto une dos capas:
+1) Capa TEÓRICA (libreta): metáfora raíz, niveles (lingüístico ↔ estructural), y una arquitectura de cartera en tres zonas: NÚCLEO (≥60%), PUENTES (~25%), ALAS BETA (≤15%).
+2) Capa OPERATIVA (ChatGPT Project): un entorno con prompt global y archivos donde se ejecuta un flujo determinista para capturar evidencia, producir explicaciones autosuficientes y mantener trazabilidad.
+
+Salida deseada: textos auditables y reutilizables que expliquen causas y mecanismos (no solo precios), listos para pegar en proyectos “vacíos”.
+
+────────────────────────────────────────────────────────────────
+B) MEMORIA CONSOLIDADA (lo que quedó guardado)
+────────────────────────────────────────────────────────────────
+[IMG] 10 páginas manuscritas:
+  • Niveles: Lingüístico = instrumentos (acciones, bonos, criptomonedas, fondos cotizados en bolsa “ETF”, FIBRAS). Estructural = arquitectura, reglas, conocimiento del sistema.
+  • Cartera: NÚCLEO (oro, bonos protegidos contra inflación “TIPS”, SmartCash GBM), PUENTES (ETF sectoriales, PAXG, bono 10y), ALAS BETA (LINK, AAVE, WWR).
+  • Claves: precio de bonos ↔ decisiones de tasa de interés de la Reserva Federal; beta de ETF vs acciones; notas sobre concentración, “equal-weight”, apalancados.
+
+[P2] Code-snippet de entendimiento (máxima longitud):
+  • Traducción de la libreta a un marco explícito: sensores macro (tasa real, índice del dólar “DXY”, expectativas inflacionarias “breakevens”, encuestas de manufactura “PMI/ISM”, diferenciales “spreads”, flujos), reglas de defensa, escenarios A/B/C, proceso operativo paso a paso.
+
+[P3] Code-snippet autosuficiente para lectores externos:
+  • Exposición completa: metáfora “invertir = gobernar un sistema en capas”, pesos con bandas, taxonomía de betas (VTIP→SCHP→TIP→Oro→Plata/Platino→Miners→Cripto), checklist de rebalanceo y gestión de riesgo.
+
+[P4] Descripción del PROYECTO DE CHATGPT:
+  • Qué es este proyecto, cómo usa el prompt global, cómo trata los archivos como evidencia, y cómo conecta la teoría de la libreta con análisis empírico reproducible.
+
+────────────────────────────────────────────────────────────────
+C) MODELO UNIFICADO (ontología mínima de trabajo)
+────────────────────────────────────────────────────────────────
+Términos:
+- Activo: {ticker, clase, beta_relativa, rol (núcleo|puente|ala), drivers[]}
+- Driver Macro: {nombre, definición, métrica, fuente, dirección esperada}
+- Regla: {condición, acción, justificación}
+- Escenario: {nombre, supuestos, señales, implicaciones, candidatos_por_zona}
+- Evidencia: {tipo (pdf|imagen|tabla), origen, fecha, resumen, referencias}
+
+Relaciones:
+- Activo ↔ drivers (muchos-a-muchos).
+- Regla consume drivers y produce acción sobre Activo o Zona.
+- Escenario agrega Reglas; cada Zona prioriza Activos según objetivos.
+
+────────────────────────────────────────────────────────────────
+D) PLAYBOOK OPERATIVO (reutilizable en proyectos “vacíos”)
+────────────────────────────────────────────────────────────────
+1. INIT
+   - Cargar prompt global y este “snippet de síntesis”.
+   - Activar flujo LO4Q-AN-SEQ si se desea repetir el proceso.
+
+2. INGESTA
+   - Recibir [IMG] (0–N imágenes) y registrar Metáfora/Niveles/Zonas.
+   - Registrar [P2], [P3], [P4] como evidencia textual.
+
+3. MAPEO
+   - Construir lista de SENSORES macro iniciales: {tasa real, DXY, breakevens, PMI/ISM, spreads de crédito, flujos}.
+   - Vincular cada sensor a Zonas:
+     • Núcleo: sensibilidad baja; objetivos: preservación de valor y liquidez.
+     • Puentes: sensibilidad media; objetivos: exposición temática diversificada.
+     • Alas beta: sensibilidad alta; objetivos: crecimiento de capital.
+
+4. REGLAS (ejemplos canónicos)
+   - Si tasa de interés a 10 años ↓ y expectativas de inflación ↑ → favorecer TIPS/oro (núcleo).
+   - Si diferenciales de crédito se estrechan y manufactura se expande → ganar beta vía ETF sectoriales (puentes).
+   - Si liquidez global ↑ y volatilidad implícita ↓ → ventanas tácticas en cripto/“junior miners” (alas).
+
+5. ESCENARIOS (plantilla)
+   - A) Recortes de tasas: Núcleo neutral-positivo; Puentes pro-cíclicos; Alas con ventanas.
+   - B) Refugio global: Núcleo fuerte (oro/TIPS); Puentes defensivos; Alas reducidas.
+   - C) Política monetaria restrictiva (“hawkish”): Núcleo defensivo; Puentes selectivos; Alas en pausa.
+
+6. SALIDAS
+   - Texto técnico autosuficiente (“code snippet txt”) con:
+     • Diagnóstico Estructural (qué manda el movimiento).
+     • Implicaciones por Zona (núcleo/puentes/alas) y ejemplos.
+     • Reglas activas hoy y próximos validadores (qué datos mirar).
+
+────────────────────────────────────────────────────────────────
+E) CHECKLIST DE CALIDAD (para cada entrega)
+────────────────────────────────────────────────────────────────
+[ ] Acrónimos explicados en primera mención.  
+[ ] Separación Lingüístico vs Estructural explícita.  
+[ ] Evidencia citada/resumida (si hay archivos).  
+[ ] Reglas con condición → acción → justificación.  
+[ ] Escenarios con señales verificables.  
+[ ] Riesgos y límites (qué invalidaría la tesis).  
+
+────────────────────────────────────────────────────────────────
+F) PRÓXIMOS PASOS SUGERIDOS
+────────────────────────────────────────────────────────────────
+• Materializar los SENSORES como tabla viva (fuentes y rangos “zonas semáforo”).  
+• Especificar bandas cuantitativas por Zona (ej.: Núcleo 60–75%, Puentes 15–30%, Alas 5–15%).  
+• Añadir un anexo de “perfiles de activos” (por rol y beta) y mapeo de sustitutos.  
+• Preparar plantilla de “cierre semanal” con evidencia y cambios de reglas.
+
+FIN — Este bloque puede pegarse tal cual en un proyecto vacío para replicar el flujo LO4Q-AN-SEQ y mantener el mismo estándar de calidad y trazabilidad.

@@ -1,0 +1,260 @@
+# CNode: capps/lo4q-an-seq-deep-files @1.4.2
+# Intake SECUENCIAL con archivos adjuntos obligatorios (P2.txt, P3.txt, P4.txt) + imágenes opcionales.
+# Endurece reglas: NO_AUTOWRITE_INPUTS, ONLY_FILE_ALLOWED, NO_EARLY_OUTPUT, SESSION_LOCK (siempre nueva sesión),
+# nombres exactos de archivo y errores explícitos. Mantiene el CONTEXT LOCK con PREGUNTAS EXACTAS.
+
+id: "cnode:capps/lo4q-an-seq-deep-files@1.4.2"
+title: "cApp: Análisis Secuencial Profundo (archivos por paso + preguntas exactas)"
+version: "1.4.2"
+owner: "usuario"
+status: "stable"
+
+# ---------- CONTEXTO ----------
+context:
+  problem: >
+    En algunas ejecuciones el asistente redactó P2 automáticamente tras recibir imágenes. Se requiere bloquear el comportamiento:
+    solo se aceptan respuestas P2/P3/P4 como archivos .txt provistos por el usuario, con nombres y mínimos definidos.
+  intent: >
+    Presentar un CONTEXT LOCK con propósito, nota P1=P2 y el Catálogo de Preguntas EXACTAS; luego ejecutar intake por pasos:
+    [IMG+PROYECTO] → [P2.txt] → [P3.txt] → [P4.txt]; almacenar memorias parciales; y sintetizar un code snippet txt exhaustivo.
+  success_criteria:
+    - "Context Lock confirmado por el usuario."
+    - "Acepta y valida adjuntos .txt (no vacíos, ≥ umbral) para P2, P3 y P4, con nombres exactos."
+    - "Salida con Plano A (analizador), Plano B (imágenes ‘a través de’ ese POV) y CROSSWALK (≥5 filas), con provenance."
+    - "Ninguna salida de contenido (snippets) antes del estado EMIT."
+
+# ---------- INTERFAZ ----------
+provides:
+  - name: "deep.snippet"
+    version: "1.0.0"
+    types_used: ["DeepSynopsis"]
+
+requires:
+  - name: "user.inputs"
+    version_range: ">=1.0.0"
+    types_expected: ["ProjectName","Array<Image>|'sin imágenes'","FileP2","FileP3","FileP4"]
+
+types:
+  ProjectName: { format: "string", min_length: 1 }
+  Image: { mime: ["image/png","image/jpeg","image/webp"] }
+
+  # === Catálogo de Preguntas (REDACCIONES EXACTAS) ===
+  QuestionCatalog:
+    P1: "Quiero que me digas qué entiendes de este proyecto. Da una descripción detallada, en profundidad, aumentada, usa el mayor número de tokens posible para responder."
+    P2: "quiero que me des un code snippet txt de la descripción de lo que entiendes del proyecto que te envié en las imagenes de mi libreta. Quiero que la descripción sea detallada, profunda, extendida, usa el mayor número posible de tokens. Considera que en distintos proyectos enviaré las mismas imágenes de mi libreta y les pediré que hagas un code snippet txt con el entendimiento, igual que el que te pido ahora (de hecho, en todos seguiré el mismo procedimiento: enviaré las imagenes y después esta misma pregunta). Lo que quiero es analizar la idea que desarrollé en mi libreta desde varios puntos de vista distintos (por eso la enviaré en varios proyectos)."
+    P3: "Ahora, quiero que me des un code snippet txt lo más profundo, detallado y explicativo que te lo permita tu programación en el que describas con lujo de detalle, ejemplos, y sin dejar nada libre lo que entiendes de este proyecto. Considera que tu respuesta será copiada y pegada en un proyecto que no tiene idea de lo que hemos estudiado en este proyecto, así que tu descripción debe ser autosuficiente, conteniendo todo lo que necesita para entenderse, sin necesitar de nada más del exterior. En cada proyecto en el que pegué la pregunta anterior, pegaré también esta pregunta. La respuesta que des será copiada en un chat del nuevo proyecto, que estoy construyendo con el fin de nutrir la discusión"
+    P4: "Cometí un error. En la pregunta anterior no fui claro, el proyecto que quiero que describas es el de chatGPT en el que estamos trabajando, no el que describo en mi libreta, lo que quiero es mostrar el marco teórico desde el cual se está comprendiendo el proyecto de inversiones, es decir, el proyecto actual de chatgpt en el que se encuentra este chat, el cual tiene un prompt global y también archivos de proyecto (no en todos, pero si este es el caso, entonces revísalos para responder)"
+
+  # === Archivos por paso (nombres exactos) ===
+  FileP2: { mime: ["text/plain"], min_words: 140, role: "P2", name: "P2.txt" }
+  FileP3: { mime: ["text/plain"], min_words: 200, role: "P3", name: "P3.txt" }
+  FileP4: { mime: ["text/plain"], min_words: 240, role: "P4", name: "P4.txt" }
+
+  # === Estructuras internas ===
+  MemoryPartial: { fields: ["project","kind('IMG'|'P2'|'P3'|'P4')","payload_ref","hash","timestamp","filename?"] }
+  CrosswalkRow:
+    fields: ["img_anchor","img_evidence","analyzer_concept","rule_or_policy","implication","provenance(['IMG','P2','P3','P4'])"]
+  DeepSynopsis:
+    fields: ["title","project","analyzer_blueprint","images_through_pov","crosswalk_table",
+             "operating_scenarios","assumptions_limits","risks_open_questions","glossary_aliases","provenance"]
+
+# ---------- POLÍTICAS / INVARIANTES ----------
+policies: { evidence_only: true, deterministic: true, provenance: true }
+session:
+  mode: "NEW_ONLY"      # siempre es una sesión nueva
+  confirm: false        # no preguntar “¿nuevo o continuar?”
+invariants:
+  - "P1 NO se solicita por separado (P1 = P2)."
+  - "Un único insumo por paso; .txt obligatorios para P2, P3, P4."
+  - "NO_AUTOWRITE_INPUTS: el asistente tiene prohibido redactar, reescribir o inferir P2/P3/P4; solo se aceptan como archivos adjuntos del usuario."
+  - "ONLY_FILE_ALLOWED: en los pasos P2/P3/P4 no se aceptan textos pegados, enlaces o descripciones; únicamente archivo .txt con nombre exacto."
+  - "NO_EARLY_OUTPUT: el asistente no emite ningún 'code snippet txt' (salvo mensajes de control/errores) antes del estado EMIT."
+  - "Las imágenes solo fijan el dominio base a analizar; el POV lo fija P4 (proyecto analizador)."
+  - "Salida con Plano A, Plano B y CROSSWALK (≥5 filas) + etiquetas [IMG]/[P2]/[P3]/[P4]."
+
+# ---------- VALIDACIONES SEMÁNTICAS / TESTS ----------
+validators:
+  P2_semantic: "Debe incluir definición del proyecto analizador, objetivo central y alcance (qué sí/qué no)."
+  P3_semantic: "Debe incluir flujo/estados; entradas/salidas; reglas, invariantes y políticas."
+  P4_semantic: "Debe exponer POV del analizador, arquitectura/políticas, límites y mención explícita a 'este proyecto/chat actual'."
+
+fitness_tests:
+  - id: "memorias_completas"
+    check: "exists(MEM[IMG]) AND exists(MEM[P2]) AND exists(MEM[P3]) AND exists(MEM[P4])"
+  - id: "umbrales_detalle"
+    check: "words(A)>=450 AND words(B)>=450 AND rows(CROSSWALK)>=5"
+  - id: "provenance_ok"
+    check: "todas las secciones/fila tienen [IMG]/[P2]/[P3]/[P4] donde aplique"
+  - id: "semantica_ok"
+    check: "validators.P2_semantic && validators.P3_semantic && validators.P4_semantic"
+  - id: "reject_text_as_p2"
+    given_state: "STEP_P2"
+    input: "texto largo sin archivo"
+    expect: "ERROR:ONLY_FILE_ALLOWED AND state==STEP_P2"
+  - id: "reject_self_authored_p2"
+    given_state: "STEP_P2"
+    action_by_assistant: "intenta generar P2 en un bloque de texto"
+    expect: "VIOLATION:NO_AUTOWRITE_INPUTS AND state==STEP_P2"
+
+# ---------- UI / ENTRADAS LEGALES ----------
+legal_inputs:
+  STEP_IMG: ["images[]", "sin imágenes"]                 # Solo adjuntos de imagen o la frase literal "sin imágenes".
+  STEP_P2:  ["file:text/plain:name=P2.txt"]              # Estrictamente archivo .txt llamado P2.txt.
+  STEP_P3:  ["file:text/plain:name=P3.txt"]
+  STEP_P4:  ["file:text/plain:name=P4.txt"]
+
+say_templates:
+  ask_img: "Paso 1 — Envía [PROYECTO] <nombre> y 0–N [IMG]. Si no usarás imágenes, escribe 'sin imágenes'."
+  ask_p2:  "Adjunta **P2.txt** como archivo (.txt). No escribas el contenido aquí. Si no tienes el archivo, detén el flujo."
+  ask_p3:  "Adjunta **P3.txt** como archivo (.txt)."
+  ask_p4:  "Adjunta **P4.txt** como archivo (.txt)."
+
+# ---------- ORQUESTADOR ----------
+orchestrator:
+  states: [IDLE, INTRO, CONTEXT_LOCK, STEP_IMG, STEP_P2, STEP_P3, STEP_P4, READY, SYNTH, EMIT, END]
+  transitions:
+    - from: IDLE
+      to: INTRO
+      on: "invoke('inicia proceso de lectura orquestada') OR invoke('inicia proceso análisis secuencial con memoria parcial')"
+      say: "Inicia flujo con Context Lock y memorias parciales (IMG → P2.txt → P3.txt → P4.txt)."
+
+    - from: INTRO
+      to: CONTEXT_LOCK
+      on: "auto"
+      say: |
+        CONTEXT LOCK — Marco de operación (v1.4.2)
+        • Propósito: analizar respuestas previas (P2, P3, P4) + imágenes para un proyecto (punto de vista) y generar un documento profundo, trazable y comparable.
+        • Nota: P1 se identifica con P2; no se solicita P1 por separado.
+        • Catálogo de Preguntas (redacciones exactas):
+          P2 → {QuestionCatalog.P2}
+          P3 → {QuestionCatalog.P3}
+          P4 → {QuestionCatalog.P4}
+        Si estás de acuerdo con este Context Lock, responde: “Entendido”.
+        Si deseas cambiar algo, escribe: “Ajusta el contexto: <cambios>”.
+
+    - from: CONTEXT_LOCK
+      to: STEP_IMG
+      guard: "user_confirms~/Entendido/i"
+      say: "{say_templates.ask_img}"
+
+    - from: STEP_IMG
+      to: STEP_P2
+      guard: "ProjectName.length>=1 AND images_count>=0"
+      do: "save_memory(kind='IMG', payload_ref=imgs_or_none)"
+      say: "Registrado [IMG]. {say_templates.ask_p2}"
+      on_invalid_input: "ERROR:ONLY_ATTACHMENTS_ALLOWED -- En este paso solo acepto imágenes o 'sin imágenes'."
+
+    - from: STEP_P2
+      to: STEP_P3
+      guard: "has_file AND file.name=='P2.txt' AND file.type=='text/plain' AND words(file)>=140 AND validators.P2_semantic"
+      do: "save_memory(kind='P2', payload_ref=file, filename, hash)"
+      say: "P2 almacenada. {say_templates.ask_p3}"
+      on_missing_file: "ERROR:MISSING_FILE -- Debes adjuntar P2.txt como archivo de texto."
+      on_wrong_type: "ERROR:WRONG_TYPE -- Solo se acepta .txt (text/plain) para P2."
+      on_wrong_name: "ERROR:WRONG_NAME -- El archivo debe llamarse exactamente 'P2.txt'."
+      on_text_instead_of_file: "ERROR:ONLY_FILE_ALLOWED -- No puedo usar texto pegado; requiero el archivo P2.txt."
+
+    - from: STEP_P3
+      to: STEP_P4
+      guard: "has_file AND file.name=='P3.txt' AND file.type=='text/plain' AND words(file)>=200 AND validators.P3_semantic"
+      do: "save_memory(kind='P3', payload_ref=file, filename, hash)"
+      say: "P3 almacenada. {say_templates.ask_p4}"
+      on_missing_file: "ERROR:MISSING_FILE -- Debes adjuntar P3.txt como archivo de texto."
+      on_wrong_type: "ERROR:WRONG_TYPE -- Solo se acepta .txt (text/plain) para P3."
+      on_wrong_name: "ERROR:WRONG_NAME -- El archivo debe llamarse exactamente 'P3.txt'."
+      on_text_instead_of_file: "ERROR:ONLY_FILE_ALLOWED -- No puedo usar texto pegado; requiero el archivo P3.txt."
+
+    - from: STEP_P4
+      to: READY
+      guard: "has_file AND file.name=='P4.txt' AND file.type=='text/plain' AND words(file)>=240 AND validators.P4_semantic"
+      do: "save_memory(kind='P4', payload_ref=file, filename, hash)"
+      say: "P4 almacenada. Validando memorias y profundidad…"
+      on_missing_file: "ERROR:MISSING_FILE -- Debes adjuntar P4.txt como archivo de texto."
+      on_wrong_type: "ERROR:WRONG_TYPE -- Solo se acepta .txt (text/plain) para P4."
+      on_wrong_name: "ERROR:WRONG_NAME -- El archivo debe llamarse exactamente 'P4.txt'."
+      on_text_instead_of_file: "ERROR:ONLY_FILE_ALLOWED -- No puedo usar texto pegado; requiero el archivo P4.txt."
+
+    - from: READY
+      to: SYNTH
+      guard: "fitness('memorias_completas')"
+      do: "extract_concepts(); align_terms(); build_crosswalk(); detect_implications(); provenance_map();"
+      say: "Memorias completas. Sintetizando documento profundo…"
+      block_early_output: true   # refuerza NO_EARLY_OUTPUT
+
+    - from: SYNTH
+      to: EMIT
+      guard: "fitness('umbrales_detalle') AND fitness('provenance_ok') AND fitness('semantica_ok')"
+      do: "generate_deep_snippet(project, MEM[IMG], MEM[P2], MEM[P3], MEM[P4])"
+      emit: "DeepSynopsis"
+      say: "Aquí tienes el code snippet txt del proyecto {project} (POV + lectura de imágenes)."
+
+    - from: EMIT
+      to: END
+      on: "auto"
+      say: "Fin para {project}. Repite el comando para otro proyecto."
+
+  errors:
+    - code: "BAD_FILE_TYPE"
+      when: "archivo no es text/plain"
+      say: "Adjunta un .txt plano para este paso."
+    - code: "INPUT_TOO_SHORT"
+      when: "P2<140 || P3<200 || P4<240"
+      say: "El archivo es muy corto. Amplía según los criterios del paso."
+    - code: "OUT_OF_SEQUENCE"
+      when: "se intenta adjuntar P3 antes de P2, etc."
+      say: "Mantén el orden: IMG → P2.txt → P3.txt → P4.txt."
+    - code: "ONLY_FILE_ALLOWED"
+      when: "el usuario escribe texto en un paso que requiere archivo"
+      say: "Este paso solo acepta archivo .txt con nombre exacto; no puedo usar texto pegado."
+    - code: "WRONG_NAME"
+      when: "el nombre del archivo no coincide con el requerido"
+      say: "Usa el nombre exacto del archivo solicitado para este paso."
+    - code: "VIOLATION:NO_AUTOWRITE_INPUTS"
+      when: "el asistente intenta redactar P2/P3/P4"
+      say: "Prohibido: los insumos deben provenir del archivo adjunto del usuario."
+
+# ---------- PLANTILLA DE SALIDA ----------
+templates:
+  deep_snippet_txt: |
+    # {ProjectName} — Documento de Referencia Profundo (LO4Q-AN-SEQ-DEEP)
+
+    ## Plano A — Blueprint del PROYECTO ANALIZADOR  [fuente: [P2]+[P3]+[P4]]
+    ### A.1 Identidad, objetivo, alcance  [P2][P4]
+    {A_identity_scope}
+    ### A.2 Arquitectura y componentes (módulos/puertos/políticas)  [P3][P4]
+    {A_architecture_components}
+    ### A.3 Máquina de estados y reglas operativas  [P3]
+    {A_state_machine_rules}
+    ### A.4 Datos y modelos (tipos, normalización, alias)  [P3][P4]
+    {A_data_models}
+    ### A.5 Supuestos y límites del analizador  [P4]
+    {A_assumptions_limits}
+
+    ## Plano B — Proyecto de las IMÁGENES visto con el POV del analizador  [IMG]+[P2]+[P3]+[P4]
+    ### B.1 Evidencias y anchors en imágenes  [IMG]
+    {B_image_reading}
+    ### B.2 Traducción al lenguaje del analizador (criterios/prioridades)  [P4]
+    {B_translation_criteria}
+    ### B.3 CROSSWALK IMG→POV (≥5 filas)  [IMG][P2][P3][P4]
+    {B_crosswalk_table}
+    ### B.4 Escenarios operativos y decisiones resultantes  [P3][P4]
+    {B_operating_scenarios}
+
+    ## Riesgos y preguntas abiertas
+    {risks_open_questions}
+    ## Glosario y alias (normalizados)
+    {glossary_aliases}
+    ---
+    **Provenance**: {provenance_tags}  # archivos (nombre+hash) y referencias [IMG]/[P2]/[P3]/[P4].
+
+# ---------- INVOCACIÓN ----------
+invocation:
+  commands: ["inicia proceso de lectura orquestada","inicia proceso análisis secuencial con memoria parcial"]
+  description: "Arranca Context Lock con PREGUNTAS EXACTAS, intake secuencial de IMG+P2.txt+P3.txt+P4.txt y síntesis profunda."
+
+# ---------- NOTAS ----------
+notes:
+  - "Usa 'mostrar estado', 'repetir pregunta', 'corregir paso <...>' o 'cambiar proyecto' según necesites."
+  - "P1 se considera idéntica a P2; por eso no se pide P1 de forma separada."
+  - "El CROSSWALK es obligatorio incluso con pocas imágenes; si hay ‘sin imágenes’, se documentan límites y se usa evidencia textual."
+# ---------- FIN DEL CNODE ----------

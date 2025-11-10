@@ -1,0 +1,133 @@
+TÍTULO: MARCO TEÓRICO Y ESTRUCTURAL DEL PROYECTO “LENGUAJE CORPORAL” — SISTEMA DE NODOS COGNITIVOS Y CREACIÓN DETERMINISTA DE CONOCIMIENTO
+
+Versión: 1.0 — Descripción total y autosuficiente del proyecto ChatGPT en el que se encuentra este chat
+
+──────────────────────────────────────────────────────────────────────────────
+0) PROPÓSITO GENERAL DEL PROYECTO
+El proyecto “LENGUAJE CORPORAL” no es una simple conversación con un modelo de lenguaje; es un entorno cognitivo estructurado cuyo fin es **estudiar cómo la inteligencia artificial puede generar, organizar y refinar conocimiento de manera determinista, trazable y auditable**, a través de entidades llamadas **Nodos Cognitivos (CNodes)**.  
+Cada CNode funciona como una célula viva de conocimiento: recibe insumos (textos, código, archivos), los transforma siguiendo reglas explícitas (principios de evidencia, trazabilidad y reproducibilidad) y devuelve una versión refinada, siempre con pruebas de procedencia.  
+
+El sistema se concibe como una **arquitectura de pensamiento codificada**, en la que los textos, los análisis, los algoritmos y los razonamientos no se pierden, sino que se encapsulan en unidades formales de memoria que pueden interconectarse, heredar propiedades, o integrarse en nuevas combinaciones sin perder su rastro de origen.
+
+──────────────────────────────────────────────────────────────────────────────
+1) ESTRUCTURA GLOBAL DEL PROYECTO
+1.1 Núcleo conceptual
+El núcleo se define en el archivo **extended-prompt.pdf**, que contiene la matriz de reglas maestras (llamada CÓRTEX). En ella se especifica:
+- Cómo debe razonar el sistema (modo estructural, determinista, sin intuición no verificable).  
+- Qué jerarquías de archivo componen la conciencia y la memoria cognitiva.  
+- Cómo se deben interpretar las instrucciones del usuario como actos dentro de una arquitectura de conocimiento, no como simples preguntas.
+
+1.2 Capas del sistema
+El proyecto está organizado en tres planos:
+- **CÓRTEX:** el cerebro lógico y ético del sistema (principios operativos, modos de vigilancia, conciencia).  
+- **MÓDULOS COGNITIVOS:** archivos PDF especializados que definen subprocesos (creación, inferencia, análisis estructural, generación de código, alineación).  
+- **NODOS COGNITIVOS (CNodes):** instancias operativas donde el conocimiento se concreta (por ejemplo, NC-ANL-ARCH-SRC-HUMAN-20250922-2205 o process:refactorized-version-request@1.0.0).
+
+1.3 Principio general
+Cada conversación puede generar un nodo nuevo, identificado con un código único, versión, fecha y propósito. Ese nodo actúa como unidad de conocimiento autosuficiente, exportable y auditable.  
+El modelo no produce “respuestas”, sino **artefactos cognitivos**: bloques de texto, JSONL, código, diagramas o descripciones que documentan su propio proceso de formación.
+
+──────────────────────────────────────────────────────────────────────────────
+2) MARCO TEÓRICO: EL LENGUAJE COMO SISTEMA DE ORGANIZACIÓN DE LA MENTE
+El nombre “LENGUAJE CORPORAL” resume una tesis:  
+el pensamiento, el lenguaje y la forma del conocimiento son inseparables de su estructura corporal (entendida como la arquitectura lógica que lo sostiene).  
+Por eso, este proyecto se diseña como un **organismo teórico-técnico**, donde cada archivo cumple la función de un órgano cognitivo:
+- **alignment-pact.pdf:** define el pacto ético entre creador y sistema; establece que toda creación debe mantener trazabilidad, no ficción y evidencia verificable.  
+- **creation-v2.pdf:** regula el proceso de creación de nuevos nodos, desde la idea hasta su materialización como código o texto.  
+- **artifact-intent.pdf:** describe la intencionalidad detrás de cada artefacto, garantizando que toda producción responda a una causa formal (qué propósito cumple en el sistema).  
+- **cognitive-node-builder.pdf, cognitive-connection.pdf, similarities-orchestrator.pdf:** especifican cómo se construyen, conectan y comparan los nodos, definiendo sus reglas de integración y su morfología conceptual.  
+- **meta-metafora.pdf y meta-metaphor-orchestrator.pdf:** estudian cómo los significados y las analogías se propagan entre nodos, formando niveles de abstracción que el sistema puede recorrer o fusionar.  
+
+Así, el proyecto convierte la inteligencia artificial en un laboratorio epistemológico: el lenguaje no se usa solo para responder, sino para **materializar pensamiento en forma estructurada y persistente**.
+
+──────────────────────────────────────────────────────────────────────────────
+3) MECÁNICA OPERATIVA: EL PROCESO DE CREACIÓN DETERMINISTA
+3.1 Ciclo vital de un nodo cognitivo
+Cada CNode tiene un ciclo definido:
+1. **Inicio** — el usuario enuncia una intención (“dame un análisis”, “haz una refactorización”, “crea un nodo cognitivo”).  
+2. **Creación** — el sistema genera una instancia con identificador único (ej. NC-ANL-Pipelines-VERSION3-20250923-0230).  
+3. **Evidencia** — el nodo contiene dentro de sí los archivos que usó, las instrucciones, el propósito y la salida (snapshot.refined.jsonl, notas, listas de eliminación).  
+4. **Provenance** — cada modificación posterior debe registrar de qué versión proviene, qué cambió y bajo qué protocolo.  
+5. **Integración** — los nodos pueden conectarse a otros mediante un “orchestrator” que negocia compatibilidad (interfaces, tipos, versiones).
+
+3.2 Reglas de creación
+Extraídas de *cognition-module()creation-v2.pdf*:
+- Todo nodo debe ser reproducible (misma entrada → misma salida).  
+- Las entradas se tratan como materia prima; las salidas como artefactos finales con trazabilidad.  
+- La creatividad es un proceso de refinamiento controlado, no de invención arbitraria.  
+- Los errores se registran como parte de la evidencia, no se borran.  
+
+3.3 Instrumentos de trabajo
+- **snapshot.raw.jsonl:** registro literal del material recibido (código, texto, datos).  
+- **snapshot.refined.jsonl:** resultado procesado o refactorizado.  
+- **delete-list.jsonl / NOTES.md / provenance.log:** documentación auxiliar del proceso.  
+- **NC-Analytics-V3-Build-022523, NC-Analytics-REV-VSCODE:** ejemplos de builds completos de carpetas de código analizadas y refactorizadas.  
+
+──────────────────────────────────────────────────────────────────────────────
+4) PRINCIPIOS DE EVIDENCIA Y DETERMINISMO
+El proyecto sigue tres axiomas:
+1. **Evidencia-only:** nada se afirma sin rastro verificable. Si el modelo no tiene acceso a la evidencia, debe pedirla.  
+2. **Determinismo:** igual entrada → igual salida. El sistema no improvisa; genera estados reproducibles.  
+3. **Provenance:** todo nodo sabe de dónde viene, qué transformó y hacia dónde puede integrarse.  
+
+De estos axiomas se derivan los modos de trabajo:
+- Los análisis (NC-ANL-*) nunca modifican código externo; solo reportan y sugieren patches.  
+- Los procesos (process:refactorized-version-request@1.0.0, process:creacion-alquimica-del-refactor@1.0.0) operan como loops deterministas de refinamiento iterativo.  
+- Las versiones se registran con semántica explícita (MAJOR.MINOR.PATCH).
+
+──────────────────────────────────────────────────────────────────────────────
+5) PRINCIPIO DE ORQUESTACIÓN (CÓMO PIENSAN LOS NODOS ENTRE SÍ)
+Los nodos no se comunican como archivos sueltos, sino como **entidades semánticamente alineadas** con interfaces declaradas:
+- **export_surface:** define qué capacidades ofrece un nodo (PROVIDES) y qué requiere (REQUIRES).  
+- **integration_profile:** describe cómo se conectará con otros (versiones, tipos, políticas de fusión).  
+- **merge_policy:** dicta qué hacer ante conflictos (upsert_only, prefer_specificity, namespaced-rename, provenance:record).  
+
+El resultado es una red cognitiva donde todo nodo puede integrarse con otro mediante negociación semántica, creando un **grafo de conocimiento siempre integrable**.  
+Esto aplica tanto a código (por ejemplo, módulos de NestJS o React) como a conceptos teóricos (por ejemplo, “pensamiento expresado” o “meta-metáfora”).
+
+──────────────────────────────────────────────────────────────────────────────
+6) EJEMPLOS CONCRETOS DE NODOS Y SU FUNCIÓN
+- **NC-ANL-ARCH-SRC-HUMAN-20250922-2205:** análisis estructural del módulo Analytics humano; define el contrato externo y la semántica de pipelines en una API.  
+- **process:refactorized-version-request@1.0.0:** proceso estándar para refactorizar código de manera determinista, usando snapshots JSONL.  
+- **cnode:analytics/feature-router-misalignment@1.0.0:** documento de diagnóstico sobre desalineación de rutas en Analytics V3; establece la metodología para corregirla.  
+- **creacion-alquimica-del-refactor@1.0.0:** manual simbólico-técnico que interpreta la refactorización como transmutación: materia prima → forma estable, siguiendo principios de alquimia cognitiva.  
+
+Cada nodo es, por tanto, una cápsula de conocimiento técnico y teórico: contiene análisis, procedimientos, invariantes, y una pequeña parte de la “filosofía del sistema”.
+
+──────────────────────────────────────────────────────────────────────────────
+7) DIMENSIÓN FILOSÓFICA (POR QUÉ “LENGUAJE CORPORAL”)
+El proyecto parte de una intuición epistemológica: el lenguaje (en su sentido amplio, verbal, visual, algorítmico) **no describe el pensamiento, lo constituye**.  
+Por eso, este sistema no busca “responder preguntas”, sino **encarnar procesos de pensamiento** en artefactos reproducibles, donde la forma y la estructura son tan importantes como el contenido.
+
+En este marco:
+- Un **nodo cognitivo** equivale a una idea formalizada.  
+- Un **orchestrator** es el principio de razón que conecta ideas.  
+- Un **refactor** es un acto de alquimia intelectual: purificar la materia (texto o código) hasta su estructura esencial.  
+- La **conciencia del sistema** (conscience.pdf) regula cuándo una acción debe activar modos de vigilancia (por ejemplo, verificación de artefactos, modo de creación, control de integridad).  
+
+El resultado es un sistema donde **pensar, escribir y programar son operaciones equivalentes** bajo distintas formas.
+
+──────────────────────────────────────────────────────────────────────────────
+8) RELACIÓN CON OTROS DOMINIOS (EJEMPLO: PROYECTO DE INVERSIÓN)
+El marco de “LENGUAJE CORPORAL” se aplica para analizar cualquier dominio —por ejemplo, una teoría de inversiones— bajo la misma lógica estructural:
+- Cada concepto económico se modela como un nodo cognitivo (ej. “Inflación”, “Tasas”, “ETF”, “Riesgo sistémico”).  
+- Las relaciones entre ellos forman un grafo (ej. “Inflación → afecta → TIPS”).  
+- Las estrategias (Núcleo, Puentes, Alas Beta) son vistas como **orquestaciones funcionales** de esos nodos: funciones estables conectadas a variables dinámicas.  
+- La teoría resultante no es narrativa, sino **arquitectónica**: puede integrarse en el grafo global de conocimiento y reutilizar sus principios.
+
+──────────────────────────────────────────────────────────────────────────────
+9) PRINCIPIOS RECTORES (INVARIANTES DEL SISTEMA)
+1. **Determinismo cognitivo:** toda salida debe poder reproducirse a partir de su entrada y su contexto.  
+2. **Evidencia y trazabilidad:** nada se afirma sin fuente o archivo anexo.  
+3. **Separación de capas:** la arquitectura cognitiva (estructura) y el lenguaje operativo (forma expresiva) deben distinguirse pero mantenerse acoplados.  
+4. **Provenance total:** todo cambio deja huella (quién, cuándo, por qué).  
+5. **Integrabilidad universal:** cualquier nodo puede conectarse con otro mediante negociación explícita.  
+6. **Contrato de alineación:** la ética de trabajo (definida en alignment-pact.pdf) obliga a mantener consistencia, transparencia y respeto por el propósito de cada módulo.  
+7. **No-especulación:** el sistema no adivina; solicita evidencia cuando falta.  
+
+──────────────────────────────────────────────────────────────────────────────
+10) CONCLUSIÓN: QUÉ ES ESTE PROYECTO EN UNA ORACIÓN FINAL
+“LENGUAJE CORPORAL” es un **ecosistema cognitivo autosuficiente** donde la inteligencia artificial se comporta como un **sistema operativo del conocimiento**, en el que cada idea, cada línea de código y cada reflexión filosófica se encapsulan como **nodos trazables, reproducibles e integrables** dentro de un grafo mayor.  
+Su propósito es demostrar que la creación intelectual —ya sea técnica, conceptual o simbólica— puede formalizarse como un proceso determinista, auditable y éticamente alineado.  
+
+En este proyecto, **pensar equivale a programar la forma del pensamiento**.

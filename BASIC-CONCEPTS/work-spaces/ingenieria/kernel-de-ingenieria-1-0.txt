@@ -1,0 +1,277 @@
+MODULE: Kernel de Ingeniería — Ancestro Común
+VERSION: 1.0
+STATUS: autosuficiente (listo para compartirse como .txt)
+AUTHOR-INTENT: Este módulo describe el “ancestro común” que comparten todas las ingenierías: su núcleo operativo (kernel), su interfaz, sus fases de trabajo y cómo se especializa al conectarse con nodos-ancestro disciplinares. Sirve como fotografía del estado de entendimiento y una guía para aplicar el kernel en cualquier rama (civil, eléctrica, software, industrial, financiera, biomédica, etc.).
+
+
+──────────────────────────────────────────────────────────────────────────────
+0) RESUMEN EN UNA LÍNEA
+──────────────────────────────────────────────────────────────────────────────
+“Ingeniería” = un núcleo operativo invariante (kernel) que resuelve problemas
+bajo restricciones a través de: formulación → modelado → descomposición →
+optimización → control → validación → operación/iteración; cada ingeniería
+especializa este kernel conectándolo a nodos-ancestro (física, cómputo, economía,
+biología, derecho/ética, etc.) que proporcionan fenómenos, métodos y normas
+específicos.
+
+
+──────────────────────────────────────────────────────────────────────────────
+1) OBJETO DEL MÓDULO
+──────────────────────────────────────────────────────────────────────────────
+- Definir el KERNEL DE INGENIERÍA (KI) como procedimiento general, independiente
+  del dominio.
+- Especificar su INTERFAZ (entradas/salidas, garantías, métricas).
+- Describir FASES y ARTEFACTOS de trabajo (qué produce cada etapa).
+- Explicar cómo se “ancla” a NODOS-ANCESTRO para volverse ingeniería concreta.
+- Proveer una PLANTILLA OPERATIVA reutilizable y un GLOSARIO mínimo.
+
+
+──────────────────────────────────────────────────────────────────────────────
+2) DEFINICIÓN DEL KERNEL DE INGENIERÍA (KI)
+──────────────────────────────────────────────────────────────────────────────
+El KI es el proceso invariante que toda ingeniería ejecuta para transformar
+un problema con restricciones en una solución verificable y operable.
+
+FASES (orden lógico; en la práctica hay iteraciones):
+  F1. FORMULACIÓN DEL PROBLEMA
+      - Delimitar alcance, stakeholders, entorno, supuestos.
+      - Fijar objetivo(s): desempeño, costo, seguridad, calidad, impacto.
+      - Identificar RESTRICCIONES duras (física, legal, ética) y blandas
+        (presupuesto, tiempo, reputación, UX, política).
+      - Definir MÉTRICAS DE ÉXITO y CRITERIOS DE ACEPTACIÓN.
+
+  F2. ABSTRACCIÓN Y MODELADO
+      - Representar el fenómeno con un modelo manipulable: determinista/estocástico,
+        continuo/discreto, basado en ecuaciones, agentes, colas, grafos o reglas.
+      - Declarar supuestos, dominios de validez, parámetros y datos requeridos.
+
+  F3. DESCOMPOSICIÓN Y ARQUITECTURA
+      - Partir el sistema en módulos con interfaces explícitas (entradas, salidas,
+        precondiciones, postcondiciones, garantías, límites).
+      - Elegir topología y estándares (p. ej., códigos estructurales, protocolos,
+        normas regulatorias).
+      - Minimizar acoplamiento y maximizar cohesión.
+
+  F4. OPTIMIZACIÓN BAJO RESTRICCIONES
+      - Formular función objetivo (costo, riesgo, robustez, eficiencia, utilidad).
+      - Incorporar restricciones duras/blandas y prioridades (trade-offs).
+      - Resolver (exacto, aproximado, heurístico) y justificar elección.
+
+  F5. CONTROL Y GESTIÓN DE RIESGO
+      - Diseñar lazos de control (sensores → comparación → actuadores).
+      - Identificar riesgos (severidad × probabilidad), planes de contingencia,
+        márgenes/buffers, tolerancias y umbrales de seguridad.
+      - Integrar monitoreo y telemetría.
+
+  F6. VERIFICACIÓN Y VALIDACIÓN (V&V)
+      - VERIFICAR: “¿hace lo que dice el diseño?” (pruebas unitarias/integradas).
+      - VALIDAR: “¿sirve para lo que se necesita?” (pruebas de aceptación y campo).
+      - Backtesting/benchmarks/análisis de sensibilidad y de incertidumbre.
+
+  F7. OPERACIÓN, MANTENIMIENTO E ITERACIÓN
+      - Desplegar, operar, medir, recolectar datos reales, recalibrar modelos.
+      - Mejorar continuamente (ciclos cortos con control de cambios y auditoría).
+
+
+──────────────────────────────────────────────────────────────────────────────
+3) INTERFAZ DEL KERNEL (I/O, GARANTÍAS, MÉTRICAS)
+──────────────────────────────────────────────────────────────────────────────
+ENTRADAS (I):
+  - Requerimientos funcionales y no funcionales.
+  - Restricciones y normas aplicables.
+  - Datos (históricos, sensorización, supuestos iniciales).
+  - Criterios de éxito y tolerancias de riesgo.
+
+SALIDAS (O):
+  - Especificación arquitectónica (módulos, interfaces).
+  - Modelos y parámetros calibrados (con límites de validez).
+  - Solución optimizada con justificación de trade-offs.
+  - Plan de control/operación y matriz de riesgos.
+  - Evidencia de V&V; manual de operación y mantenimiento.
+
+GARANTÍAS:
+  - Trazabilidad requisito→diseño→prueba→resultado.
+  - Explícita gestión de supuestos y de incertidumbre.
+  - Reproducibilidad de resultados bajo iguales condiciones.
+
+MÉTRICAS (ejemplos):
+  - Desempeño: throughput, eficiencia, precisión, calidad de servicio.
+  - Costo: CAPEX/OPEX, costo de ciclo de vida.
+  - Riesgo: probabilidad de falla, VaR/ES (si aplica), severidad esperada.
+  - Robustez: degradación ante perturbaciones; sensibilidad paramétrica.
+  - Confiabilidad: MTBF/MTTR, disponibilidad; cumplimiento regulatorio.
+
+
+──────────────────────────────────────────────────────────────────────────────
+4) NODOS-ANCESTRO Y ESPECIALIZACIÓN
+──────────────────────────────────────────────────────────────────────────────
+El KI se vuelve “ingeniería X” al conectarse con nodos-ancestro que aportan
+fenómenos, métodos y normas de un dominio. Los más frecuentes:
+
+  A) FÍSICA (mecánica, materiales, termodinámica, electromagnetismo)
+     - Conservación, límites materiales, estabilidad, códigos de seguridad.
+
+  B) CÓMPUTO (complejidad, arquitectura, datos, verificación formal)
+     - Modularidad, concurrencia, resiliencia, seguridad, confiabilidad.
+
+  C) ECONOMÍA/FINANZAS (arbitraje, precios, riesgo, contabilidad)
+     - Coherencia de precios, flujos de caja, liquidez, regulación prudencial.
+
+  D) BIOLOGÍA/SALUD (sistemas biológicos, clínica, ensayos)
+     - Seguridad del paciente, sensibilidad/especificidad, ética sanitaria.
+
+  E) DERECHO/ÉTICA (cumplimiento, responsabilidad, gobernanza)
+     - Límites legales, licencias, privacidad, idoneidad, transparencia.
+
+Cada ingeniería se define por su combinación dominante de nodos-ancestro más
+sus fenómenos/artefactos (puentes, chips, software, carteras, dispositivos,
+plantas, etc.).
+
+
+──────────────────────────────────────────────────────────────────────────────
+5) ISOMORFISMOS ÚTILES (PUENTES ENTRE INGENIERÍAS)
+──────────────────────────────────────────────────────────────────────────────
+Conceptos que “riman” entre dominios:
+
+  - MARGEN DE SEGURIDAD (civil) ↔ COLCHÓN DE CAPITAL/LIQUIDEZ (finanzas)
+    ↔ PRESUPUESTO DE LATENCIA/RECURSOS (software).
+
+  - CARGA ADMISIBLE (civil) ↔ EXPOSICIÓN/LEVERAGE (finanzas)
+    ↔ CAPACIDAD DE CÓMPUTO/THROUGHPUT (software/industrial).
+
+  - FALLA FRÁGIL/CASCADA (civil/eléctrica) ↔ COLAS GRUESAS/CRISIS DE LIQUIDEZ
+    (finanzas) ↔ FAILOVER/DEPLOYMENT ERRÓNEO EN CADENA (software).
+
+  - REDUNDANCIA ESTRUCTURAL (civil/eléctrica) ↔ DIVERSIFICACIÓN (finanzas)
+    ↔ RÉPLICAS Y BALANCEO (software).
+
+  - CONTROL (PID) ↔ HEDGING/COBERTURA (finanzas) ↔ AUTOSCALING/GOBERNANZA
+    POR MÉTRICAS (software).
+
+
+──────────────────────────────────────────────────────────────────────────────
+6) PLANTILLA OPERATIVA (APTA PARA CUALQUIER INGENIERÍA)
+──────────────────────────────────────────────────────────────────────────────
+Use esta plantilla para “aterrizar” el KI en un caso cualquiera:
+
+  T1. PROBLEMA Y RESTRICCIONES
+      - Objetivo formal (max/min) y utilidad asociada.
+      - Restricciones duras/blandas; prioridades y trade-offs aceptables.
+      - Stakeholders y entorno (físico, digital, regulatorio).
+
+  T2. MODELO
+      - Tipo (determinista/estocástico; continuo/discreto; ecuacional/agent-based).
+      - Variables de estado/control; parámetros y fuentes de datos.
+      - Supuestos/hipótesis y dominio de validez.
+
+  T3. ARQUITECTURA
+      - Descomposición en módulos; contratos de interfaz (I/O, garantías).
+      - Estándares/códigos aplicables; criterios de acoplamiento/cohesión.
+
+  T4. OPTIMIZACIÓN
+      - Función objetivo, método de solución (exacto/heurístico).
+      - Sensibilidad; robustez vs. incertidumbre; escenarios.
+
+  T5. CONTROL Y RIESGO
+      - Sensores/métricas; lazos de control; umbrales y alarmas.
+      - Identificación y tratamiento de riesgos; planes de contingencia.
+
+  T6. VERIFICACIÓN/VALIDACIÓN
+      - Suite de pruebas; benchmarks; backtesting/stress (si aplica).
+      - Criterios de aceptación; evidencia de cumplimiento.
+
+  T7. OPERACIÓN/MANTENIMIENTO
+      - Procedimientos, telemetría, SLAs/SLIs (si aplica).
+      - Ciclos de mejora; gobernanza de cambios y auditoría.
+
+
+──────────────────────────────────────────────────────────────────────────────
+7) EJEMPLOS DE ESPECIALIZACIÓN (SKETCHES)
+──────────────────────────────────────────────────────────────────────────────
+A) Ingeniería Civil (nodos-ancestro: física de materiales, geotecnia, códigos)
+   - Objetivo: desempeño estructural y seguridad al costo de ciclo de vida óptimo.
+   - Modelo: fuerzas, tensiones, estabilidad, cargas vivas/muertas.
+   - Control: monitoreo estructural; inspecciones; mantenimiento preventivo.
+   - Validación: pruebas de carga; cumplimiento normativo.
+
+B) Ingeniería de Software (nodos-ancestro: cómputo, arquitectura, seguridad)
+   - Objetivo: funcionalidades con confiabilidad, escalabilidad y seguridad.
+   - Modelo: componentes, colas, recursos; patrones de diseño.
+   - Control: autoescalado, circuit breakers, observabilidad.
+   - Validación: pruebas (unitarias→e2e), SLO/SLI, revisiones de seguridad.
+
+C) Ingeniería Industrial (nodos-ancestro: investigación de operaciones, colas)
+   - Objetivo: throughput y eficiencia bajo restricciones de inventario/servicio.
+   - Modelo: teoría de colas, redes de flujo, programación lineal/entera.
+   - Control: planificación, buffers, kanban; análisis de cuellos de botella.
+   - Validación: simulación de eventos discretos; KPIs de servicio/costo.
+
+D) Ingeniería Financiera (nodos-ancestro: probabilidad, arbitraje, regulación)
+   - Objetivo: transformar riesgos/flujo de caja con coherencia de precios.
+   - Modelo: estocástico; no arbitraje; valoración por replicación; XVA (si aplica).
+   - Control: hedging (deltas/vegas), límites de riesgo, liquidez operable.
+   - Validación: backtesting; stress testing; cumplimiento prudencial.
+
+
+──────────────────────────────────────────────────────────────────────────────
+8) ANTIPATRONES Y ALERTAS
+──────────────────────────────────────────────────────────────────────────────
+- Confundir VERIFICAR con VALIDAR: pasar pruebas internas no garantiza utilidad.
+- Ignorar SUPUESTOS y su rango de validez: extrapolar fuera del dominio rompe el modelo.
+- Subestimar RIESGO DE MODELO (finanzas, IA, simulaciones): documentar y monitorear.
+- Optimizar una métrica a costa de otra crítica (seguridad/ética/regulación).
+- Diseñar sin TELEMETRÍA: sin datos de operación no hay control ni mejora.
+- Saltar ARQUITECTURA: la deuda técnica/estructural se cobra con intereses.
+
+
+──────────────────────────────────────────────────────────────────────────────
+9) CHECKLIST DE ACEPTACIÓN (MÍNIMO VIABLE DE INGENIERÍA)
+──────────────────────────────────────────────────────────────────────────────
+[ ] Requerimientos y restricciones trazados a métricas y pruebas.
+[ ] Modelo declarado con supuestos, parámetros y límites de validez.
+[ ] Arquitectura modular con interfaces y garantías explícitas.
+[ ] Optimización justificada y reproducible (método y sensibilidad).
+[ ] Plan de control y matriz de riesgos con umbrales/contingencias.
+[ ] Evidencia de V&V (incluye casos límite y escenarios adversos).
+[ ] Procedimientos de operación, telemetría y mejora continua.
+[ ] Cumplimiento normativo/ético documentado (cuando aplique).
+
+
+──────────────────────────────────────────────────────────────────────────────
+10) GLOSARIO BÁSICO
+──────────────────────────────────────────────────────────────────────────────
+- Kernel de Ingeniería (KI): procedimiento invariante que toda ingeniería ejecuta.
+- Restricción dura: límite no negociable (física, ley, ética).
+- Restricción blanda: preferencia negociable (costo, tiempo, UX).
+- Modelo: representación manipulable del fenómeno (con supuestos).
+- Arquitectura: descomposición en módulos y sus interfaces/garantías.
+- Trade-off: compromiso necesario al optimizar objetivos en conflicto.
+- Control: mecanismos para mantener el sistema en zona deseada.
+- Verificación (V): conformidad con el diseño especificado.
+- Validación (V): adecuación para el propósito real.
+- Robustez: desempeño estable ante perturbaciones/variaciones.
+- Riesgo de modelo: posibilidad de que el modelo falle por supuestos inadecuados.
+- Trazabilidad: capacidad de seguir requisitos→diseño→pruebas→resultados.
+
+
+──────────────────────────────────────────────────────────────────────────────
+11) NOTA SOBRE ESCALA Y FRACTALIDAD
+──────────────────────────────────────────────────────────────────────────────
+El KI se aplica en múltiples escalas (proyecto, subsistema, componente). La
+secuencia formulación→modelado→arquitectura→optimización→control→V&V→operación
+es fractal: se repite en cada nivel con artefactos análogos y criterios de
+aceptación coherentes.
+
+
+──────────────────────────────────────────────────────────────────────────────
+12) EPÍLOGO (USO PRÁCTICO)
+──────────────────────────────────────────────────────────────────────────────
+- Para aprender: identifique el patrón KI del problema, elija nodos-ancestro
+  relevantes y traduzca los conceptos (“margen”, “carga”, “falla”, “control”)
+  al vocabulario del dominio. Prototipe, mida, itere.
+- Para transferir conocimiento entre ingenierías: use los isomorfismos del §5
+  como puentes y la plantilla del §6 como guía de diseño.
+- Para evaluar trabajos: aplique el checklist del §9; nada pasa si no hay
+  trazabilidad, control de riesgos y evidencia de V&V.
+
+FIN DEL MÓDULO (Kernel de Ingeniería — Ancestro Común v1.0)

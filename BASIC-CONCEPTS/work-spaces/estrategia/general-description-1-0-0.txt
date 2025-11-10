@@ -1,0 +1,302 @@
+# ============================================================
+# ESTRATEGIA (GENERAL) — PLANTILLA OPERABLE (v1.0, rellenable)
+# ------------------------------------------------------------
+# Nota para el profesor:
+# En esta plantilla formalizo "Estrategia" como estructura primaria
+# que gobierna manifestaciones en múltiples dominios: militar,
+# empresarial, tecnológico, logístico, diplomático, narrativo, etc.
+# Está escrita como una especificación operable para evaluación:
+# define propósito, invariantes, portafolio de arquitecturas,
+# adaptadores de contexto, orquestador de presets (pesos),
+# contratos mínimos, políticas si–entonces, validaciones (bloqueos),
+# métricas faro/instancia, trazabilidad y checklist de publicación.
+# La idea es que cualquier caso concreto sea una "manifestación"
+# de este modelo, cambiando contenidos pero no la forma.
+# ============================================================
+
+@metadata: {
+  id: "ESTRATEGIA_GENERAL@v1.0",
+  proposito: "Lograr ventaja sistémica sostenida bajo restricciones, alineando fines, medios y modos con trazabilidad y evidencia.",
+  autor: "Alumno: <MI_NOMBRE_AQUI>",
+  fecha: "<AAAA-MM-DD>",
+  notas_revision: "Plantilla base para instanciar dominios; hereda invariantes y exige contratos antes de ejecutar."
+}
+
+# ------------------------------------------------------------
+# A) DEFINICION DE ESTRATEGIA (estructura primaria)
+# ------------------------------------------------------------
+estrategia: {
+  definicion_operativa: "Sistema orquestador que decide fines (ends), compone medios (means) y diseña modos (ways) para producir ventaja sostenida.",
+  niveles: [
+    { nombre: "estrategico", ritmo: "lento", salida: "teoria_de_la_victoria, portafolio_de_arquitecturas, guardarrailes, metrica_faro" },
+    { nombre: "orquestador", ritmo: "medio", salida: "dimensiones, presets/pesos, reglas_si_entonces, asignacion_de_recursos" },
+    { nombre: "operativo", ritmo: "rapido", salida: "contratos_minimos, validaciones_duras, experimentos, medicion_y_aprendizaje" }
+  ],
+  teoria_de_la_victoria: {
+    en_una_linea: "Ventaja sostenible = valor_neto_creado − (coste_de_coercion/operacion + coste_de_deslegitimacion), con elasticidad y trazabilidad.",
+    notas: "La noción de 'valor' se adapta al dominio (ej.: superávit fiscal, margen operativo, seguridad, cobertura, satisfacción)."
+  }
+}
+
+# ------------------------------------------------------------
+# B) INVARIANTES (no negociables; si se rompen → BLOQUEO)
+# ------------------------------------------------------------
+invariantes: [
+  "No prometer beneficios o garantías sin palanca real (capacidad, presupuesto, acceso, logística o autoridad) demostrable.",
+  "No ejecutar sin contrato mínimo completo y umbrales definidos (diseño por contrato).",
+  "Separar métricas de sistema (faro) de métricas de instancia (local) para evitar optimización miope.",
+  "Toda reponderación de presets/pesos exige evidencia mínima suficiente (no vale una anécdota).",
+  "Mantener trazabilidad determinista (ID compuesto, bitácora de decisiones, resultados y próximos pasos).",
+  "Cumplir legalidad, ética y accesibilidad del canal; violaciones → bloqueo inmediato."
+]
+
+# ------------------------------------------------------------
+# C) PORTAFOLIO DE ARQUITECTURAS ESTRATÉGICAS (formas reusables)
+#   — Esta lista es ampliable; cada arquitectura es una “forma”.
+# ------------------------------------------------------------
+arquitecturas: [
+  {
+    id: "ARQ_DOMINACION_DE_CANAL",
+    dominio: "transversal (marketing/ventas/atencion)",
+    descripcion: "Concentrar presencia en uno o pocos canales clave para capturar demanda/atencion y extraer valor de red.",
+    condiciones_de_uso: [
+      "Canal con economías de escala/red, sesgos de descubrimiento o costos de cambio altos.",
+      "Capacidad para sostener calidad/ritmo de publicación/abastecimiento."
+    ],
+    riesgos: [
+      "Dependencia excesiva de políticas del canal; riesgo de cambios algorítmicos.",
+      "Saturación publicitaria que deteriora conversiones y reputación."
+    ]
+  },
+  {
+    id: "ARQ_PLATAFORMA_ECOSISTEMA",
+    dominio: "tecnologico/empresarial",
+    descripcion: "Orquestar oferta y demanda habilitando terceros (APIs, SDKs, marketplace) y capturando valor por intermediación.",
+    condiciones_de_uso: [
+      "Suficiente masa crítica en al menos uno de los lados (oferta/demanda).",
+      "Mecanismos de gobernanza y confianza para terceros."
+    ],
+    riesgos: [
+      "Desalineación de incentivos con socios; fuga de valor a complementadores.",
+      "Coste de moderación/seguridad y cumplimiento regulatorio."
+    ]
+  },
+  {
+    id: "ARQ_ESTEPA_MOVIL",
+    dominio: "militar/logistico",
+    descripcion: "Control de corredores con movilidad, disuasión y negociación (análogo a caballería/postas en lo militar).",
+    condiciones_de_uso: [
+      "Entorno con profundidad de maniobra (física o de red).",
+      "Posibilidad de acordar tributos/SLAs (Service Level Agreements) en vez de ocupación total."
+    ],
+    riesgos: [
+      "Sobre-extensión logística; reputación volátil si falta consistencia.",
+      "Fricción con 'nodos amurallados' (ciudades/monopolios) sin 'ingeniería' adecuada."
+    ]
+  },
+  {
+    id: "ARQ_REDUCCION_URBANA",
+    dominio: "militar/operativo/operaciones",
+    descripcion: "Captura de nodos 'amurallados' (ciudades, monopolios, cuentas clave) mediante 'ingeniería' intensiva y capitulaciones/contratos robustos.",
+    condiciones_de_uso: [
+      "Alta densidad de nodos críticos y rotación baja.",
+      "Disponibilidad de 'ingeniería' (recursos/experiencia/maquinaria) para romper defensas."
+    ],
+    riesgos: [
+      "Coste de tiempo y desgaste si fallan los primeros intentos.",
+      "Resistencia organizada que erosiona la métrica faro del sistema."
+    ]
+  }
+]
+
+# ------------------------------------------------------------
+# D) ADAPTADORES ESTRATÉGICOS (parametrizan la elección/mezcla)
+# ------------------------------------------------------------
+adaptadores: {
+  entorno_estructural: ["geografia_fisica", "geografia_de_red", "estructura_regulatoria", "poder_de_mercado", "madurez_institucional"],
+  tecnologia_dominante: ["infra_comunicaciones", "automatizacion", "ingenieria_critica", "inteligencia_de_datos", "canales_descubrimiento"],
+  horizonte_temporal: ["corto", "medio", "largo"],
+  legitimidad_objetivo: ["minima_transaccional", "parcial_por_contrato", "integracion_plena"],
+  restriccion_principal: ["capital", "talento", "tiempo", "atencion", "licencia_social", "capacidad_productiva"]
+}
+
+# ------------------------------------------------------------
+# E) ORQUESTADOR DE PRESETS/PESOS (vector que DEBE sumar 1.0)
+#    — Dimensiones genéricas para priorización; se pueden ajustar.
+# ------------------------------------------------------------
+presets_dimensiones: ["velocidad", "costo", "calidad_confiabilidad", "flexibilidad", "legitimidad_confianza", "aprendizaje"],
+validacion_presets: {
+  suma_pesos_debe_ser: 1.0,
+  regla: "Si la suma difiere de 1.0 → BLOQUEO y emitir corrección; registrar bitácora de ajuste."
+},
+ejemplos_presets: [
+  { nombre: "exploracion_conservadora", pesos: { velocidad: 0.20, costo: 0.15, calidad_confiabilidad: 0.20, flexibilidad: 0.20, legitimidad_confianza: 0.15, aprendizaje: 0.10 } },
+  { nombre: "explotacion_operativa", pesos: { velocidad: 0.25, costo: 0.25, calidad_confiabilidad: 0.20, flexibilidad: 0.10, legitimidad_confianza: 0.10, aprendizaje: 0.10 } }
+]
+
+# ------------------------------------------------------------
+# F) CONTRATOS MINIMOS (interfaces por dominio; ejemplo genérico)
+# ------------------------------------------------------------
+contratos: [
+  {
+    id: "CONTRATO_SERVICIO_VALOR",
+    aplicable_a: ["empresarial", "logistico", "tecnologico", "narrativo"],
+    campos_obligatorios: ["parte_A", "parte_B", "definicion_de_valor", "SLA_o_equivalente", "ventana_de_entrega", "mecanismo_de_verificacion", "garantias", "clausula_de_salida"],
+    validaciones_duras: [
+      "Debe existir mecanismo verificable (telemetría, auditoría, recibo).",
+      "Debe existir canal operativo (soporte, mensajería, postas/red)."
+    ],
+    bloqueos: [
+      "Si faltan 'garantias' o 'mecanismo_de_verificacion' → BLOQUEO.",
+      "Si 'ventana_de_entrega' es incompatible con capacidad → BLOQUEO."
+    ]
+  },
+  {
+    id: "CONTRATO_CAPTURA_DE_NODO",
+    aplicable_a: ["militar", "cuentas_clave", "gobierno_de_datos"],
+    campos_obligatorios: ["nodo_objetivo", "plazo_ultimatum_o_conversión", "plan_de_ingenieria_o_equivalente", "recursos_asignados", "plan_post_captura/integracion"],
+    validaciones_duras: [
+      "Debe existir capacidad técnica real antes de iniciar captura.",
+      "Debe existir plan de integración/operación tras la captura."
+    ],
+    bloqueos: [
+      "Sin 'plan_de_ingenieria' y 'recursos_asignados' → prohibido iniciar.",
+      "Sin 'plan_post_captura' → prohibido publicar victoria (evita 'éxitos huecos')."
+    ]
+  }
+]
+
+# ------------------------------------------------------------
+# G) POLITICAS SI–ENTONCES (gobernanza del sistema)
+# ------------------------------------------------------------
+politicas_si_entonces: [
+  "Si la métrica_faro no mejora dos ciclos consecutivos, entonces abrir diagnóstico causal y reponderar presets en la dimensión limitante.",
+  "Si la promesa (beneficio/escasez/seguridad) no tiene palanca real, entonces BLOQUEO de publicación y corrección de plan.",
+  "Si el cuello de botella es operativo (stock, distribución, tiempos, canal), entonces priorizar corrección operativa antes de iterar mensajes/creatividad.",
+  "Si la legitimidad desciende por debajo del umbral, entonces activar guardarraíles: transparencia, compensaciones, revisión de gobernanza del canal.",
+  "Si la mezcla de arquitecturas supera la capacidad del equipo, entonces reducir frentes (focus) hasta recuperar elasticidad."
+]
+
+# ------------------------------------------------------------
+# H) METRICAS (separar FARO del sistema vs INSTANCIA local)
+#   — Definir cada acrónimo al primer uso.
+# ------------------------------------------------------------
+metricas: {
+  faro_estrategico: [
+    "ROIC: Return On Invested Capital (rendimiento sobre el capital invertido) o su análogo en dominio público/social.",
+    "LTV/CAC: Lifetime Value / Customer Acquisition Cost (valor de vida del cliente / coste de adquisición) o ratio análogo de valor/coste.",
+    "NPS: Net Promoter Score (recomendación neta) como proxy de reputación/legitimidad cuando aplique.",
+    "OTIF: On Time In Full (entregas a tiempo y completas) como señal de confiabilidad operativa.",
+    "Elasticidad_estrategica: capacidad para abrir/cerrar frentes sin deterioro estructural (definir indicador)."
+  ],
+  instancias: [
+    "Conversion_especifica_por_campaña/teatro",
+    "Tiempo_a_rendicion_o_integracion_de_nodo",
+    "Defecciones/quejas/incidencias por periodo",
+    "Costo_variable_por_unidad_y_su_tendencia"
+  ],
+  umbrales_sugeridos: [
+    "Si ROIC o su análogo no supera el coste de capital por 2 ciclos → disparar revisión de arquitectura.",
+    "Si OTIF cae por debajo de X% → priorizar corrección de operación antes de crecer demanda.",
+    "Si LTV/CAC < 1.0 (o umbral acordado) → pausar escalado y optimizar retención/pricing."
+  ]
+}
+
+# ------------------------------------------------------------
+# I) TRAZABILIDAD Y APRENDIZAJE (bitácora determinista)
+# ------------------------------------------------------------
+trazabilidad: {
+  id_compuesto: "[Dominio/Arquitectura/Teatro_o_Mercado/Temporada/Contrato/Objetivo]@vX.Y",
+  cadencia_revision: ["semanal", "mensual", "trimestral (según dominio)"],
+  bitacora_minima: ["preset_activo", "cambios_parametricos", "evidencia_minima", "resultado", "siguiente_accion"],
+  aprendizaje: [
+    "Reponderar presets con evidencia.",
+    "Promocionar/degradar arquitecturas en el portafolio según métricas faro.",
+    "Registrar lecciones con ejemplos y contraejemplos (qué NO repetir)."
+  ]
+}
+
+# ------------------------------------------------------------
+# J) MANIFESTACIONES (plantillas por dominio; ejemplos-esqueleto)
+#   — Aquí se instancian casos concretos reusando esta forma.
+# ------------------------------------------------------------
+manifestaciones: [
+  {
+    id: "MILITAR@v1.0",
+    arquitectura: "ARQ_ESTEPA_MOVIL | ARQ_REDUCCION_URBANA | mezcla",
+    adaptadores: {
+      entorno_estructural: "profundidad_de_maniobra | alta_densidad_urbana",
+      tecnologia_dominante: ["postas", "ingenieria_asedio", "inteligencia"],
+      horizonte_temporal: "corto | largo",
+      legitimidad_objetivo: "tributaria_minima | integracion_plena",
+      restriccion_principal: "tiempo | capacidad | legitimidad"
+    },
+    presets: { velocidad: 0.30, costo: 0.20, calidad_confiabilidad: 0.15, flexibilidad: 0.15, legitimidad_confianza: 0.10, aprendizaje: 0.10 },
+    contratos_en_uso: ["CONTRATO_CAPTURA_DE_NODO"],
+    metricas_clave_locales: ["tiempo_a_rendicion", "incidencias_por_teatro", "OTIF_logistico_si_aplica"]
+  },
+  {
+    id: "EMPRESARIAL@v1.0",
+    arquitectura: "ARQ_DOMINACION_DE_CANAL | ARQ_PLATAFORMA_ECOSISTEMA | mezcla",
+    adaptadores: {
+      entorno_estructural: "regulacion | poder_de_mercado | madurez",
+      tecnologia_dominante: ["automatizacion", "canal_descubrimiento", "data_stack"],
+      horizonte_temporal: "medio | largo",
+      legitimidad_objetivo: "parcial_por_contrato | integracion_plena",
+      restriccion_principal: "capital | talento | atencion"
+    },
+    presets: { velocidad: 0.20, costo: 0.25, calidad_confiabilidad: 0.20, flexibilidad: 0.15, legitimidad_confianza: 0.10, aprendizaje: 0.10 },
+    contratos_en_uso: ["CONTRATO_SERVICIO_VALOR"],
+    metricas_clave_locales: ["LTV/CAC", "NPS", "OTIF_si_corresponde", "margen_operativo"]
+  }
+]
+
+# ------------------------------------------------------------
+# K) VALIDACIONES DURAS (BLOQUEOS AUTOMATICOS)
+# ------------------------------------------------------------
+bloqueos: [
+  "Si falta cualquier campo obligatorio en un contrato → BLOQUEO y devolución de faltantes.",
+  "Si la suma de presets !== 1.0 → BLOQUEO hasta corregir.",
+  "Si no hay evidencia mínima para reponderar presets/arquitecturas → prohibir cambio.",
+  "Si legalidad/ética/accesibilidad no se cumplen → detener publicación y escalar revisión."
+]
+
+# ------------------------------------------------------------
+# L) EXPERIMENTOS CONTROLADOS (A/B o equivalentes por dominio)
+# ------------------------------------------------------------
+experimentos: [
+  {
+    id: "AB_promesa_contra_operacion",
+    objetivo: "Validar si la mejora creativa (mensaje) sin corrección operativa desplaza la métrica faro.",
+    criterio_exito: "Mejora en métrica faro (no sólo CTR o proxy local); si no, priorizar operación."
+  },
+  {
+    id: "AB_cambio_de_arquitectura",
+    objetivo: "Testear sustitución/mezcla de arquitectura (ej.: canal→plataforma) en un submercado piloto.",
+    criterio_exito: "ROIC > coste de capital y NPS estable; elasticidad estratégica no empeora."
+  }
+]
+
+# ------------------------------------------------------------
+# M) CHECKLIST DE PUBLICACION (control de calidad formal)
+# ------------------------------------------------------------
+checklist_publicacion: [
+  "Alineación explícita con fines y teoría de la victoria.",
+  "Arquitecturas seleccionadas con adaptadores declarados.",
+  "Presets suman 1.0 y están justificados por evidencia.",
+  "Contratos mínimos definidos y validados; bloqueos probados.",
+  "Métricas faro vs instancia separadas; umbrales y periodos claros.",
+  "Trazabilidad por ID compuesto; bitácora determinista activa.",
+  "Riesgos y guardarraíles explicitados; anti-patrones documentados."
+]
+
+# ------------------------------------------------------------
+# N) ANTI-PATRONES (prohibidos por diseño)
+# ------------------------------------------------------------
+anti_patrones: [
+  "Poesía sin prueba (explicaciones bonitas que no cambian decisiones).",
+  "Confusión de niveles (optimizar instancia sacrificando la métrica faro del sistema).",
+  "Promesa sin palanca real (escasez, entrega, seguridad sin base).",
+  "Cambios de preset/arquitectura por anécdota (sin evidencia suficiente).",
+  "Crecimiento sobre operación rota (escalar demanda con OTIF deteriorado)."
+]

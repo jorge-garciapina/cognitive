@@ -1,0 +1,246 @@
+TÍTULO: Visión fractal de sistemas — Guía operativa y autocontenida (con ejemplos de Empresa+Marketing, Contenidos y Póker)
+VERSIÓN: 1.2 (documento autosuficiente; no depende de otras fuentes)
+AUTOR: [tu nombre o equipo]
+PROPÓSITO: Establecer un modelo único, preciso y reutilizable para pensar, diseñar, ejecutar y auditar sistemas como estructuras fractales: cada parte se compone de subpartes con la misma forma lógica, y cada parte pertenece a un sistema mayor con el que intercambia información bajo contratos explícitos. Esta versión enriquece la guía con tres ejemplos completos: (E-EMP) Empresa+Marketing, (E-CON) Marketing de contenidos, y (E-POK) Estrategia de póker.
+
+──────────────────────────────────────────────────────────────────────────────
+0) RESUMEN EJECUTIVO
+──────────────────────────────────────────────────────────────────────────────
+Esta visión define que:
+1) Todo sistema es descomponible en subsistemas que repiten la misma forma de gobierno: Propósito → Invariantes → Objetos → Interfaces (entradas/salidas) → Métrica faro → Validaciones duras → Cadencia (ritmo) → Aprendizaje → Trazabilidad.
+2) Todo sistema pertenece a un sistema mayor y hereda límites; a su vez expone una superficie clara para integrarse con pares y con su “padre”.
+3) La forma es estable (invariantes estructurales); los contenidos cambian (catálogo de productos, países, algoritmos, campañas). Esto permite escalar, auditar y diagnosticar fallas con alta precisión.
+
+──────────────────────────────────────────────────────────────────────────────
+1) GLOSARIO OPERATIVO (sin ambigüedad)
+──────────────────────────────────────────────────────────────────────────────
+- Sistema: conjunto organizado que persigue un propósito observable y medible. 
+- Subsistema: parte de un sistema que mantiene la misma forma lógica y que puede operar en relativo aislamiento con su propio propósito y métricas, siempre subordinado a invariantes superiores.
+- Forma lógica (la “plantilla fractal”): campos obligatorios que todo sistema debe declarar:
+  A) Propósito (para qué existe; medible).
+  B) Invariantes (lo no negociable: éticos, técnicos, legales, de marca).
+  C) Objetos (artefactos o recursos que “viven” en el sistema; inventariables).
+  D) Interfaces (entradas/salidas con tipos y reglas claras).
+  E) Métrica faro (indicador principal que resume el éxito local).
+  F) Validaciones duras (condiciones de validez que bloquean ejecución si fallan).
+  G) Cadencia (ritmo de decisión y revisión).
+  H) Aprendizaje (cómo la evidencia modifica parámetros).
+  I) Trazabilidad (identificadores y rastro de decisiones/datos).
+- Invariante: regla que no puede romperse sin romper la identidad del sistema.
+- Contrato (interfaz): especificación de entradas y salidas; define tipos, umbrales y reglas “si–entonces”.
+- Telemetría: datos recolectados durante la operación; alimentan el aprendizaje.
+- Métrica faro: indicador único que gobierna decisiones locales.
+- Validación dura: chequeo automático que impide avanzar si no se cumple.
+
+──────────────────────────────────────────────────────────────────────────────
+2) PRINCIPIOS FUNDAMENTALES (axiomas)
+──────────────────────────────────────────────────────────────────────────────
+P1. Autosimilaridad funcional: cada nivel usa la misma plantilla A–I.  
+P2. Herencia de invariantes: ningún subsistema puede violar un invariante del sistema padre.  
+P3. Encaje por contratos: la única manera válida de unir sistemas es por interfaces declaradas; no hay atajos implícitos.  
+P4. Recursión de métricas: la métrica faro local se agrega hacia arriba; los objetivos superiores se distribuyen hacia abajo sin contradicción.  
+P5. Determinismo de decisión: decisiones equivalentes con entradas equivalentes producen salidas equivalentes (misma forma → mismas reglas → mismo resultado).  
+P6. Evidencia-primero: no hay cambio de estado (promoción de nivel, cierre de iteración, escalamiento) sin telemetría suficiente.  
+P7. Separación forma–contenido: la forma (plantilla) permanece; los contenidos (catálogo, campaña, algoritmo, país) pueden variar.  
+P8. Trazabilidad total: toda entidad tiene un identificador compuesto que refleja su cadena de pertenencia (padre→hijo) y su versión.
+
+──────────────────────────────────────────────────────────────────────────────
+3) PLANTILLA FRACTAL (campos obligatorios A–I)
+──────────────────────────────────────────────────────────────────────────────
+Para cualquier sistema S (corporativo, marketing, software, logística, creativo), completar:
+
+A) PROPÓSITO
+- Definición: resultado observable que S pretende maximizar o cumplir.
+- Formato: “Incrementar X en Y% dentro del periodo Z, sujeto a invariantes W”.
+- Ejemplo genérico: “Vender 85% del lote en 10 días en la Plaza P para el Estrato E”.
+
+B) INVARIANTES
+- Definición: reglas no negociables (marca, seguridad, legal, técnica, ética).
+- Ejemplo: “No se comunica escasez si no hay palancas reales de stock/tiempo; contraste AA en creatividades”.
+
+C) OBJETOS
+- Definición: artefactos y recursos que pertenecen a S.
+- Ejemplo: catálogo de SKUs, manual de identidad, taxonomía de estratos, librería musical por mecanismo, planogramas, política de devoluciones.
+
+D) INTERFACES (entradas/salidas)
+- Entradas: qué espera recibir (datos, permisos, catálogos, límites).
+- Salidas: qué entrega y en qué formato (decisiones, especificaciones, activos, reportes).
+
+E) MÉTRICA FARO
+- Definición: indicador principal que gobierna decisiones locales (único).
+- Ejemplo: “Conversión al boleto de entrada en el Nicho X”.
+
+F) VALIDACIONES DURAS
+- Condiciones booleanas que bloquean ejecución si fallan.
+- Ejemplo: “Nicho inválido si falta Plaza o Estrato; anuncio inválido si no cumple accesibilidad”.
+
+G) CADENCIA
+- Ritmo de decisiones/revisión (diaria, semanal, mensual, por temporada).
+
+H) APRENDIZAJE
+- Mecanismo que transforma telemetría en cambios de parámetros (reajuste de precios, rotación de creatividades, refuerzo de palancas).
+
+I) TRAZABILIDAD
+- Identificadores compuestos (ejemplo):
+  ID = [Holding/Marca/Colección/País/Plaza/Estrato/Nicho/Orquestador/Mecanismo/Palancas/Canal/Formato/Activo]@versión
+
+──────────────────────────────────────────────────────────────────────────────
+4) JERARQUÍAS Y PERTENENCIA (cómo se anidan los sistemas)
+──────────────────────────────────────────────────────────────────────────────
+Ejemplo de negocio con publicidad integrada:
+
+Nivel 0 — Holding (grupo)
+Nivel 1 — Marca
+Nivel 2 — Línea/Colección
+Nivel 3 — Territorio/País
+  3.a — Plaza (región/ciudad/área metropolitana)
+  3.b — Estrato socioeconómico (taxonomía fija)
+Nivel 4 — Nicho (persona + ocasión + precio + canal)  ← Punto de anclaje del orquestador
+  SMCP — Sistema Multimodal de Conversión Publicitaria (sub-sistema del Nicho)
+    O — Orquestador de Conversión (objetivo, mecanismo, reglas)
+    P — Palancas operativas (stock, tiempo, acceso, distribución, precio)
+    C — Capas creativas (verbal, visual, sonora, rítmica, espacial, interacción, accesibilidad)
+Nivel 5 — Canal (rutas de comercialización)
+Nivel 6 — Formato (configuración exacta en cada canal)
+Nivel 7 — Unidad de oferta (SKU/servicio) y Activos (anuncios) con telemetría
+
+Regla de pertenencia: cada nivel es hijo del anterior y hereda invariantes; cada decisión debe poder trazarse a sus padres por ID.
+
+──────────────────────────────────────────────────────────────────────────────
+5) REGLAS “SI–ENTONCES” (encaje entre niveles; evitan ambigüedad)
+──────────────────────────────────────────────────────────────────────────────
+R1. Si un Nicho no referencia exactamente una Plaza y un Estrato válidos del Territorio, entonces el Nicho es inválido y no pasa a ejecución.
+R2. Si el mecanismo elegido es Escasez, entonces deben existir palancas activas y verificables (lote, ventana, acceso, distribución, precio); si no existen, la comunicación de escasez está prohibida.
+R3. Si un copy declara una prueba (reseñas, certificación, demo), entonces debe mapear a evidencia aceptada por Marca y por normativas del País.
+R4. Si un activo no cumple accesibilidad (contraste, subtítulos, texto alternativo), entonces no se publica.
+R5. Si las métricas de un nivel inferior indican bloqueo (por ejemplo, alta intención y baja compra), entonces se debe revisar primero fricción del nivel de Interacción, después disponibilidad (Stock/Distribución), y por último el texto.
+R6. Si un cambio rompe un invariante de Marca o del País, entonces el cambio se rechaza, aunque mejore una métrica local.
+
+──────────────────────────────────────────────────────────────────────────────
+6) MÉTRICAS Y AGREGACIÓN (recursión de indicadores)
+──────────────────────────────────────────────────────────────────────────────
+- Cada nivel declara una métrica faro local y métricas secundarias.
+- Agregación ascendente: Activo → Campaña → SMCP (Nicho) → País → Colección → Marca → Holding.
+- Gobernanza: metas descendentes; resultados ascendentes con atribución por nivel y por capa.
+
+──────────────────────────────────────────────────────────────────────────────
+7) DIAGNÓSTICO (localización precisa de fallas)
+──────────────────────────────────────────────────────────────────────────────
+- Fallas de interfaz: contrato entre niveles incompleto (por ejemplo, Formato sin “safe areas”).
+- Fallas de herencia: un subsistema contradice un invariante del padre (claim no permitido).
+- Fallas de telemetría: activos sin etiquetas; aprendizaje no sube y el bucle se rompe.
+- Fallas de palanca: mecanismo prometido sin soporte operativo (escasez discursiva sin lote/ventana).
+
+Check rápido:
+1) ¿Existe palanca real? 2) ¿Se ve y se entiende? 3) ¿Se puede actuar con baja fricción? 4) ¿Cumple accesibilidad? 5) ¿La oferta y el precio son válidos? Después revisar creatividad verbal.
+
+──────────────────────────────────────────────────────────────────────────────
+8) TRAZABILIDAD (identidad y rastro)
+──────────────────────────────────────────────────────────────────────────────
+- Todo objeto lleva un ID compuesto por su cadena de pertenencia y su versión.
+- Todo cambio relevante conserva historial: quién, cuándo, por qué, con qué evidencia.
+- Publicación condicionada: sin IDs completos y válidos, el sistema bloquea el despliegue.
+
+Ejemplo de ID:
+ID_ACTIVO = [H/Marca/Col/País/Plaza/Estrato/Nicho/Orq/Mec/Pal/Capa/Canal/Formato/SKU]@v1.2.3
+
+──────────────────────────────────────────────────────────────────────────────
+9) EJEMPLOS CRUZADOS (misma forma, contenidos distintos)
+──────────────────────────────────────────────────────────────────────────────
+A. (E-EMP) Empresa + Marketing (ejemplo completo)
+— Contexto jerárquico —
+0 Holding → 1 Marca → 2 Colección → 3 País (3.a Plaza; 3.b Estrato) → 4 Nicho → SMCP (O, P, C) → 5 Canal → 6 Formato → 7 Unidad/Activos.
+
+— Instanciación fractal (A–I) por nivel clave —
+• Nicho (A–I):
+  A Propósito: “Vender 85% del lote en 10 días en Plaza X, Estrato Medio”.
+  B Invariantes: claims veraces; accesibilidad AA; precios autorizados por País.
+  C Objetos: ficha de persona; ocasión; rango de precio; boleto de entrada; puentes hacia núcleo.
+  D Interfaces: Entradas (Colección, País, Plaza, Estrato). Salidas (brief al Orquestador).
+  E Métrica faro: conversión al boleto de entrada.
+  F Validaciones duras: Nicho inválido sin Plaza y Estrato; sin oferta disponible se bloquea.
+  G Cadencia: semanal con revisión diaria en ventana.
+  H Aprendizaje: micro-conversión por paso (vista→detalle→reserva→compra).
+  I Trazabilidad: ID_NICHO = [Marca/Col/País/Plaza/Estrato/Persona/Ocasión]@v.
+
+• SMCP (O, P, C):
+  O Orquestador: objetivo cuantificado; mecanismo dominante (escasez); reglas por capa.
+  P Palancas: P1 Stock=500; P2 Ventana=10 días; P3 Acceso anticipado 48 h; P4 Canales tienda+app; P5 Bundle.
+  C Capas:
+    C1 Verbal (Patrón Verbal de Conversión): “Edición limitada 500. Hasta domingo. Reseña 4.6/5. Llamado a la acción: reservar 10 min.”
+    C2 Visual: badge “#124/500”; barra de stock; contraste alto.
+    C3 Sonora: pulso creciente; acento al mostrar “quedan 3”.
+    C4 Rítmica: primera señal ≤ 2 s; refuerzo al 70 %; cierre con ventana.
+    C5 Espacial: isla “Limited” con tablero por talla.
+    C6 Interacción: botón “reserva 10 minutos”; microcopy “última M”.
+    C7 Accesibilidad: subtítulos; texto alternativo; contraste AA.
+  Métrica faro SMCP: avance boleto de entrada → bundle núcleo.
+
+• Campaña → Activos:
+  Especificaciones por canal/formato (video 1080×1920 ≤ 12 s; display 1080×1080; vitrina 2×3 m).
+  Telemetría: retención a 3/6/9 s; clic en badge; reservas; conversión en ventana; quejas.
+  Reglas “si–entonces”: si no hay palanca activa, no se comunica urgencia; si falta accesibilidad, activo no se publica.
+
+Resultado: la misma forma A–I se repite desde Nicho hasta Activo y cierra el bucle con aprendizaje al Orquestador.
+
+B. (E-CON) Marketing de contenidos (videos y publicaciones)
+• Propósito: aumentar reconocimiento y confianza, convirtiendo atención en suscripción o contacto.
+• Invariantes: veracidad; utilidad mínima por pieza; identidad visual; accesibilidad (subtítulos, contraste).
+• Objetos: guías editoriales; biblioteca de temas; guiones; plantillas de miniatura; librería audiovisual; pauta de distribución.
+• Interfaces: Entradas (perfiles, problemas, calendario). Salidas (guiones aprobados, videos exportados, metadatos).
+• Métrica faro: avance “descubrimiento → suscripción/contacto” por pieza y serie.
+• Validaciones duras: pieza inválida sin subtítulos o miniatura accesible; rechazo si no mapea problema–solución.
+• Cadencia: semanal (piezas), mensual (temas), trimestral (series).
+• Aprendizaje: retención por segundo; temas con mejor finalización; palabras clave que convierten.
+• Trazabilidad: ID_PIEZA = [Proyecto/Serie/Tema/Canal/Formato/Versión]@fecha.
+
+C. (E-POK) Estrategia de póker (arquitectura de decisión)
+• Propósito: maximizar valor esperado a largo plazo en distintas mesas y estructuras de ciegas.
+• Invariantes: banca mínima; selección de mesa; límites de varianza; ética.
+• Objetos: tablas de rangos por posición; reglas por textura de mesa; perfiles de rivales; registros de manos; plan de salida.
+• Interfaces: Entradas (posición, cartas, stack, perfiles, ciegas). Salidas (acción, tamaño de apuesta, líneas futuras).
+• Métrica faro: valor esperado por sesión y por mil manos.
+• Validaciones duras: prohibido violar gestión de banca; abortar mesa si varianza excede umbral.
+• Cadencia: en mano (tiempo real), por bloque de manos (revisión), semanal (ajuste de tablas).
+• Aprendizaje: análisis de manos críticas; ajuste de rangos; control de sesgos.
+• Trazabilidad: ID_MANO = [Mesa/Posición/Ciegas/Tiempo/Versión_Tablas].
+
+— Matriz de paralelismos —
+• Guía editorial (E-CON) ↔ Tablas de rangos (E-POK) ↔ Manual de marca+Patrón Verbal (E-EMP).
+• Anzuelo–desarrollo–prueba–oferta–llamado a la acción (E-CON) ↔ Línea de apuestas por calles (E-POK) ↔ Capas creativas C1–C7 + Palancas (E-EMP).
+• Accesibilidad y cumplimiento (E-CON/E-EMP) ↔ Gestión de banca y límites de varianza (E-POK).
+
+──────────────────────────────────────────────────────────────────────────────
+10) PLANTILLA LISTA PARA RELLENAR (para cualquier sistema)
+──────────────────────────────────────────────────────────────────────────────
+NOMBRE DEL SISTEMA: ______________________   VERSIÓN: ______  FECHA: ______
+A) Propósito:
+B) Invariantes:
+C) Objetos (inventario):
+D) Interfaces:
+   - Entradas:
+   - Salidas:
+E) Métrica faro:
+F) Validaciones duras (bloqueos):
+G) Cadencia:
+H) Aprendizaje (telemetría → cambios de parámetros):
+I) Trazabilidad (IDs compuestos y política de versionado):
+
+Chequeos finales:
+[ ] Cumple invariantes del sistema padre
+[ ] Interfaces completas (sin campos vacíos)
+[ ] Telemetría instrumentada
+[ ] Accesibilidad y cumplimiento verificados
+[ ] Determinismo (mismas entradas → mismas salidas)
+[ ] Registro de cambios con evidencia
+
+──────────────────────────────────────────────────────────────────────────────
+11) CIERRE (por qué esta visión es útil)
+──────────────────────────────────────────────────────────────────────────────
+- Escala sin caos: nuevas marcas, países, series de contenido o módulos encajan sin inventar procesos.
+- Auditoría simple: un único formato A–I para todo, con validaciones duras.
+- Diagnóstico certero: la falla “tiene dirección postal” (nivel e interfaz exactos).
+- Aprendizaje compuesto: cada ciclo mejora parámetros locales y realinea metas globales.
+- Transferencia entre dominios: los mismos principios permiten diseñar campañas, escribir guiones o decidir líneas de juego; cambia el contenido, no la forma.
+
+FIN DEL DOCUMENTO (v1.2)

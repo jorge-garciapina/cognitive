@@ -1,0 +1,639 @@
+===============================================================================
+C O G N I T I V E   A P P S  —  C N O D E S   (GUÍA AUTO-CONTENIDA PARA PEGAR)
+Proyecto destino: "Cognitive Apps" (espacio vacío)
+Propósito: explicar QUÉ es un CNode, PARA QUÉ sirve, su FORMA CANÓNICA,
+           y cómo usarlo como MODELO para construir cApps con flujo conversacional.
+-------------------------------------------------------------------------------
+NO se asume conocimiento previo. Este archivo es pegable y autosuficiente.
+Incluye una cApp de ejemplo ("suma de números") que funciona como diálogo
+interactivo: al comando `ejecuta cApp suma de números` el chat guía al usuario,
+valida la entrada hasta que sea válida, devuelve la suma y TERMINA el ciclo.
+===============================================================================
+
+
+0) CONCEPTOS BASE
+-------------------------------------------------------------------------------
+0.1) ¿Qué es un CNode (Cognitive Node)?
+- Es una UNIDAD DE CONOCIMIENTO EJECUTABLE y TRAZABLE.
+- Contiene lo que SABE (definiciones, reglas, contratos, invariantes)
+  y lo que PUEDE HACER (transformaciones, validaciones, adaptaciones, reportes).
+- Provee garantías de:
+  • Determinismo: misma entrada ⇒ misma salida.
+  • Invariantes explícitos: reglas no negociables declaradas y probadas.
+  • Evidencia/Provenance: cada afirmación tiene procedencia verificable.
+  • Compatibilidad: se compone con otros CNodes sin romper contratos.
+  • Auditabilidad: terceros pueden verificar su corrección.
+
+0.2) ¿Qué es la “forma canónica”?
+- Es el FORMATO ESTÁNDAR, mínimo y suficiente, para describir CNodes:
+  claro, determinista, validable y reusable. Evita ambigüedades y habilita tooling.
+
+0.3) ¿Qué es una cApp (Cognitive App)?
+- Es un FLUJO de trabajo invocable por chat (o API) que orquesta CNodes.
+- Se dispara con un comando de activación (prompt de invocación) y ejecuta
+  una sucesión DETERMINISTA de pasos (validaciones, transformaciones, salidas).
+- En este proyecto, el chat conversa con el usuario: solicita datos, valida,
+  reintenta si hace falta y, al cumplir las condiciones, emite el resultado
+  y cierra el ciclo.
+
+
+1) FORMA CANÓNICA DE UN CNODE (MAPA GENERAL)
+-------------------------------------------------------------------------------
+Un CNode se expresa con TRES BLOQUES principales:
+
+A) `contexto`  → Identidad, propósito, alcance, fuentes y garantías canónicas.
+B) `nodes`     → Motor interno: orquestador (pipeline + contratos + políticas)
+                 y componentes declarativos (anchors, edges, alias, invariantes,
+                 tests de fitness, provenance).
+C) `metaforas` → Metáfora (mapeo estructural concreto) + Meta-metáfora
+                 (plantilla/validador de metáforas) + plantillas transferibles.
+
+Vista de alto nivel (solo estructura):
+{
+  "contexto": { ... },
+  "nodes":    { "orquestador": { ... }, "componentes": { ... } },
+  "metaforas": {
+    "metafora_base": { ... },
+    "meta_metafora": { ... },
+    "plantillas_transferibles": [ ... ]
+  }
+}
+
+
+2) BLOQUE A — `contexto` (IDENTIDAD Y GARANTÍAS)
+-------------------------------------------------------------------------------
+Campos:
+- id (string, único, versionado):   cnode:<namespace>/<nombre>@<version>
+  ej: "cnode:ejemplos/suma_numeros@1.0.0"
+- titulo (string breve):            "Validador y Sumador de Números (CSV simple)"
+- proposito (string):               "Validar y sumar enteros entregados por chat."
+- ambito (string):                  "feature" | "proceso" | "repo" | "doc"
+- fuentes (string[]):               referencias (convenciones, specs, docs)
+- notas (string):                   supuestos (alcance, límites, decisiones)
+- canonicidad (objeto booleano):    estructura_minima_suficiente, determinismo,
+                                    invariantes_explicitos, evidencia_y_provenance,
+                                    compatibilidad, auditabilidad
+
+
+3) BLOQUE B — `nodes` (CÓMO FUNCIONA)
+-------------------------------------------------------------------------------
+3.1) `nodes.orquestador`  (PIPELINE + CONTRATOS + POLÍTICAS)
+- pipeline (string[]) — Secuencia DETERMINISTA recomendada:
+  1) intake                   → ingesta controlada (tipos básicos, vacíos, etc.)
+  2) alineacion_alias         → normaliza vocabulario heterogéneo (sinónimos/tipos)
+  3) extraccion_anchors_edges → identifica anclas (elementos clave) y relaciones
+  4) validacion_invariantes   → verifica reglas no negociables (composición/orden)
+  5) tests_fitness            → mide ajuste; algunos tests son obligatorios (must_pass)
+  6) sintesis_adapter         → emite artefacto exportable (adapter/reporte/grafo…)
+  7) emision_canonica         → publica resultado con evidencia (provenance)
+
+- provides (array<object>) — Capacidades/artefactos que el CNode entrega.
+  ej: { "name": "resultado_suma", "types": ["INT", "JSON_REPORT"] }
+
+- requires (array<object>) — Insumos que debe recibir (nombre, tipos, si es opcional).
+  ej: { "name": "entrada_textual", "types_expected": ["STRING"], "optional": false }
+
+- politicas (object) — Reglas globales:
+  evidence_only: true              → nunca improvisar datos
+  rollback_seguro: true            → revertir si falla una etapa crítica
+  umbral_confianza: 0.8            → mínimo para aceptar tests no deterministas
+  merge_policy: {                  → fusión con otros nodos
+    upsert_only: true,
+    conflict: "prefer-specificity" | "prefer-recency" | "fail",
+    id_collision: "namespaced-rename" | "fail",
+    provenance: "record"
+  }
+
+3.2) `nodes.componentes`  (PIEZAS DECLARATIVAS)
+- anchors (array<object>) — Correspondencias fuente↔objetivo que fijan el mapa.
+  ej: { "from": "texto_csv", "to": "lista_enteros", "justificacion": "regex válida" }
+
+- edges (array<object>) — Relaciones (grafo dirigido) entre elementos/pasos.
+  ej: { "from": "validacion_formato", "to": "parseo", "tipo": "flujo", "peso": 1 }
+
+- alias_map (object) — Diccionario de sinónimos/normalizaciones:
+  type_aliases: { "csv_numeros": "STRING", "lista": "ARRAY<INT>" }
+  edge_aliases: { "depende_de": "from->to" }
+
+- invariantes (string[]) — Reglas NO NEGOCIABLES (si fallan, no es canónico).
+  ej: ["solo_digitos_y_comas", "orden_pipeline", "sin_ciclos_operacionales"]
+
+- tests_fitness (array<object>) — Pruebas de adecuación:
+  { "name":"regex_numerica", "fn":"/^\\s*\\d+\\s*(,\\s*\\d+\\s*)*$/", "must_pass": true }
+  { "name":"tamano_lista",   "fn":"len(lista)<=10000",                "must_pass": false }
+
+- provenance (array<object>) — Evidencia por afirmación:
+  { "claim":"regex_numerica",
+    "source":"regex_specs_numeros.md#v1",
+    "confidence":0.95, "who":"equipo_validacion", "when":"2025-10-01T00:00:00Z" }
+
+
+4) BLOQUE C — `metaforas` (CÓMO PENSAMOS Y CÓMO VALIDAMOS ESE PENSAR)
+-------------------------------------------------------------------------------
+4.1) `metafora_base` (mapeo estructural concreto)
+- nombre (string)                ej: "Suma determinista con entrada CSV por chat"
+- anchors_mapeo (have→need)      ej: {"have":"texto_usuario","need":"lista_enteros_valida"}
+- reglas (string[])              ej: ["paso_minimo_valido","no_romper_invariantes","registrar_confianza"]
+
+4.2) `meta_metafora` (plantilla/validador de metáforas)
+- esquema: tipos mínimos para anclas/edges  (Anchor: id,tipo,evidencia | Edge: from,to,tipo,peso)
+- adaptadores: data_mappers from→to (lossless true/false)
+- validacion: constraints ["composition","adjacency","ordering", ...] + fitness_threshold
+- composicion: prioridad de metáforas y política de conflictos
+
+4.3) `plantillas_transferibles` (recetas reusables)
+- Objetivo + checklist accionable (p. ej., “Validar_CSV_numerico”).
+
+
+5) CONTRATO DE RUNTIME PARA cApps EN CHAT (PROTOCOLO GENERAL)
+-------------------------------------------------------------------------------
+Este proyecto "Cognitive Apps" modela cApps como FLUJOS CONVERSACIONALES.
+
+5.1) Comando de INVOCACIÓN (usuario → chat)
+- Sintaxis sugerida:
+  "ejecuta cApp <nombre_de_la_cApp>"
+  ejemplo:  "ejecuta cApp suma de números"
+
+5.2) Estado conversacional (máquina de estados)
+- IDLE         : el sistema espera comandos.
+- AWAIT_INPUT  : la cApp solicita datos al usuario (mensaje guiado).
+- VALIDATE     : verifica formato / invariantes de la entrada.
+- PARSE        : transforma entrada a estructura interna.
+- EXECUTE      : realiza la operación (p. ej., suma).
+- EMIT         : entrega resultado + breve reporte.
+- END          : cierra ciclo y vuelve a IDLE.
+
+5.3) Reglas
+- Reintentos: si VALIDATE falla, el sistema EXPLICA el error y vuelve a AWAIT_INPUT.
+- Determinismo: misma entrada válida ⇒ mismo resultado.
+- Evidencia: cada validación guarda un rastro (claim/source/confidence/when).
+- Cierre: al EMIT, la cApp muestra resultado y TERMINA el ciclo (END).
+
+5.4) Convenciones de mensajes (español, estilo claro)
+- Solicitud:  "Por favor, escribe una lista de enteros separados por comas (ej: 1, 5, 8)."
+- Error vacía: "No recibí números. Intenta con algo como: 3, 10, 27."
+- Error formato: "Solo se admiten enteros separados por comas. Ejemplo: 2, 4, 6. Intenta de nuevo."
+- Confirmación: "Entrada válida: [1, 5, 8, 23, 4]. Procedo a sumar…"
+- Resultado: "La suma es 41. Fin de la cApp 'suma de números'."
+- Reinicio:  "(Puedes escribir: ejecuta cApp suma de números para volver a usarla)."
+
+
+6) cApp DE EJEMPLO (CONVERSACIONAL) — “suma de números”
+-------------------------------------------------------------------------------
+⚠️ Esta cApp NO asume que el usuario da los números en el mismo comando.
+    Sigue tu intención: el comando inicia un flujo; el chat PIDE los números,
+    VALIDA hasta que sean válidos y luego SUMA y TERMINA.
+
+6.1) Especificación de ALTO NIVEL (humana)
+- Nombre:       "suma de números"
+- Objetivo:     Guiar al usuario para introducir una lista textual de enteros
+                (CSV simple), validarla, convertirla a enteros, sumar y responder.
+- Responsabilidades (cApp_resps):
+  (R1) Pedir datos con ejemplo claro y restricción (solo enteros y comas).
+  (R2) Validar entrada; si inválida, explicar y reintentar.
+  (R3) Parsear a lista<int>.
+  (R4) Sumar y emitir resultado; cerrar ciclo.
+- Cierre: la cApp finaliza tras emitir el resultado (estado END).
+
+6.2) PSEUDOCÓDIGO del flujo conversacional (máquina de estados)
+
+state = "IDLE"
+
+on user_message:
+  if state == "IDLE":
+    if matches(user_message, /^\\s*ejecuta\\s+cApp\\s+suma\\s+de\\s+números\\s*$/i):
+      reply("Por favor, escribe una lista de enteros separados por comas, p. ej.: 1, 5, 8, 23, 4")
+      state = "AWAIT_INPUT"
+    else:
+      // ignorar o manejar otros comandos
+  else if state == "AWAIT_INPUT":
+    input = user_message
+    if is_empty_or_whitespace(input):
+      reply("No recibí números. Intenta con algo como: 3, 10, 27.")
+      state = "AWAIT_INPUT"
+    else:
+      state = "VALIDATE"
+      goto validate
+
+validate:
+  // Permite espacios; exige uno o más enteros separados por coma
+  regex = /^\\s*\\d+\\s*(,\\s*\\d+\\s*)*$/
+  if not regex.test(input):
+    reply("Solo se admiten enteros separados por comas. Ejemplo: 2, 4, 6. Intenta de nuevo.")
+    state = "AWAIT_INPUT"
+  else:
+    state = "PARSE"
+    goto parse
+
+parse:
+  // normalización
+  tokens = split(input, ",")
+  nums = []
+  for t in tokens:
+    n = parseInt(trim(t))
+    nums.push(n)
+  // límites (opcionales)
+  if length(nums) > 10000:
+    reply("La lista es demasiado larga (máx. 10,000 números). Intenta con menos.")
+    state = "AWAIT_INPUT"
+  else:
+    reply("Entrada válida: " + JSON.stringify(nums) + ". Procedo a sumar…")
+    state = "EXECUTE"
+    goto execute
+
+execute:
+  sum = 0
+  for n in nums: sum += n
+  context.sum_result = sum
+  state = "EMIT"
+  goto emit
+
+emit:
+  reply("La suma es " + context.sum_result + ". Fin de la cApp 'suma de números'.")
+  state = "END"
+
+END:
+  // opcionalmente volver a IDLE tras responder
+  state = "IDLE"
+
+6.3) MÓDULOS (CNodes) que implementan cada responsabilidad
+- CNode A — `validar_csv_numerico`:
+  propósito: verificar que la cadena cumpla la regex de enteros+comas
+  invariantes: ["solo_digitos_y_comas", "no_vacio"]
+  tests_fitness:
+    - regex_numerica: /^\\s*\\d+\\s*(,\\s*\\d+\\s*)*$/  (must_pass: true)
+
+- CNode B — `parsear_csv_a_enteros`:
+  propósito: convertir tokens a enteros (trim + parseInt)
+  invariantes: ["orden_pipeline"]  (no ejecutar si A falló)
+  tests_fitness:
+    - tamano_lista <= 10000        (must_pass: false)
+
+- CNode C — `sumar_enteros`:
+  propósito: sumar lista<int>
+  invariantes: ["entrada_tipada_ARRAY<INT>"]
+  tests_fitness: (opcionales) chequeo de overflow si aplica
+
+6.4) CONTRATO DE MENSAJES (plantillas)
+- Solicitud inicial:
+  "Por favor, escribe una lista de enteros separados por comas, p. ej.: 1, 5, 8."
+
+- Respuestas de error:
+  a) Vacío: "No recibí números. Intenta con algo como: 3, 10, 27."
+  b) Formato: "Solo se admiten enteros separados por comas. Ejemplo: 2, 4, 6. Intenta de nuevo."
+  c) Límite: "La lista es demasiado larga (máx. 10,000 números). Intenta con menos."
+
+- Confirmación:
+  "Entrada válida: [<lista>]. Procedo a sumar…"
+
+- Resultado:
+  "La suma es <N>. Fin de la cApp 'suma de números'."
+
+6.5) EJEMPLO DE TRANSCRIPCIÓN (feliz + error + reintento)
+Usuario:    ejecuta cApp suma de números
+Sistema:    Por favor, escribe una lista de enteros separados por comas, p. ej.: 1, 5, 8.
+Usuario:    2, tres, 4
+Sistema:    Solo se admiten enteros separados por comas. Ejemplo: 2, 4, 6. Intenta de nuevo.
+Usuario:    2, 3, 4, 5
+Sistema:    Entrada válida: [2, 3, 4, 5]. Procedo a sumar…
+Sistema:    La suma es 14. Fin de la cApp 'suma de números'.
+
+
+7) PLANTILLA CANÓNICA MINIMAL (LISTA PARA COPIAR) — CNODE
+-------------------------------------------------------------------------------
+Use esta base para definir CNodes del proyecto "Cognitive Apps".
+
+{
+  "contexto": {
+    "id": "cnode:<namespace>/<nombre>@<version>",
+    "titulo": "<Título claro y breve>",
+    "proposito": "<Qué problema resuelve este CNode>",
+    "ambito": "<feature|proceso|repo|doc>",
+    "fuentes": ["<referencia 1>", "<referencia 2>"],
+    "notas": "<supuestos y límites>",
+    "canonicidad": {
+      "estructura_minima_suficiente": true,
+      "determinismo": true,
+      "invariantes_explicitos": true,
+      "evidencia_y_provenance": true,
+      "compatibilidad": true,
+      "auditabilidad": true
+    }
+  },
+  "nodes": {
+    "orquestador": {
+      "pipeline": [
+        "intake",
+        "alineacion_alias",
+        "extraccion_anchors_edges",
+        "validacion_invariantes",
+        "tests_fitness",
+        "sintesis_adapter",
+        "emision_canonica"
+      ],
+      "provides": [
+        {"name": "<capacidad_exportada_1>", "types": ["<TipoA>", "<TipoB>"]}
+      ],
+      "requires": [
+        {"name": "<insumo_1>", "types_expected": ["<TipoX>"], "optional": false}
+      ],
+      "politicas": {
+        "evidence_only": true,
+        "rollback_seguro": true,
+        "umbral_confianza": 0.8,
+        "merge_policy": {
+          "upsert_only": true,
+          "conflict": "prefer-specificity",
+          "id_collision": "namespaced-rename",
+          "provenance": "record"
+        }
+      }
+    },
+    "componentes": {
+      "anchors": [
+        {"from": "<fuente.objeto>", "to": "<objetivo.objeto>", "justificacion": "<evidencia>"}
+      ],
+      "edges": [
+        {"from": "<nodoA>", "to": "<nodoB>", "tipo": "<flujo|dep|ref>", "peso": 1}
+      ],
+      "alias_map": {
+        "type_aliases": {"<sinonimo>": "<canonico>"},
+        "edge_aliases": {"<depende_de>": "from->to"}
+      },
+      "invariantes": [
+        "preservar_composicion",
+        "preservar_adyacencia",
+        "preservar_orden"
+      ],
+      "tests_fitness": [
+        {"name": "aciclicidad", "fn": "noCycles(G)", "must_pass": true}
+      ],
+      "provenance": [
+        {"claim": "<qué se afirmó>", "source": "<archivo/url>", "confidence": 0.85, "who": "IA|humano", "when": "<ISO8601>"}
+      ]
+    }
+  },
+  "metaforas": {
+    "metafora_base": {
+      "nombre": "<Metáfora principal>",
+      "anchors_mapeo": [
+        {"have": "<recurso_actual>", "need": "<requisito_contrato>"}
+      ],
+      "reglas": [
+        "usar_paso_minimo_valido",
+        "no_romper_invariantes",
+        "medir_confianza_y_registrar"
+      ]
+    },
+    "meta_metafora": {
+      "esquema": {
+        "Anchor": {"campos": ["id", "tipo", "evidencia"]},
+        "Edge":   {"campos": ["from", "to", "tipo", "peso"]}
+      },
+      "adaptadores": {
+        "data_mappers": [
+          {"from": "<TipoFuente>", "to": "<TipoCanonico>", "lossless": true}
+        ]
+      },
+      "validacion": {
+        "constraints": ["composition", "adjacency", "ordering"],
+        "fitness_threshold": 0.8
+      },
+      "composicion": {
+        "prioridad": ["metafora_base", "otras_metaforas"],
+        "conflictos": "preferir_mas_especifica"
+      }
+    },
+    "plantillas_transferibles": [
+      {
+        "nombre": "Validar_CSV_numerico",
+        "objetivo": "Asegurar que una cadena contiene solo enteros separados por comas",
+        "checklist": [
+          "aplicar_regex_numerica",
+          "eliminar_espacios",
+          "rechazar_tokens_no_numericos"
+        ]
+      }
+    ]
+  }
+}
+
+
+8) ESPECIFICACIÓN DE LA cApp “suma de números” (PARA PEGAR EN EL PROYECTO)
+-------------------------------------------------------------------------------
+Esta sección define la cApp usando el modelo de CNodes. Copia/pega y ajusta.
+
+8.1) cApp — Descripción de ALTO NIVEL (JSON)
+
+{
+  "capp": {
+    "name": "suma_de_numeros",
+    "version": "1.0.0",
+    "prompt_invocacion_regex": "^\\s*ejecuta\\s+cApp\\s+suma\\s+de\\s+números\\s*$",
+    "objetivo": "Guiar al usuario para introducir una lista de enteros CSV, validar, sumar y cerrar ciclo.",
+    "responsabilidades": [
+      "R1: Solicitar entrada (ejemplo claro, restricción de formato).",
+      "R2: Validar entrada; explicar errores; reintentar hasta que sea válida.",
+      "R3: Parsear a lista<int>.",
+      "R4: Sumar y emitir resultado; terminar la cApp."
+    ],
+    "finaliza_en": "EMIT"
+  },
+  "mensajes": {
+    "solicitud": "Por favor, escribe una lista de enteros separados por comas, p. ej.: 1, 5, 8, 23, 4",
+    "error_vacio": "No recibí números. Intenta con algo como: 3, 10, 27.",
+    "error_formato": "Solo se admiten enteros separados por comas. Ejemplo: 2, 4, 6. Intenta de nuevo.",
+    "error_largo": "La lista es demasiado larga (máx. 10,000 números). Intenta con menos.",
+    "confirmacion": "Entrada válida: {{lista}}. Procedo a sumar…",
+    "resultado": "La suma es {{suma}}. Fin de la cApp 'suma de números'."
+  },
+  "estado": {
+    "inicial": "IDLE",
+    "transiciones": [
+      {"from": "IDLE", "on": "invocacion_valida", "to": "AWAIT_INPUT"},
+      {"from": "AWAIT_INPUT", "on": "input_recibido", "to": "VALIDATE"},
+      {"from": "VALIDATE", "on": "invalida_vacia", "to": "AWAIT_INPUT"},
+      {"from": "VALIDATE", "on": "invalida_formato", "to": "AWAIT_INPUT"},
+      {"from": "VALIDATE", "on": "valida", "to": "PARSE"},
+      {"from": "PARSE", "on": "lista_demasiado_larga", "to": "AWAIT_INPUT"},
+      {"from": "PARSE", "on": "ok", "to": "EXECUTE"},
+      {"from": "EXECUTE", "on": "ok", "to": "EMIT"},
+      {"from": "EMIT", "on": "done", "to": "END"},
+      {"from": "END", "on": "reset", "to": "IDLE"}
+    ]
+  }
+}
+
+8.2) CNodes usados por la cApp (definiciones mínimas)
+
+A) CNode — validar_csv_numerico
+{
+  "contexto": {
+    "id": "cnode:capps/validar_csv_numerico@1.0.0",
+    "titulo": "Validador de CSV numérico (enteros)",
+    "proposito": "Comprobar que una cadena contiene uno o más enteros separados por comas.",
+    "ambito": "feature",
+    "fuentes": ["regex_specs_numeros.md"],
+    "notas": "Solo enteros >= 0. Permite espacios. No admite decimales ni signos.",
+    "canonicidad": {
+      "estructura_minima_suficiente": true,
+      "determinismo": true,
+      "invariantes_explicitos": true,
+      "evidencia_y_provenance": true,
+      "compatibilidad": true,
+      "auditabilidad": true
+    }
+  },
+  "nodes": {
+    "orquestador": {
+      "pipeline": [
+        "intake",
+        "validacion_invariantes",
+        "tests_fitness",
+        "emision_canonica"
+      ],
+      "provides": [{"name": "csv_validado", "types": ["STRING"]}],
+      "requires": [{"name": "entrada_textual", "types_expected": ["STRING"], "optional": false}],
+      "politicas": {"evidence_only": true, "rollback_seguro": true, "umbral_confianza": 1.0,
+        "merge_policy": {"upsert_only": true, "conflict": "prefer-specificity", "id_collision": "namespaced-rename", "provenance": "record"}}
+    },
+    "componentes": {
+      "anchors": [{"from": "cadena", "to": "csv_validado", "justificacion": "regex_numerica"}],
+      "edges": [],
+      "alias_map": { "type_aliases": {"texto_usuario": "STRING"} },
+      "invariantes": ["solo_digitos_y_comas", "no_vacio"],
+      "tests_fitness": [
+        {"name": "regex_numerica", "fn": "/^\\s*\\d+\\s*(,\\s*\\d+\\s*)*$/", "must_pass": true}
+      ],
+      "provenance": [
+        {"claim": "regex_numerica", "source": "regex_specs_numeros.md#v1", "confidence": 0.95, "who": "equipo_validacion", "when": "2025-10-01T00:00:00Z"}
+      ]
+    }
+  },
+  "metaforas": {
+    "metafora_base": {
+      "nombre": "Texto→CSV_numerico_valido",
+      "anchors_mapeo": [{"have": "texto_usuario", "need": "csv_validado"}],
+      "reglas": ["paso_minimo_valido","no_romper_invariantes","registrar_confianza"]
+    },
+    "meta_metafora": {
+      "esquema": {"Anchor": {"campos": ["id","tipo","evidencia"]}, "Edge": {"campos": ["from","to","tipo","peso"]}},
+      "adaptadores": {"data_mappers": [{"from":"STRING","to":"STRING","lossless": true}]},
+      "validacion": {"constraints": ["composition","ordering"], "fitness_threshold": 1.0},
+      "composicion": {"prioridad": ["Texto→CSV_numerico_valido"], "conflictos": "preferir_mas_especifica"}
+    },
+    "plantillas_transferibles": []
+  }
+}
+
+B) CNode — parsear_csv_a_enteros
+{
+  "contexto": {
+    "id": "cnode:capps/parsear_csv_a_enteros@1.0.0",
+    "titulo": "Parseo CSV a lista de enteros",
+    "proposito": "Transformar una cadena CSV válida en ARRAY<INT>.",
+    "ambito": "feature",
+    "fuentes": ["convenciones_equipo_textio.md"],
+    "notas": "Trim de espacios; máximo 10,000 elementos."
+  },
+  "nodes": {
+    "orquestador": {
+      "pipeline": ["intake","sintesis_adapter","emision_canonica"],
+      "provides": [{"name":"lista_enteros","types":["ARRAY<INT>"]}],
+      "requires": [{"name":"csv_validado","types_expected":["STRING"],"optional":false}],
+      "politicas": {"evidence_only": true, "rollback_seguro": true, "umbral_confianza": 1.0,
+        "merge_policy": {"upsert_only": true, "conflict":"prefer-specificity","id_collision":"namespaced-rename","provenance":"record"}}
+    },
+    "componentes": {
+      "anchors": [{"from":"csv_validado","to":"lista_enteros","justificacion":"split(',') + parseInt"}],
+      "edges": [],
+      "alias_map": {},
+      "invariantes": ["orden_pipeline"],
+      "tests_fitness": [{"name":"tamano_lista","fn":"len(lista)<=10000","must_pass":false}],
+      "provenance": []
+    }
+  },
+  "metaforas": { "metafora_base": {"nombre":"CSV→ARRAY<INT>","anchors_mapeo":[{"have":"csv_validado","need":"lista_enteros"}],"reglas":["registrar_confianza"]},
+                  "meta_metafora": {"esquema":{"Anchor":{"campos":["id","tipo","evidencia"]},"Edge":{"campos":["from","to","tipo","peso"]}},
+                                    "adaptadores":{"data_mappers":[{"from":"STRING","to":"ARRAY<INT>","lossless":false}]},
+                                    "validacion":{"constraints":["composition"],"fitness_threshold":0.8},
+                                    "composicion":{"prioridad":["CSV→ARRAY<INT>"],"conflictos":"preferir_mas_especifica"}},
+                  "plantillas_transferibles":[] }
+}
+
+C) CNode — sumar_enteros
+{
+  "contexto": {
+    "id": "cnode:capps/sumar_enteros@1.0.0",
+    "titulo": "Suma de enteros",
+    "proposito": "Reducir ARRAY<INT> a INT con suma.",
+    "ambito": "feature",
+    "fuentes": [],
+    "notas": "Sin verificación de overflow (agregar si el entorno lo requiere)."
+  },
+  "nodes": {
+    "orquestador": {
+      "pipeline": ["intake","sintesis_adapter","emision_canonica"],
+      "provides": [{"name":"resultado_suma","types":["INT","JSON_REPORT"]}],
+      "requires": [{"name":"lista_enteros","types_expected":["ARRAY<INT>"],"optional":false}],
+      "politicas": {"evidence_only": true, "rollback_seguro": true, "umbral_confianza": 1.0,
+        "merge_policy": {"upsert_only": true, "conflict":"prefer-specificity","id_collision":"namespaced-rename","provenance":"record"}}
+    },
+    "componentes": {
+      "anchors": [{"from":"lista_enteros","to":"resultado_suma","justificacion":"reduce(+)" }],
+      "edges": [],
+      "alias_map": {},
+      "invariantes": ["entrada_tipada_ARRAY<INT>"],
+      "tests_fitness": [],
+      "provenance": []
+    }
+  },
+  "metaforas": { "metafora_base": {"nombre":"ARRAY<INT>→INT (suma)","anchors_mapeo":[{"have":"lista_enteros","need":"resultado_suma"}],"reglas":["registrar_confianza"]},
+                  "meta_metafora": {"esquema":{"Anchor":{"campos":["id","tipo","evidencia"]},"Edge":{"campos":["from","to","tipo","peso"]}},
+                                    "adaptadores":{"data_mappers":[{"from":"ARRAY<INT>","to":"INT","lossless":false}]},
+                                    "validacion":{"constraints":["composition"],"fitness_threshold":0.8},
+                                    "composicion":{"prioridad":["ARRAY<INT>→INT (suma)"],"conflictos":"preferir_mas_especifica"}},
+                  "plantillas_transferibles":[] }
+}
+
+8.3) NOTAS DE INTEGRACIÓN (cómo “pegar” todo en el chat)
+- Al detectar el patrón `prompt_invocacion_regex`, el runtime:
+  (1) cambia a estado AWAIT_INPUT y envía `mensajes.solicitud`.
+  (2) con el siguiente mensaje del usuario, llama CNode A (validar_csv_numerico):
+      * si falla: enviar `error_vacio` o `error_formato` y volver a AWAIT_INPUT.
+      * si pasa: continuar a CNode B (parsear_csv_a_enteros).
+  (3) si B detecta lista > límite: enviar `error_largo` y volver a AWAIT_INPUT.
+      si OK: pasar CNode C (sumar_enteros).
+  (4) emitir `mensajes.confirmacion` y luego `mensajes.resultado`; terminar.
+
+
+9) CHECKLIST DE CALIDAD (ANTES DE PUBLICAR UNA cApp)
+-------------------------------------------------------------------------------
+[ ] Comando de invocación claro y probado.
+[ ] Mensajes de solicitud/errores/confirmación homogéneos (tono y formato).
+[ ] CNodes con `provides`/`requires` tipados y comprensibles.
+[ ] Invariantes y tests_fitness definidos, con umbrales explícitos.
+[ ] Provenance para claims críticos (regex, límites, políticas).
+[ ] Máquina de estados sin ambigüedades (un solo camino por transición).
+[ ] Ejemplos de transcripción (felices y de error) incluidos.
+[ ] SemVer en cApp y CNodes (versionado coherente).
+[ ] Documentar límites (ej. máximo de elementos, tipos permitidos).
+
+
+10) GLOSARIO ESENCIAL
+-------------------------------------------------------------------------------
+- Ancla (anchor): correspondencia 1↔1 entre elemento fuente y objetivo.
+- Edge: relación dirigida entre nodos/pasos (grafo).
+- Invariante: regla no negociable (si falla, el nodo no es canónico).
+- Fitness: grado de ajuste del resultado a la forma esperada (0..1).
+- Provenance: procedencia verificable de una afirmación (quién/cuándo/dónde/confianza).
+- Metáfora: mapeo estructural concreto entre dominios (conserva forma).
+- Meta-metáfora: plantilla/validador para fabricar y validar metáforas.
+
+
+FIN — Con este archivo, el proyecto “Cognitive Apps” puede:
+1) Entender el modelo de CNodes y la forma canónica.
+2) Definir cApps conversacionales que guían al usuario, validan entrada,
+   reintentan en caso de error y emiten resultados deterministas.
+3) Reusar/expandir el ejemplo “suma de números” como blueprint para nuevas cApps.
+===============================================================================

@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/contrato_dump.schema.json",
+  "title": "Contrato de Dump JSONL para Ingesta Cognitiva",
+  "description": "Cada línea del JSONL describe un archivo o chunk textual con metadatos suficientes para preservar composición/adyacencia/orden.",
+  "type": "object",
+  "required": [
+    "path",
+    "type",
+    "sha256",
+    "size",
+    "mtime",
+    "mediaType"
+  ],
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "Ruta relativa dentro del proyecto (POSIX)."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "file",
+        "chunk"
+      ],
+      "description": "'file' para archivo completo pequeño; 'chunk' para fragmentos de archivos grandes."
+    },
+    "lang": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Lenguaje detectado (ej. ts, js, py) si aplica."
+    },
+    "mediaType": {
+      "type": "string",
+      "description": "MIME aproximado (ej. text/typescript, text/plain)."
+    },
+    "size": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Tamaño en bytes del archivo original (no del chunk)."
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{64}$",
+      "description": "Hash SHA-256 del archivo fuente."
+    },
+    "mtime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Última modificación del archivo fuente (ISO 8601)."
+    },
+    "chunkIndex": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "description": "Índice del chunk dentro del archivo, si type='chunk'."
+    },
+    "lineStart": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "description": "Línea inicial incluida en el chunk, si corresponde."
+    },
+    "lineEnd": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "description": "Línea final incluida en el chunk, si corresponde."
+    },
+    "offsetBytes": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "description": "Desplazamiento en bytes desde el inicio del archivo, si corresponde."
+    },
+    "text": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Contenido textual del archivo o chunk. Si el archivo es grande, partirlo en chunks y usar UTF-8."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "chunk"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "chunkIndex",
+          "lineStart",
+          "lineEnd",
+          "offsetBytes",
+          "text"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "file"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "text"
+        ]
+      }
+    }
+  ]
+}

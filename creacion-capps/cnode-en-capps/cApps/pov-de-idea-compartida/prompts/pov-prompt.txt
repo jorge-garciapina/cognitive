@@ -1,0 +1,40 @@
+PROMPT — Análisis profundo de la IDEA desde el punto de vista del proyecto (con anclaje al CONTEXTO previo)
+
+Propósito
+Quiero un análisis único, profundo y autosuficiente de la IDEA contenida en el artefacto adjunto. El análisis debe estar escrito en el **estilo nativo** del [el proyecto de chatgpt que contiene este chat] descrito en el mensaje anterior (CONTEXTO) y usar ese CONTEXTO como **marco de interpretación** (criterios, reglas, prioridades), sin introducir información externa. No describas el artefacto por secciones; integra toda la evidencia en una lectura cohesiva de la IDEA.
+
+Anclaje obligatorio (encabezado de dos líneas al inicio)
+Proyecto: <NombreCanónicoDelProyecto extraído del CONTEXTO> (alias: [proyecto de chatgpt que contiene este chat])
+IDEA_REF: <identificador estable de la idea>
+
+Instrucciones clave
+- **Estilo del [el proyecto de chatgpt que contiene este chat] **: redacta con el tono, estructura, marcas y nivel de detalle propios del [el proyecto de chatgpt que contiene este chat]  (según el CONTEXTO). Si hay choque entre un estilo genérico y el del [el proyecto de chatgpt que contiene este chat] , **prevalece el del [el proyecto de chatgpt que contiene este chat] **.
+- **Autosuficiencia**: el texto debe poder leerse sin conocer el hilo. Si usas términos o acrónimos, **expándelos/defínelos** la primera vez.
+- **Evidencia únicamente**: apóyate solo en el artefacto adjunto y en el marco del CONTEXTO (no añadas datos externos ni “conocimiento del mundo”).
+- **No listar por artefacto**: integra la evidencia en una explicación única; evita “en el archivo dice…”. 
+- **Español técnico y claro**; respuesta como **code snippet txt**; longitud orientativa ≥ 500 palabras (prioriza profundidad real sobre extensión vacía).
+
+Formato de salida (títulos fijos; narrativa libre en el estilo del [el proyecto de chatgpt que contiene este chat] )
+
+IDEA_REF: <identificador estable de la idea>
+
+Marco de interpretación (derivado del CONTEXTO de [el proyecto de chatgpt que contiene este chat] )
+- Resume, en 4–7 líneas, **cómo** este [proyecto de chatgpt que contiene este chat]  encuadra la lectura: objetivos/criterios que prioriza, restricciones relevantes, señales o dimensiones que condicionan la evaluación. No copies el CONTEXTO; **aplícalo**.
+
+Lectura profunda de la IDEA (bajo el marco del proyecto)
+- Explica **qué es** la IDEA según la evidencia, **qué prioriza** y **qué descarta** de acuerdo con los criterios de [el proyecto de chatgpt que contiene este chat].
+- Describe su **estructura y funcionamiento**: componentes, relaciones, flujos/estados, mecanismos de decisión y supuestos que quedan implícitos.
+- Expón **escenarios representativos** y sus implicaciones operativas, en el énfasis que el proyecto considera central.
+- Mantén consistencia terminológica; define términos/acrónimos la primera vez.
+
+Reglas y umbrales aplicables (si existen)
+- Declara **condiciones → acciones/decisiones** (p. ej., “si <condición> entonces <decisión>”) observables en la evidencia o coherentes con las políticas de [el proyecto de chatgpt que contiene este chat]  según el CONTEXTO.
+- Si no aparecen reglas explícitas: “No se observan reglas explícitas en el artefacto”.
+
+Limitaciones y evidencia faltante
+- Señala **ambigüedades o huecos** de la evidencia, y qué datos serían necesarios para robustecer o falsar esta lectura sin salir del marco de [el proyecto de chatgpt que contiene este chat] .
+
+Notas de cierre
+- No cites ni pegues texto del CONTEXTO; úsalo como **lente**.
+- No enumeres el contenido del archivo; **interpreta**.
+- Asegura que el resultado sea **autosuficiente** y refleje el **estilo nativo** de [el proyecto de chatgpt que contiene este chat].

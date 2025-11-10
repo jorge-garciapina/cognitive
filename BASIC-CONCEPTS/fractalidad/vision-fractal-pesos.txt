@@ -1,0 +1,276 @@
+TÍTULO: Visión fractal de sistemas — Integración del Orquestador de Pesos/Presets (caso general aplicable a cualquier dominio)
+VERSIÓN: 2.0 (documento autosuficiente; no depende de fuentes externas)
+AUTOR: [tu nombre o equipo]
+
+PROPÓSITO DEL DOCUMENTO
+Unificar la “Visión fractal de sistemas” con un módulo genérico de gobierno por PESOS y PRESETS que permita priorizar capacidades sin romper la forma estructural A–I (Propósito, Invariantes, Objetos, Interfaces, Métrica faro, Validaciones duras, Cadencia, Aprendizaje, Trazabilidad). Mostramos cómo esta forma gobierna por igual un sistema de inversión (Núcleo–Puentes–Alas) y un sistema de storytelling multimodal (AAS–NRS–EAS), tratándolos como manifestaciones de una estructura primaria única: el ORQUESTADOR DE SISTEMAS ACTIVABLES POR PESOS.
+
+──────────────────────────────────────────────────────────────────────────────
+0) RESUMEN EJECUTIVO
+──────────────────────────────────────────────────────────────────────────────
+• Forma estable: todo sistema declara A–I; la estructura no cambia entre dominios.
+• Pesos y presets: las “perillas” operativas que redistribuyen prioridad entre subcapacidades sin violar invariantes.
+• Métrica faro: cada nivel (padre→hijo) posee un indicador único que valida la utilidad del preset.
+• Validaciones duras: si algo crítico falla (accesibilidad, legal, riesgo), el despliegue se bloquea aunque el score ponderado sea alto.
+• Telemetría y aprendizaje: la evidencia modifica parámetros (pesos dentro de rangos), no la identidad (invariantes).
+
+──────────────────────────────────────────────────────────────────────────────
+1) GLOSARIO OPERATIVO (sin ambigüedad)
+──────────────────────────────────────────────────────────────────────────────
+• Sistema: conjunto organizado con un propósito medible y reglas explícitas.
+• Subsistema: hijo de un sistema que repite la misma forma A–I y hereda invariantes.
+• Invariante: regla no negociable cuya violación rompe la identidad del sistema.
+• Interfaz/Contrato: especificación de entradas, salidas y reglas “si–entonces” con tipos y umbrales.
+• Métrica faro: indicador único que gobierna decisiones locales y evalúa la eficacia del preset.
+• Peso: coeficiente real 0..1 (normalizable) asignado a una subcapacidad; expresa prioridad relativa.
+• Preset: tupla de pesos válida y nombrada para un objetivo y contexto (canal, régimen, ventana).
+• Telemetría: datos operativos usados para diagnóstico y aprendizaje.
+• Trazabilidad: identidad compuesta padre→hijo y rastro de decisiones con versión.
+
+Acrónimos usados (definidos una única vez):
+• AAS — Attention Activation Score: medida de activación de atención.
+• NRS — Narrative Relevance Score: medida de relevancia narrativa (progresión/cauce).
+• EAS — Emotion Activation Score: medida de activación emocional.
+
+──────────────────────────────────────────────────────────────────────────────
+2) PRINCIPIOS FUNDAMENTALES (axiomas)
+──────────────────────────────────────────────────────────────────────────────
+P1. Autosimilaridad funcional: todos los niveles usan la plantilla A–I.
+P2. Herencia de invariantes: ningún hijo puede violar un invariante del padre.
+P3. Encaje por contratos: la unión de niveles ocurre únicamente por interfaces declaradas.
+P4. Recursión de métricas: la métrica faro local agrega hacia arriba y recibe metas hacia abajo.
+P5. Determinismo: mismas entradas → mismas salidas; evitar arbitrariedad.
+P6. Evidencia-primero: no hay cambio relevante sin telemetría suficiente.
+P7. Separación forma–contenido: la forma permanece; el contenido cambia.
+P8. Trazabilidad total: cada entidad conserva un ID compuesto y versionado.
+
+──────────────────────────────────────────────────────────────────────────────
+3) ORQUESTADOR DE SISTEMAS ACTIVABLES POR PESOS (estructura primaria)
+──────────────────────────────────────────────────────────────────────────────
+Descripción
+Un componente de nivel superior que gobierna subsistemas mediante presets de pesos. Proporciona catálogo de presets válidos, reglas meta “si–entonces”, ventanas de medición y política de trazabilidad. No impone un dominio; impone una forma.
+
+Superficie PROVIDES
+1) Catálogo de presets: nombre, vector de pesos, contexto previsto, límites y validaciones duras asociadas.
+2) Política “si–entonces” meta: reglas universales que limitan el uso de presets (bloqueos).
+3) Esquema de medición: métricas faro y secundarias; ventanas de revisión.
+4) Plantilla de implementación: cómo mapear un preset a decisiones concretas en el hijo.
+
+Superficie REQUIRES
+• Objetivo local y contexto (canal, formato, régimen, horizonte).
+• Señales y datos disponibles (telemetría mínima).
+• Restricciones específicas del hijo (legales, de marca, de riesgo, de accesibilidad).
+
+──────────────────────────────────────────────────────────────────────────────
+4) PLANTILLA FRACTAL A–I (extendida con “Pesos/Presets”)
+──────────────────────────────────────────────────────────────────────────────
+A) PROPÓSITO
+Definición: resultado observable que el sistema maximiza o cumple.
+Formato: “Maximizar <MétricaFaro> en <ventana> sujeto a invariantes <B>”.
+Nota: El preset elegido debe declarar explícitamente para qué métrica faro optimiza.
+
+B) INVARIANTES (no negociables)
+• Legales/Éticos/Marca (publicidad) o Riesgo/Liquidez/Apalancamiento (inversión).
+• Límites sobre el “espacio de pesos” (rango, granularidad de cambio, suma a 1).
+• Bloqueos duros: accesibilidad mínima (publicidad), Núcleo mínimo (inversión), etc.
+
+C) OBJETOS (inventario)
+• Catálogo de subcapacidades a ponderar (ej.: AAS, NRS, EAS en storytelling; Núcleo, Puentes, Alas en inversión).
+• Catálogo de presets: cada uno con nombre, vector de pesos, contexto, límites y reglas.
+• Herramientas de medición y tableros (retención, clics, conversión; β realizada, drawdown).
+• Guías y manuales (Patrones verbales/visuales; Libro de ciclos fractales).
+
+D) INTERFACES (entradas/salidas)
+Entradas:
+• Señales operativas (ej.: retención a 3 s; volatilidad; β; inventario).
+• Contexto (canal, formato; régimen macro; ventana).
+Salidas:
+• Decisiones ponderadas (selección, orden, intensidad).
+• Especificaciones de ejecución (brief de campaña; plan de asignación).
+• Reportes de estado y cambios de preset.
+
+E) MÉTRICA FARO (indicador rector)
+• Un único indicador por nivel valida si el preset aporta al objetivo.
+• Ejemplos: “avance al boleto de entrada” o “retención a 3 s” (publicidad); “rendimiento ajustado por riesgo con drawdown limitado” (inversión).
+
+F) VALIDACIONES DURAS (bloqueos)
+• Suma de pesos = 1 (o normalización obligatoria).
+• Límites de cada peso (min/max) y de variación por iteración (no se saltan escalones).
+• Accesibilidad/Veracidad (publicidad) o Riesgo/Liquidez (inversión) como filtros previos a publicación.
+• Si F falla, no se ejecuta aunque el score ponderado supere umbrales.
+
+G) CADENCIA (ritmo de gobierno)
+• Frecuencia para recalibración de pesos por nivel (diaria/semanal/mensual/por temporada).
+• Ventanas de medición y checkpoints obligatorios (ej.: cierre de ciclo fractal).
+
+H) APRENDIZAJE (de telemetría a parámetros)
+• Procedimiento para ajustar pesos dentro de rangos sin romper invariantes.
+• Algoritmo simple: comparar preset actual vs. métrica faro; si cuello de botella es “claridad”, aumentar peso de estructura (NRS) antes de intensificar emoción (EAS); si cuello de botella es “drawdown”, aumentar Núcleo y disminuir Alas.
+• Registro de hipótesis, experimentos y resultados (bitácora).
+
+I) TRAZABILIDAD (identidad y rastro)
+• ID_PRESET = [Padre/Hijo/Contexto/NombrePreset]@vX.Y
+• ID_DECISIÓN = [Fecha/Entrada/Salida/CambioPesos]@vX.Y
+• Historial: quién, cuándo, por qué, evidencias, estado antes/después.
+
+──────────────────────────────────────────────────────────────────────────────
+5) MÓDULO DE PESOS Y PRESETS (matemática y gobernanza)
+──────────────────────────────────────────────────────────────────────────────
+Definiciones
+• Vector de pesos W = (w₁, w₂, …, wₙ), con wᵢ ∈ [0,1] y ∑wᵢ=1 (o normalizado).
+• Vector de sub-scores S = (s₁, s₂, …, sₙ), cada sᵢ ∈ [0,1] (escalado).
+• Score compuesto: SCORE = Σ (wᵢ · sᵢ).
+
+Propiedades
+• Orden relativo: cambiar W modifica el ranking de objetos con S fijo.
+• Estabilidad: restricciones en variación de W evitan oscilaciones oportunistas.
+• Validaciones: si un objeto falla una validación dura, queda excluido antes del ranking ponderado.
+
+Política de presets
+• Presets nominales con propósito claro: “Attention-Dominant”, “Narrative-Dominant”, “Emotion-Dominant”, “Balanced”; “Defensivo-Núcleo”, “Tendencial-Puentes”, “Oportunista-Alas”.
+• Cada preset declara: W, contexto previsto, métrica faro, validaciones obligatorias, cadencia de revisión y condiciones de rollback.
+
+Reglas meta si–entonces
+1) Si el preset mejora la métrica faro pero falla una validación dura, entonces se bloquea.
+2) Si hay desalineación (mucha atención y poca acción), entonces mover pesos hacia la capacidad que resuelve el cuello de botella (estructura/claridad) antes de intensificar emoción.
+3) Si el contexto operativo cambia (canal, régimen macro), entonces recalibrar o elegir un preset congruente (no reciclar sin validación).
+4) Si el cambio de pesos no mueve la métrica faro en la ventana definida, entonces escalar a revisión de políticas (posible error de objetivo o de medición).
+
+──────────────────────────────────────────────────────────────────────────────
+6) JERARQUÍAS Y PERTENENCIA (con orquestadores locales)
+──────────────────────────────────────────────────────────────────────────────
+• Cada nivel puede poseer su propio orquestador de pesos subordinado al padre.
+• Ejemplo genérico:
+  Nivel 0 — Holding/Proyecto
+  Nivel 1 — Marca/Sistema
+  Nivel 2 — Colección/Módulo
+  Nivel 3 — País/Canal
+   3.a — Plaza/Formato
+   3.b — Estrato/Segmento
+  Nivel 4 — Nicho/Función objetivo  ← punto de anclaje del orquestador local
+  Nivel 5 — Subcapas (mecanismos/palancas) con presets
+  Nivel 6 — Unidad de ejecución (activo/decisión)
+• Regla de pertenencia: cada hijo hereda invariantes y reporta contra la métrica faro del padre.
+
+──────────────────────────────────────────────────────────────────────────────
+7) EJEMPLO 1 — STORYTELLING MULTIMODAL (AAS–NRS–EAS)
+──────────────────────────────────────────────────────────────────────────────
+Subcapacidades ponderadas
+• AAS (Attention Activation Score): ganchos, ritmo inicial, sorpresa en 0–3 s.
+• NRS (Narrative Relevance Score): progresión, causalidad, claridad de promesa y prueba.
+• EAS (Emotion Activation Score): activación emocional, embodiment, catarsis.
+
+Presets ilustrativos
+• Attention-Dominant: W = (0.70, 0.20, 0.10) — foco en ganchos para entornos de alta competencia.
+• Narrative-Dominant: W = (0.20, 0.70, 0.10) — foco en progresión y comprensión de la historia.
+• Emotion-Dominant: W = (0.10, 0.30, 0.60) — foco en catarsis y empatía.
+• Balanced: W ≈ (0.33, 0.33, 0.34) — equilibrio global.
+
+Validaciones duras
+• Accesibilidad: contraste mínimo, subtítulos, texto alternativo, seguridad de flashes.
+• Veracidad y evidencia: claims verificables; no prometer sin soporte.
+
+Métrica faro y telemetría
+• Ejemplo de métrica faro: avance al “boleto de entrada” (micro-conversión definida).
+• Telemetría: retención (3/6/9 s), clic, conversión, quejas y reportes.
+
+Regla de aplicación
+• SCORE_estímulo = w_AAS·AAS + w_NRS·NRS + w_EAS·EAS; rankear estímulos y componer activos.
+• Si “atención alta, acción baja” → subir NRS (claridad/estructura) o despejar fricción (palancas de acceso/stock/tiempo).
+
+Trazabilidad
+• ID_PRESET_VIDEO = [Marca/Serie/Canal/Formato/PRESET]@v
+• ID_ACTIVO = [Serie/Tema/Canal/Formato]@v + etiquetas de accesibilidad.
+
+──────────────────────────────────────────────────────────────────────────────
+8) EJEMPLO 2 — INVERSIÓN (Núcleo–Puentes–Alas)
+──────────────────────────────────────────────────────────────────────────────
+Subcapacidades ponderadas
+• Núcleo: resguardo y liquidez (Oro, TIPS/VTIP/SCHP, efectivo optimizado).
+• Puentes: participación diversificada con β moderada (ETF temáticos/sectoriales, bonos 10Y, PAXG).
+• Alas: crecimiento con β alta en cajas pequeñas (cripto con tesis, acciones high beta).
+
+Presets ilustrativos
+• Defensivo-Núcleo: W = (0.70, 0.25, 0.05)
+• Tendencial-Puentes: W = (0.60, 0.30, 0.10)
+• Oportunista-Alas: W = (0.60, 0.25, 0.15) con reglas de repatriación estrictas
+• Balanced: W ≈ (0.60, 0.25, 0.15) con bandas y tolerancias
+
+Validaciones duras
+• Núcleo mínimo (≥ 60 % salvo evento extraordinario formal).
+• Límite de Alas (≤ 15 %) y repatriación mecánica de ganancias.
+• Riesgo/Liquidez: drawdown máximo por capa y global.
+
+Métrica faro y telemetría
+• Métrica faro: rendimiento ajustado por riesgo con drawdown controlado (elige uno consistente).
+• Telemetría: β realizada, volatilidad, drawdown, atribución por capa y por ciclo fractal.
+
+Regla de aplicación
+• La elección de preset determina pesos por capa; la selección de activos respeta β esperada de su capa.
+• Si “ganancia alta pero drawdown alto” → aumentar Núcleo, reducir Alas; si “atención de mercado sin captura” → refinar Puentes (ETF con mejor participación neta de costos).
+
+Trazabilidad
+• ID_PRESET_CARTERA = [Cartera/Tema/PRESET]@v
+• ID_DECISIÓN = [Fecha/Asignación/CambioPesos/Motivo]@v
+
+──────────────────────────────────────────────────────────────────────────────
+9) MATRIZ DE PARALELISMOS (misma forma, contenidos distintos)
+──────────────────────────────────────────────────────────────────────────────
+• Subcapacidades: (AAS, NRS, EAS) ↔ (Núcleo, Puentes, Alas).
+• Presets por objetivo: Attention/Narrative/Emotion ↔ Defensivo/Tendencial/Oportunista.
+• Validaciones duras: Accesibilidad/Veracidad ↔ Riesgo/Liquidez.
+• Métrica faro: Avance al boleto (o conversión) ↔ Rendimiento ajustado por riesgo.
+• Telemetría: Retención/Clic/Conversión ↔ β/Volatilidad/Drawdown.
+• Reglas si–entonces: cerrar cuello de botella (claridad o fricción) ↔ reforzar Núcleo o recalibrar Puentes.
+
+──────────────────────────────────────────────────────────────────────────────
+10) CHECKLISTS Y PLANTILLAS
+──────────────────────────────────────────────────────────────────────────────
+Checklist de diseño por nivel
+[ ] A (Propósito) define métrica faro y ventana
+[ ] B (Invariantes) listados y testeados
+[ ] C (Objetos) catálogos y presets registrados
+[ ] D (Interfaces) entradas/salidas, tipos y contratos
+[ ] E (Métrica faro) fórmula/definición adoptada
+[ ] F (Validaciones) bloqueos implementados
+[ ] G (Cadencia) calendario de revisión y reajuste
+[ ] H (Aprendizaje) procedimiento de ajuste de pesos
+[ ] I (Trazabilidad) IDs y bitácora operativa
+
+Plantilla de preset (rellenar)
+NOMBRE_PRESET: ______________________
+OBJETIVO/CONTEXTO: ________________
+VECTOR_PESOS: (w₁, w₂, …, wₙ) con ∑=1
+MÉTRICA_FARO: ______________________
+VALIDACIONES_DURAS: ________________
+RANGOS_PESO y PASO_DE_AJUSTE: ______
+CADENCIA_REVISIÓN: ________________
+CONDICIONES_ROLLBACK: _____________
+EVIDENCIA_EXIGIDA: ________________
+
+Plantilla de decisión (rellenar)
+FECHA: _______  ENTRADAS: _______
+PRESET_APLICADO: ___________  POR_QUÉ: __________
+SALIDAS: ____________________  MÉTRICA_FARO_PRE/POST: __/__ 
+VALIDACIONES_PASADAS: _______  OBSERVACIONES: ______
+ID_DECISIÓN: __________________@v__
+
+──────────────────────────────────────────────────────────────────────────────
+11) DIAGNÓSTICO Y CORRECCIÓN (fallas típicas)
+──────────────────────────────────────────────────────────────────────────────
+• “Score alto, resultado pobre”: validación omitida (fricción, accesibilidad, riesgo); arreglar filtros antes de intensificar pesos.
+• “Oscilaciones de pesos”: falta de límites a variación; fijar paso máximo y ventanas mínimas.
+• “Goodhart”: convertir la métrica faro en objetivo directo degrada su valor; auditar con métricas secundarias.
+• “Preset fuera de contexto”: usar un preset de atención en un canal que exige claridad; recalibrar a Narrative-Dominant (NRS) o reforzar palancas.
+• “Exceso de alas/volatilidad”: repatriación no mecánica; formalizar disparadores de toma de utilidad.
+
+──────────────────────────────────────────────────────────────────────────────
+12) CIERRE (por qué esta integración es útil)
+──────────────────────────────────────────────────────────────────────────────
+• Universalidad: un mismo modelo gobierna inversión, publicidad, software, logística o educación.
+• Escalabilidad: nuevos hijos (sistemas) encajan sin inventar marcos; solo se definen subcapacidades y presets.
+• Auditabilidad: decisiones trazables, determinismo por contratos, aprendizaje con evidencia.
+• Robustez: los pesos cambian prioridades; las validaciones preservan identidad y cumplimiento.
+• Transferencia: mover un equipo entre dominios requiere cambiar contenidos, no la forma.
+
+FIN DEL DOCUMENTO (v2.0)

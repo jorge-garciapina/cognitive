@@ -1,0 +1,138 @@
+ANÁLISIS UNIFICADO (CODE SNIPPET TXT)
+Tema: Esencia compartida, similitudes y estructura subyacente en 3 documentos
+Archivos analizados: proyecto-de-inversion.md, meta-metafora.txt, ejemplos-estructura-poker-videos.md
+
+──────────────────────────────────────────────────────────────────────────────
+0) IDEA RECTORa COMÚN (tesis)
+──────────────────────────────────────────────────────────────────────────────
+Los tres documentos operan sobre la misma intuición: separar lo que se ve y cambia rápido (NIVEL LINGÜÍSTICO) de la forma que lo hace funcionar y persiste
+(NIVEL ESTRUCTURAL). Para conectar ambos niveles de manera operativa se utiliza un método llamado META-METÁFORA, que formaliza una metáfora con elementos
+verificables (anclas, relaciones, diccionario mínimo, reglas de mapeo, pruebas y criterios de éxito). Resultado: la metáfora deja de ser adorno y se convierte
+en procedimiento transferible entre dominios.
+
+• Nivel lingüístico: ejemplos concretos de superficie (piezas de contenido, jugadas de póker, instrumentos financieros).
+• Nivel estructural: roles, relaciones, composición, orden, umbrales, políticas y criterios de decisión que gobiernan lo visible.
+• Meta-metáfora: plantilla metódica para trasladar “formas funcionales” entre contextos con menor ambigüedad y mayor repetibilidad.
+
+──────────────────────────────────────────────────────────────────────────────
+1) SIMILITUDES TRANSVERSALES ENTRE LOS 3 DOCUMENTOS
+──────────────────────────────────────────────────────────────────────────────
+1.1 Doble nivel explícito
+    - Inversión: instrumentos = lenguaje; arquitectura de cartera (Núcleo–Puentes–Alas) = estructura.
+    - Marketing/Póker: piezas y jugadas = lenguaje; plantillas de decisión y estrategia = estructura.
+
+1.2 Enfoque de ingeniería cognitiva
+    - Se parte de lo observable, se destila su forma y se codifica en reglas operativas con criterios de validación.
+
+1.3 Fractalidad (misma forma en distintas escalas)
+    - La lógica estructural se replica en subcarteras, subcampañas o subplanes de juego sin romper la coherencia.
+
+1.4 Gobernanza explícita
+    - Umbrales, límites y políticas estabilizan el sistema frente a la variabilidad del lenguaje (pesos de cartera, lineamientos de contenido, parámetros de estrategia).
+
+1.5 Validación y métricas
+    - Claridad, consistencia, cobertura, ahorro de tiempo, coherencia con objetivo y señales/umbrales observables.
+
+──────────────────────────────────────────────────────────────────────────────
+2) CÓMO APARECE LA TESIS EN CADA DOCUMENTO
+──────────────────────────────────────────────────────────────────────────────
+2.1 Proyecto de inversión (proyecto-de-inversion.md)
+    - Distinción “instrumentos” (acciones, bonos, cripto, ETF/FIBRAS) ↔ “estructura” (Núcleo–Puentes–Alas).
+    - Roles funcionales y umbrales de asignación: 
+        • Núcleo: resguardo de valor y estabilidad (peso mayoritario).
+        • Puentes: exposición moderada, conexión entre estabilidad y crecimiento.
+        • Alas: captura de beta/crecimiento con límites acotados.
+    - Fractalidad: la misma arquitectura puede replicarse en subcarteras sectoriales o temáticas.
+
+2.2 Método meta-metáfora (meta-metafora.txt)
+    - Procedimiento para pasar de metáforas inspiracionales a mecanismos operativos:
+        • Anclas, relaciones, diccionario mínimo.
+        • Reglas de mapeo entre dominios (si <señal>, entonces <acción>).
+        • Pruebas en pequeño y criterios de éxito (claridad, consistencia, cobertura, ahorro de tiempo).
+        • Antipatrones para evitar confusiones comunes.
+    - Resultado: puente reproducible y comprobable entre “lenguaje” y “estructura”.
+
+2.3 Ejemplos (ejemplos-estructura-poker-videos.md)
+    - Marketing de contenidos:
+        • Nivel lingüístico: piezas (texto, imagen, video, posts).
+        • Nivel estructural: plantillas psico-lingüísticas (gancho, narrativa, prueba social, promesa → entrega).
+        • Gobernanza: objetivos por pieza, triggers y coherencia de campaña.
+    - Póker:
+        • Nivel lingüístico: jugadas, tamaños de apuesta y señales por calle.
+        • Nivel estructural: estrategia + parámetros (estilo, rangos, posiciones); sistema de decisiones.
+        • Reglas: señales que disparan acciones según plan previamente definido.
+
+──────────────────────────────────────────────────────────────────────────────
+3) MODELO COMÚN (pipeline conceptual de 7 pasos)
+──────────────────────────────────────────────────────────────────────────────
+(1) Definir el objetivo funcional
+    - Enunciar con precisión “qué” y “para qué” (resguardo, adquisición de audiencia, maximizar EV).
+
+(2) Inventariar el nivel lingüístico
+    - Listar piezas/instrumentos/acciones observables que cambian rápido según contexto.
+
+(3) Destilar la forma estructural
+    - Identificar:
+        • Roles (p. ej., Núcleo–Puentes–Alas; Gancho–Narrativa–Prueba; Estrategia–Parámetros–Señales).
+        • Relaciones (composición, orden, dependencias).
+        • Umbrales y límites (pesos máximos, criterios de activación, bandas de decisión).
+
+(4) Construir la meta-metáfora mínima viable
+    - Anclas ↔ relaciones ↔ diccionario mínimo ↔ reglas de mapeo ↔ pruebas ↔ criterios de éxito.
+    - Expresar reglas en forma condicional (si <condición> entonces <acción>) con señales observables.
+
+(5) Probar en pequeño y medir
+    - Caso representativo; métricas de claridad, consistencia, cobertura y ahorro de tiempo; iteración controlada.
+
+(6) Escalar por fractalidad
+    - Replicar la misma forma en subniveles (subcarteras, subcampañas, manos específicas) manteniendo gobernanza.
+
+(7) Gobernar con políticas explícitas
+    - Definir límites operativos, priors y políticas de corrección (rebalanceo, tono/segmentación, disciplina de apuestas).
+
+──────────────────────────────────────────────────────────────────────────────
+4) TABLA COMPARADA (lingüístico ↔ estructural ↔ validación)
+──────────────────────────────────────────────────────────────────────────────
+Dominio: Inversión
+• Lingüístico: acciones, bonos, cripto, ETF/FIBRAS.
+• Estructural: Núcleo (>60%), Puentes (~25%), Alas (≤15%); funciones y umbrales.
+• Validación: riesgo/retorno, volatilidad, traslados desde alas a núcleo, coherencia macro; pruebas por escenarios.
+
+Dominio: Marketing de contenidos
+• Lingüístico: posts, guiones, clips, creatividades visuales.
+• Estructural: plantillas psico-lingüísticas (gancho, narrativa, prueba social, CTA).
+• Validación: coherencia con objetivo y audiencia, tasa de respuesta, consistencia y cobertura de mensajes.
+
+Dominio: Póker
+• Lingüístico: jugadas puntuales, tamaños de apuesta, líneas por calle.
+• Estructural: estrategia, parámetros (estilo, rangos), sistema de señales/acciones.
+• Validación: EV esperado, disciplina respecto al plan, ajustes con feedback de resultados.
+
+Dominio: Meta-metáfora (método)
+• Lingüístico: ejemplos que ilustran analogías.
+• Estructural: anclas, relaciones, diccionario mínimo, reglas, pruebas, criterios.
+• Validación: claridad, consistencia, cobertura, ahorro de tiempo; ausencia de antipatrones.
+
+──────────────────────────────────────────────────────────────────────────────
+5) BENEFICIOS DEL MODELO COMPARTIDO
+──────────────────────────────────────────────────────────────────────────────
+• Reducción de ambigüedad: el significado se ancla a funciones y relaciones, no a palabras aisladas.
+• Replicabilidad: la forma estructural (roles, umbrales, reglas) se traslada entre casos y dominios.
+• Escalabilidad fractal: la misma lógica funciona en diferentes niveles de detalle sin perder coherencia.
+• Gobernanza de decisiones: límites y políticas explícitas estabilizan el sistema frente a cambios rápidos.
+
+──────────────────────────────────────────────────────────────────────────────
+6) GUÍA RÁPIDA DE APLICACIÓN (checklist)
+──────────────────────────────────────────────────────────────────────────────
+[ ] Objetivo funcional claro y medible.
+[ ] Inventario del nivel lingüístico (piezas/acciones disponibles).
+[ ] Definición de roles estructurales y relaciones (composición, orden, dependencias).
+[ ] Umbrales y límites expresados como reglas operativas (si <señal> entonces <acción>).
+[ ] Meta-metáfora mínima (anclas, relaciones, diccionario, reglas, pruebas, criterios).
+[ ] Prueba en pequeño con 3–4 métricas; retroalimentación y ajuste.
+[ ] Escalado fractal + gobernanza explícita (políticas y rebalanceos/ajustes predefinidos).
+
+──────────────────────────────────────────────────────────────────────────────
+7) CIERRE
+──────────────────────────────────────────────────────────────────────────────
+Los tres documentos son manifestaciones de una misma arquitectura mental: distinguir lenguaje (lo visible y variable) de estructura (lo que persiste y gobierna), y articular el cruce con un método de meta-metáfora que convierte analogías en procedimientos verificables. Así, ejemplos distintos (inversión, marketing, póker) se entienden como expresiones coherentes de una forma estructural compartida, transferible y gobernable.

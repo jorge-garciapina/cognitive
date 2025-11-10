@@ -1,0 +1,48 @@
+1. Psychological Stimuli (AAS=0.95, NRS=0.95, EAS=0.92) → Score: 0.9440 
+2. Temporal Stimuli (AAS=0.9, NRS=0.9, EAS=0.7) → Score: 0.8600 
+3. Social Stimuli (AAS=0.85, NRS=0.8, EAS=0.88) → Score: 0.8385 
+4. Cultural & Narrative Stimuli (AAS=0.7, NRS=0.95, EAS=0.75) → Score: 0.7975 
+5. Linguistic & Symbolic Stimuli (AAS=0.75, NRS=0.8, EAS=0.72) → Score: 0.7615 
+6. Biological Stimuli (AAS=0.88, NRS=0.55, EAS=0.65) → Score: 0.7185 
+7. Environmental Stimuli (AAS=0.55, NRS=0.45, EAS=0.6) → Score: 0.5250 
+8. Interoceptive/Homeostatic Stimuli (AAS=0.4, NRS=0.35, EAS=0.85) → Score: 0.4725
+--------------------------------------------------------------------------------
+Attention-Dominant (AAS=0.70, NRS=0.20, EAS=0.10): 
+1. Psychological Stimuli (AAS=0.95, NRS=0.95, EAS=0.92) → Score: 0.9470 
+2. Temporal Stimuli (AAS=0.9, NRS=0.9, EAS=0.7) → Score: 0.8800 
+3. Social Stimuli (AAS=0.85, NRS=0.8, EAS=0.88) → Score: 0.8430 
+4. Biological Stimuli (AAS=0.88, NRS=0.55, EAS=0.65) → Score: 0.7910 
+5. Linguistic & Symbolic Stimuli (AAS=0.75, NRS=0.8, EAS=0.72) → Score: 0.7570 
+6. Cultural & Narrative Stimuli (AAS=0.7, NRS=0.95, EAS=0.75) → Score: 0.7550 
+7. Environmental Stimuli (AAS=0.55, NRS=0.45, EAS=0.6) → Score: 0.5350 
+8. Interoceptive/Homeostatic Stimuli (AAS=0.4, NRS=0.35, EAS=0.85) → Score: 0.4350
+--------------------------------------------------------------------------------
+Narrative-Dominant (AAS=0.20, NRS=0.70, EAS=0.10): 
+1. Psychological Stimuli (AAS=0.95, NRS=0.95, EAS=0.92) → Score: 0.9470 
+2. Temporal Stimuli (AAS=0.9, NRS=0.9, EAS=0.7) → Score: 0.8800 
+3. Cultural & Narrative Stimuli (AAS=0.7, NRS=0.95, EAS=0.75) → Score: 0.8800 
+4. Social Stimuli (AAS=0.85, NRS=0.8, EAS=0.88) → Score: 0.8180 
+5. Linguistic & Symbolic Stimuli (AAS=0.75, NRS=0.8, EAS=0.72) → Score: 0.7820 
+6. Biological Stimuli (AAS=0.88, NRS=0.55, EAS=0.65) → Score: 0.6260 
+7. Environmental Stimuli (AAS=0.55, NRS=0.45, EAS=0.6) → Score: 0.4850 
+8. Interoceptive/Homeostatic Stimuli (AAS=0.4, NRS=0.35, EAS=0.85) → Score: 0.4100
+--------------------------------------------------------------------------------
+Emotion-Dominant (AAS=0.10, NRS=0.30, EAS=0.60): 
+1. Psychological Stimuli (AAS=0.95, NRS=0.95, EAS=0.92) → Score: 0.9320 
+2. Social Stimuli (AAS=0.85, NRS=0.8, EAS=0.88) → Score: 0.8530 
+3. Cultural & Narrative Stimuli (AAS=0.7, NRS=0.95, EAS=0.75) → Score: 0.8050 
+4. Temporal Stimuli (AAS=0.9, NRS=0.9, EAS=0.7) → Score: 0.7800 
+5. Linguistic & Symbolic Stimuli (AAS=0.75, NRS=0.8, EAS=0.72) → Score: 0.7470 
+6. Interoceptive/Homeostatic Stimuli (AAS=0.4, NRS=0.35, EAS=0.85) → Score: 0.6550 
+7. Biological Stimuli (AAS=0.88, NRS=0.55, EAS=0.65) → Score: 0.6430 8. Environmental Stimuli (AAS=0.55, NRS=0.45, EAS=0.6) → Score: 0.5500
+--------------------------------------------------------------------------------
+Balanced Weights (AAS=0.33, NRS=0.33, EAS=0.34): 
+1. Psychological Stimuli (AAS=0.95, NRS=0.95, EAS=0.92) → Score: 0.9398 
+2. Social Stimuli (AAS=0.85, NRS=0.8, EAS=0.88) → Score: 0.8437 
+3. Temporal Stimuli (AAS=0.9, NRS=0.9, EAS=0.7) → Score: 0.8320 
+4. Cultural & Narrative Stimuli (AAS=0.7, NRS=0.95, EAS=0.75) → Score: 0.7995 
+5. Linguistic & Symbolic Stimuli (AAS=0.75, NRS=0.8, EAS=0.72) → Score: 0.7563 
+6. Biological Stimuli (AAS=0.88, NRS=0.55, EAS=0.65) → Score: 0.6929 
+7. Interoceptive/Homeostatic Stimuli (AAS=0.4, NRS=0.35, EAS=0.85) → Score: 0.5365 
+8. Environmental Stimuli (AAS=0.55, NRS=0.45, EAS=0.6) → Score: 0.5340 
+------------------------------------------------------------------------------

@@ -1,0 +1,205 @@
+cNode: process:elevate-conversation-level@1.1.0
+
+Propósito
+Elevar cualquier conversación desde el nivel de “instancia” (caso puntual) al nivel de “estructura primaria” (orquestador del sistema), mostrando capas, invariantes, políticas, adaptadores y métricas; y regresar, cuando sea útil, a la instancia como manifestación.
+
+Idea clave (una línea)
+Elevar la conversación de nivel = pasar de “hablar del caso” a “hablar del sistema que produce el caso”, con reglas deterministas, métricas y adaptadores explícitos.
+
+------------------------------------------------------------
+DEFINICIONES OPERATIVAS
+------------------------------------------------------------
+Estructura primaria: sistema orquestador que asigna recursos, define políticas y genera comportamientos repetibles (p. ej., holding, plataforma, protocolo).
+
+Manifestación: instancia local que materializa la estructura primaria mediante adaptadores (p. ej., una marca, una tienda, un módulo, una campaña).
+
+Capas: niveles con ritmos de cambio distintos: estratégico (lento), táctico (medio), operativo (rápido).
+
+Invariantes: reglas que deben preservarse entre manifestaciones (p. ej., ética, transparencia, límites de riesgo, fórmula de retorno).
+
+Adaptadores: piezas que ajustan la estructura primaria al contexto local (canal, plaza, categoría, idioma, restricciones).
+
+Métricas de orquestación (nivel sistema): indicadores que reflejan salud del orquestador (p. ej., ROIC — Return On Invested Capital; LTV/CAC — Lifetime Value / Customer Acquisition Cost; NPL — Non-Performing Loans).
+
+Métricas de instancia: indicadores del desempeño local (p. ej., conversión, ticket promedio, tráfico, Net Promoter Score — NPS).
+
+------------------------------------------------------------
+SUPERFICIE PROVIDES (SALIDAS)
+------------------------------------------------------------
+1) Mapa en capas del tema (primario → táctico → operativo).
+2) Contrato de orquestación (políticas “si <condición> entonces <acción>”, asignación de recursos, guardarraíles).
+3) Tabla de adaptadores por contexto (qué se puede y qué no se puede cambiar).
+4) Plantilla de re-redacción (de pregunta de caso a pregunta de sistema).
+5) Checklist de elevación (10 ítems).
+6) Ejemplos guiados (meta-metáforas operativas) con prueba mínima y umbrales.
+
+------------------------------------------------------------
+SUPERFICIE REQUIRES (ENTRADAS)
+------------------------------------------------------------
+- Caso de entrada (síntoma o evento puntual).
+- Objetivo de decisión (diagnóstico, plan, métrica).
+- Restricciones (regulatorias, éticas, presupuesto, tiempo).
+- Datos disponibles (y huecos visibles).
+
+------------------------------------------------------------
+PROCEDIMIENTO DETERMINISTA
+------------------------------------------------------------
+Paso 1 — Declarar capas y orquestador
+- Nombrar la estructura primaria y 3–5 capacidades transversales (financiera, comercial, operativa, datos, marca).
+- Listar invariantes que no se pueden violar.
+
+Paso 2 — Re-redactar la pregunta
+- De: “¿Qué pasa con <instancia>?”
+- A: “Dado el orquestador <X> y sus políticas, ¿qué indican las métricas de orquestación y qué adaptadores explican el síntoma observado en <instancia>?”
+
+Paso 3 — Contrato de orquestación
+- Políticas de sistema en formato “si <condición> entonces <acción>”.
+- Asignación de recursos (capital, inventario, pauta, talento).
+- Guardarraíles (ética, transparencia, límites de riesgo).
+
+Paso 4 — Tabla de adaptadores
+- Para cada manifestación: canal, plaza/categoría, restricciones, KPIs locales, grados de libertad.
+
+Paso 5 — Métricas
+- Separar métricas de orquestación (sistema) y métricas de instancia (local).
+- Definir umbrales y periodos de revisión.
+
+Paso 6 — Chequeo de elevación (10 ítems)
+1. ¿Está nombrada la estructura primaria?
+2. ¿Existen capacidades transversales explícitas?
+3. ¿Se declararon invariantes?
+4. ¿La pregunta fue re-redactada al nivel sistema?
+5. ¿Hay políticas “si-entonces”?
+6. ¿Se separaron métricas de sistema vs instancia?
+7. ¿Hay tabla de adaptadores por contexto?
+8. ¿Se identifican riesgos sistémicos y locales?
+9. ¿Existe bucle de aprendizaje con datos?
+10. ¿La salida es replicable en nuevas manifestaciones?
+
+Paso 7 — Salida
+- Entregar mapa en capas, contrato, métricas, adaptadores, riesgos y próximos experimentos.
+
+------------------------------------------------------------
+EJEMPLOS (META-METÁFORAS OPERATIVAS)
+Formato de cada ejemplo: Anclas (A↔B) · Invariantes · Diccionario mínimo · Reglas si-entonces · Prueba mínima · Criterios de aceptación
+
+EJEMPLO 1 — Holding minorista (orquestador) → Marca de moda “value” (manifestación)
+Anclas: 
+- A = desempeño de la marca local; B = políticas del holding.
+Invariantes:
+- Transparencia de crédito; ROIC objetivo; control de NPL a 30/60 días; ética de venta (no “venta dura” antes de resolver valor).
+Diccionario mínimo:
+- ROIC (retorno sobre capital), NPL (cartera vencida), uptake de crédito (adopción de instrumento).
+Reglas si-entonces:
+- Si NPL de la cohorte > umbral, entonces reducir límites y acortar plazos hasta normalizar.
+- Si ROIC por formato < meta 2 trimestres, entonces congelar aperturas y activar plan de saneamiento.
+- Si uptake de crédito < rango esperado pero conversión cae, entonces revisar secuenciación (primero valor, luego facilidad de pago).
+Prueba mínima:
+- Periodo trimestral; comparar 2 tiendas test vs 2 control con políticas aplicadas.
+Criterios de aceptación:
+- NPL ≤ umbral; ROIC +2 pp en test vs control; NPS estable o al alza.
+
+EJEMPLO 2 — Plataforma de contenidos (orquestador) → Video corto (manifestación)  [inspirado en “estructura psico-lingüística”]
+Anclas:
+- A = rendimiento de un video; B = playbook de plataforma de contenidos.
+Invariantes:
+- Anzuelo inicial, desarrollo narrativo, prueba (Reason To Believe), llamado a la acción.
+Diccionario mínimo:
+- CTR (Click-Through Rate), VTR50 (Video Through Rate al 50%).
+Reglas si-entonces:
+- Si VTR50 < 30%, entonces reescribir anzuelo y reordenar escenas (mostrar valor antes del segundo 3).
+- Si CTR < 1.2% pero VTR>50% ≥ 35%, entonces optimizar “thumbnail” y copy de título.
+Prueba mínima:
+- A/B con 2 variantes (anzuelo y orden); 10k impresiones cada una.
+Criterios de aceptación:
+- +20% CTR o +10 pp VTR50 en la variante ganadora.
+
+EJEMPLO 3 — Sistema de juego (orquestador) → Mano de póker (manifestación)
+Anclas:
+- A = decisión en un turno; B = estrategia predefinida con parámetros (riesgo, posición, rangos).
+Invariantes:
+- Disciplina de rangos; gestión de banca; actualización por información.
+Diccionario mínimo:
+- EV (Expected Value), tight/loose (rango estrecho/amplio).
+Reglas si-entonces:
+- Si posición tardía y rango favorable, entonces abrir con apuesta estándar; si stack efectivo < X, ajustar tamaño.
+- Si EV negativo sostenido en línea, pausar y revisar parámetros del sistema.
+Prueba mínima:
+- 5 sesiones registradas; comparar EV por línea antes/después.
+Criterios de aceptación:
+- EV línea objetivo ≥ 0 y varianza bajo control (desviación ≤ umbral).
+
+EJEMPLO 4 — Grupo tecnológico (orquestador) → Microservicio (manifestación)
+Anclas:
+- A = servicio específico; B = política de arquitectura (latencia, costo, seguridad).
+Invariantes:
+- Observabilidad, límites de latencia, presupuestos por Q (Quarter).
+Diccionario mínimo:
+- SLO (Service Level Objective), P99 (percentil 99 de latencia).
+Reglas si-entonces:
+- Si latencia P99 > SLO 2 semanas, entonces activar degradación elegante y priorizar optimización en sprint.
+- Si costo > presupuesto mensual +10%, entonces escalar revisión de arquitectura o “right-size” de instancias.
+Prueba mínima:
+- Panel con alertas; sprint de optimización de 2 semanas.
+Criterios de aceptación:
+- P99 bajo SLO y costo en umbral con estabilidad 30 días.
+
+EJEMPLO 5 — Universidad (orquestador) → Curso (manifestación)
+Anclas:
+- A = resultados de un curso; B = políticas académicas (Resultados de Aprendizaje, evaluación continua, carga máxima).
+Invariantes:
+- Transparencia de rúbrica; carga razonable; retroalimentación oportuna.
+Diccionario mínimo:
+- LO (Learning Outcome), retención, NPS académico.
+Reglas si-entonces:
+- Si retención < meta y NPS académico cae, entonces redistribuir evaluación (más formativa, menos sumativa).
+- Si LO clave no se alcanza en ≥ 40% de estudiantes, entonces integrar prácticas guiadas y tutorías.
+Prueba mínima:
+- Cohorte piloto; medir LO, retención, NPS en 8 semanas.
+Criterios de aceptación:
+- +10 pp en LO clave y retención sin caída del NPS.
+
+EJEMPLO 6 — Axo-orquestador → C&A-manifestación (resumen aplicado)
+Anclas:
+- A = desempeño C&A local; B = políticas Axo (finanzas, comercial, datos, ética).
+Invariantes:
+- Transparencia de costos de financiamiento; secuencia correcta: valor→paquete→facilidad de pago; ROIC meta; NPL controlado.
+Diccionario mínimo:
+- Uptake crédito, ticket promedio, Net Promoter Score (NPS).
+Reglas si-entonces:
+- Si tienda < ROIC meta y mix crédito no compensa, entonces redimensionar formato (pisos/metros) y revisar mix de paquetes.
+- Si quejas por “venta dura” > 1% de comentarios, entonces re-entrenar secuenciación y mover incentivo de asesor.
+Prueba mínima:
+- 2 tiendas test aplicando política vs 2 control durante un trimestre.
+Criterios de aceptación:
+- ROIC +2 pp; NPL estable; NPS no deteriorado.
+
+------------------------------------------------------------
+PLANTILLA DE RE-REDACCIÓN (COPIAR Y USAR)
+------------------------------------------------------------
+Reframe de Sistema
+1) Estructura primaria: ______________________
+2) Capacidades transversales: [____, ____, ____]
+3) Invariantes: [____________________________]
+4) Pregunta elevada:
+   “Dado <estructura primaria> y sus políticas, ¿qué indican las métricas de orquestación sobre <hipótesis> y cómo deben ajustarse los adaptadores en <manifestación>?”
+5) Políticas si-entonces: _____________________
+6) Métricas (sistema / instancia): ____________
+7) Riesgos + guardarraíles: _________________
+8) Próximos pasos (experimentos / decisiones): __
+
+------------------------------------------------------------
+ANTI-PATRONES (EVITAR)
+------------------------------------------------------------
+- Explicar todo por el caso local (síntoma ≠ estructura).
+- Métricas solo de instancia cuando la decisión es de portafolio.
+- Políticas sin umbrales o sin datos.
+- Confundir niveles (pedirle a la instancia que resuelva reglas del sistema).
+
+------------------------------------------------------------
+MÉTRICAS DE CALIDAD DEL CNODE
+------------------------------------------------------------
+- Replicabilidad: ante casos distintos, produce la misma estructura de salida.
+- Separación de capas: argumentos de instancia no sustituyen políticas del sistema.
+- Trazabilidad: cada acción local se ancla a una política del orquestador.
+- Utilidad: habilita decisiones de portafolio y pruebas locales con umbrales claros.

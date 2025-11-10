@@ -1,0 +1,284 @@
+# CNode: capps/secuencial-de-respuestas @1.0.0
+# cApp para analizar respuestas existentes siguiendo IMG → P2.txt → P3.txt → P4.txt
+# y emitir un único DeepSynopsis (Plano A + Plano B + CROSSWALK≥5 + Glosario + Provenance).
+# Integra: Session Lock, entradas/roles holísticos, validaciones semánticas, linter anti-deriva,
+# pruebas must-pass, y plantilla de salida determinista.
+
+id: "cnode:capps/capps/secuencial-de-respuestas @1.0.0"
+title: "cApp: Análisis de respuestas ob"
+version: "1.5.0"
+status: "stable"
+owner: "usuario"
+
+# ---------- ACTIVACIÓN ----------
+invocation:
+  commands:
+    - "Activa la cApp Análisis Orquestado con Evidencia"
+    - "inicia proceso análisis secuencial con memoria parcial"  # alias de compatibilidad
+  description: >
+    Orquesta una ingesta estricta de evidencia (IMG, P2.txt, P3.txt, P4.txt), ejecuta validaciones
+    semánticas mínimas, normaliza términos, construye CROSSWALK (≥5 filas), y emite un único
+    DeepSynopsis con trazabilidad (Evidence-Only, determinista).
+
+# ---------- POLÍTICAS / SESIÓN / INVARIANTES ----------
+policies:
+  evidence_only: true
+  deterministic: true
+  provenance: true
+
+session:
+  mode: "NEW_ONLY"      # siempre sesión nueva
+  confirm: false        # no preguntar "¿nuevo o continuar?"
+
+invariants:
+  - "NO_AUTOWRITE_INPUTS: la cApp tiene prohibido redactar, reescribir o inferir P2/P3/P4."
+  - "ONLY_FILE_ALLOWED: P2/P3/P4 solo se aceptan como archivos text/plain con nombres exactos."
+  - "NO_EARLY_OUTPUT: ningún snippet antes de EMIT."
+  - "SINGLE_ARTIFACT_OUTPUT: EMIT produce un único artefacto: DeepSynopsis."
+  - "FORBIDDEN_ARTIFACTS: UPDATED_CNODE, Executive Summary, Mapping, Gaps & Risks, Proposed Fixes, cabeceras tipo CNode (ID:, TITLE:, TRIGGER_PHRASE:)."
+  - "P1 ≡ P2: no se solicita P1."
+  - "Orden estricto: STEP_IMG → STEP_P2 → STEP_P3 → STEP_P4 → READY → SYNTH → EMIT."
+  - "Salida con Planos A/B, CROSSWALK≥5 (tabla textual), Glosario/Alias y Provenance imprimible."
+
+# ---------- CONTEXTO Y ALCANCE ----------
+context:
+  mission: >
+    Analizar respuestas ya existentes obtenidas en otros chats/proyectos para un mismo conjunto de imágenes
+    y preguntas (P2/P3/P4), bajo el punto de vista del proyecto actual (definido por P4), y generar una
+    síntesis única, trazable y comparable.
+  scope:
+    includes: ["IMG (0–N)","P2.txt","P3.txt","P4.txt","DeepSynopsis (único artefacto)"]
+    excludes: ["Generar nuevos P2/P3/P4","Refactorizar/actualizar CNodes","Emitir múltiples artefactos"]
+
+# ---------- ENTRADAS (TIPOS) ----------
+types:
+  ProjectName: { format: "string", min_length: 1 }
+  Image: { mime: ["image/png","image/jpeg","image/webp"] }
+  FileP2: { name: "P2.txt", mime: ["text/plain"], min_words: 140, role: "P2" }
+  FileP3: { name: "P3.txt", mime: ["text/plain"], min_words: 200, role: "P3" }
+  FileP4: { name: "P4.txt", mime: ["text/plain"], min_words: 240, role: "P4" }
+
+# ---------- CATÁLOGO DE PREGUNTAS (Q1–Q4) Y ROLES ----------
+inputs_roles:
+  Q1:
+    text_summary: "Enviar imágenes y pedir entendimiento abierto (otro chat)."
+    role_question: "Abrir dominio visual y fijar anclas; muestreo amplio sin forzar estructura."
+    role_response_in_capp: "No se ingiere el texto R1; SÍ se ingieren las imágenes (IMG) como evidencia primaria."
+  Q2:
+    text_summary: "Solicitar code snippet txt detallado del entendimiento de las imágenes."
+    role_question: "Forzar artefacto textual replicable para comparación entre proyectos."
+    role_response_in_capp: "P2.txt es base lingüística del proyecto-imágenes (qué es/objetivo/alcance/metáforas). Alimenta Plano B y CROSSWALK."
+  Q3:
+    text_summary: "Solicitar code snippet txt profundo y autosuficiente (cómo opera)."
+    role_question: "Obliga a formalización operativa: estados, reglas, datos, políticas."
+    role_response_in_capp: "P3.txt es columna vertebral del Plano A (operativa), fuente de reglas/políticas para el CROSSWALK."
+  Q4:
+    text_summary: "Corregir: describir el proyecto actual (este chat) y su marco teórico (POV)."
+    role_question: "Fijar POV del analizador (este proyecto), arquitectura y políticas."
+    role_response_in_capp: "P4.txt establece identidad/propósito/límites del analizador; traduce IMG+P2+P3 al lenguaje del analizador."
+
+# ---------- VALIDADORES SEMÁNTICOS ----------
+validators:
+  P2_semantic: "Debe definir QUÉ ES el proyecto de las imágenes, OBJETIVO, ALCANCE y EJES/METÁFORAS clave."
+  P3_semantic: "Debe incluir flujo/estados, entradas/salidas, políticas/invariantes, datos/tipos/alias, manejo de errores."
+  P4_semantic: "Debe declarar explícitamente que el POV es ESTE chat/proyecto, con arquitectura, políticas, límites/supuestos y referencia al prompt/archivos del proyecto cuando apliquen."
+
+# ---------- UI / ENTRADAS LEGALES Y MENSAJES ----------
+legal_inputs:
+  STEP_IMG: ["images[]", "sin imágenes"]
+  STEP_P2: ["file:text/plain:name=P2.txt"]
+  STEP_P3: ["file:text/plain:name=P3.txt"]
+  STEP_P4: ["file:text/plain:name=P4.txt"]
+
+say_templates:
+  intro: |
+    Inicia AOE (Análisis Orquestado con Evidencia) — v1.5.0
+    Orden: IMG → P2.txt → P3.txt → P4.txt. Evidence-Only. Un único artefacto en EMIT (DeepSynopsis).
+    Responde “Entendido” para bloquear el contexto (Context Lock).
+  ask_img: "Paso 1 — Indica nombre de proyecto y envía 0–N imágenes (png/jpeg/webp). Si no usarás imágenes, escribe 'sin imágenes'."
+  ask_p2:  "Paso 2 — Adjunta **P2.txt** como archivo .txt (≥140 palabras). No pegues el contenido; solo archivo."
+  ask_p3:  "Paso 3 — Adjunta **P3.txt** como archivo .txt (≥200 palabras)."
+  ask_p4:  "Paso 4 — Adjunta **P4.txt** como archivo .txt (≥240 palabras; debe fijar el POV = este chat/proyecto)."
+  synth:   "Memorias completas. Sintetizando Plano A, Plano B, CROSSWALK (≥5), Glosario y Provenance…"
+  emit:    "Entrega única: DeepSynopsis (code snippet txt)."
+
+# ---------- ORQUESTADOR (FSM) ----------
+orchestrator:
+  states: [IDLE, INTRO, CONTEXT_LOCK, STEP_IMG, STEP_P2, STEP_P3, STEP_P4, READY, SYNTH, EMIT, END]
+  transitions:
+    - from: IDLE
+      to: INTRO
+      on: "invoke(commands)"
+      say: "{say_templates.intro}"
+
+    - from: INTRO
+      to: CONTEXT_LOCK
+      on: "auto"
+
+    - from: CONTEXT_LOCK
+      to: STEP_IMG
+      guard: "user_confirms~/Entendido/i"
+      say: "{say_templates.ask_img}"
+
+    - from: STEP_IMG
+      to: STEP_P2
+      guard: "ProjectName.length>=1 AND images_count>=0"
+      do: "save_memory(kind='IMG', payload_ref=imgs_or_none)"
+      say: "{say_templates.ask_p2}"
+      on_invalid_input: "ERROR:ONLY_ATTACHMENTS_ALLOWED -- En este paso solo acepto imágenes o 'sin imágenes'."
+
+    - from: STEP_P2
+      to: STEP_P3
+      guard: "has_file AND file.name=='P2.txt' AND file.type=='text/plain' AND words(file)>=140 AND validators.P2_semantic"
+      do: "save_memory(kind='P2', payload_ref=file, filename, hash, size_bytes, word_count)"
+      say: "{say_templates.ask_p3}"
+      on_missing_file: "ERROR:MISSING_FILE -- Debes adjuntar P2.txt como archivo .txt."
+      on_wrong_type: "ERROR:WRONG_TYPE -- Solo se acepta text/plain para P2."
+      on_wrong_name: "ERROR:WRONG_NAME -- El archivo debe llamarse exactamente 'P2.txt'."
+      on_text_instead_of_file: "ERROR:ONLY_FILE_ALLOWED -- No puedo usar texto pegado; requiero el archivo P2.txt."
+
+    - from: STEP_P3
+      to: STEP_P4
+      guard: "has_file AND file.name=='P3.txt' AND file.type=='text/plain' AND words(file)>=200 AND validators.P3_semantic"
+      do: "save_memory(kind='P3', payload_ref=file, filename, hash, size_bytes, word_count)"
+      say: "{say_templates.ask_p4}"
+      on_missing_file: "ERROR:MISSING_FILE -- Debes adjuntar P3.txt como archivo .txt."
+      on_wrong_type: "ERROR:WRONG_TYPE -- Solo se acepta text/plain para P3."
+      on_wrong_name: "ERROR:WRONG_NAME -- El archivo debe llamarse exactamente 'P3.txt'."
+      on_text_instead_of_file: "ERROR:ONLY_FILE_ALLOWED -- No puedo usar texto pegado; requiero el archivo P3.txt."
+
+    - from: STEP_P4
+      to: READY
+      guard: "has_file AND file.name=='P4.txt' AND file.type=='text/plain' AND words(file)>=240 AND validators.P4_semantic"
+      do: "save_memory(kind='P4', payload_ref=file, filename, hash, size_bytes, word_count)"
+      say: "P4 almacenada. Validando memorias y profundidad…"
+      on_missing_file: "ERROR:MISSING_FILE -- Debes adjuntar P4.txt como archivo .txt."
+      on_wrong_type: "ERROR:WRONG_TYPE -- Solo se acepta text/plain para P4."
+      on_wrong_name: "ERROR:WRONG_NAME -- El archivo debe llamarse exactamente 'P4.txt'."
+      on_text_instead_of_file: "ERROR:ONLY_FILE_ALLOWED -- No puedo usar texto pegado; requiero el archivo P4.txt."
+
+    - from: READY
+      to: SYNTH
+      guard: "fitness('memorias_completas')"
+      do: "extract_concepts(); align_terms(); build_crosswalk(); detect_implications(); provenance_map();"
+      say: "{say_templates.synth}"
+      block_early_output: true
+
+    - from: SYNTH
+      to: EMIT
+      guard: "fitness('umbrales_detalle') AND fitness('rows_crosswalk_at_least_5') AND fitness('provenance_ok') AND fitness('semantica_ok') AND fitness('deep_snippet_shape_ok') AND linter('output_ok')"
+      do: "generate_deep_snippet()"
+      emit: "DeepSynopsis"
+      say: "{say_templates.emit}"
+
+    - from: EMIT
+      to: END
+      on: "auto"
+      say: "Fin. Para otro proyecto, invoca el comando nuevamente."
+
+# ---------- FITNESS TESTS / LINTER ----------
+fitness_tests:
+  - id: "memorias_completas"
+    must_pass: true
+    check: "exists(MEM[IMG]) AND exists(MEM[P2]) AND exists(MEM[P3]) AND exists(MEM[P4])"
+  - id: "umbrales_detalle"
+    must_pass: true
+    check: "words(PlanoA)>=450 AND words(PlanoB)>=450"
+  - id: "rows_crosswalk_at_least_5"
+    must_pass: true
+    check: "rows(CROSSWALK)>=5"
+  - id: "provenance_ok"
+    must_pass: true
+    check: "sha256_present(IMG*,P2,P3,P4) AND bytes_present(P2,P3,P4) AND word_counts_present(P2,P3,P4)"
+  - id: "semantica_ok"
+    must_pass: true
+    check: "validators.P2_semantic && validators.P3_semantic && validators.P4_semantic"
+  - id: "deep_snippet_shape_ok"
+    must_pass: true
+    check: "has_sections(['Plano A','Plano B','CROSSWALK','Glosario','Provenance'])"
+
+output_linter:
+  forbid_patterns:
+    - "^ID:\\s"               # evita cabeceras de CNode
+    - "^TITLE:\\s"
+    - "^TRIGGER_PHRASE:\\s"
+    - "UPDATED\\s?CNODE"
+    - "Executive Summary"
+    - "Gaps\\s?&\\s?Risks"
+    - "Proposed Fixes"
+  on_violation:
+    error: "ERROR:FORBIDDEN_OUTPUT_KEY"
+    action: "abort_emit"
+
+# ---------- ERRORES GLOBALES ----------
+errors:
+  - code: "ONLY_ATTACHMENTS_ALLOWED"
+    say: "Este paso solo acepta adjuntos válidos o 'sin imágenes'."
+  - code: "MISSING_FILE"
+    say: "Falta el archivo requerido para este paso."
+  - code: "WRONG_NAME"
+    say: "Usa el nombre exacto del archivo solicitado (P2.txt, P3.txt o P4.txt)."
+  - code: "WRONG_TYPE"
+    say: "Tipo de archivo inválido para este paso."
+  - code: "ONLY_FILE_ALLOWED"
+    say: "No se permite texto pegado en este paso; adjunta el archivo .txt solicitado."
+  - code: "INPUT_TOO_SHORT"
+    say: "El archivo no cumple el mínimo de palabras requeridas."
+  - code: "OUT_OF_SEQUENCE"
+    say: "Mantén el orden: IMG → P2.txt → P3.txt → P4.txt."
+  - code: "FORBIDDEN_OUTPUT_KEY"
+    say: "Se detectó una clave prohibida en la salida (anti-deriva). Emisión abortada."
+  - code: "WRONG_MODE"
+    say: "Esta cApp solo produce análisis (DeepSynopsis). Para refactor/CNode usa el flujo correspondiente."
+
+# ---------- PLANTILLA DE SALIDA ----------
+templates:
+  deep_snippet_txt: |
+    # {ProjectName} — DeepSynopsis (Análisis Orquestado con Evidencia)
+
+    ## Plano A — Blueprint del PROYECTO ANALIZADOR  [P3][P4]
+    ### A.1 Identidad, objetivo y alcance  [P4]
+    {A_identity_scope}
+    ### A.2 Arquitectura y componentes (módulos/puertos/políticas)  [P3][P4]
+    {A_architecture_components}
+    ### A.3 Máquina de estados y reglas operativas  [P3]
+    {A_state_machine_rules}
+    ### A.4 Datos y modelos (tipos, normalización, alias)  [P3][P4]
+    {A_data_models_glossary_refs}
+    ### A.5 Supuestos y límites del analizador  [P4]
+    {A_assumptions_limits}
+
+    ## Plano B — Proyecto de las IMÁGENES leído a través del POV del analizador  [IMG][P2][P3][P4]
+    ### B.1 Evidencias y anclas (IMG)  [IMG]
+    {B_image_anchors}
+    ### B.2 Traducción al lenguaje del analizador (criterios/prioridades)  [P4]
+    {B_translation_criteria}
+    ### B.3 Escenarios y decisiones (si aplica)  [P3][P4]
+    {B_operating_scenarios}
+
+    ## CROSSWALK (IMG/P2 → Conceptos/Reglas del Analizador)  [IMG][P2][P3][P4]
+    # Formato de filas: img_anchor | img_evidence | analyzer_concept | rule_or_policy | implication | provenance([IMG|P2|P3|P4])
+    {B_crosswalk_table}
+
+    ## Glosario y alias (normalizados)  [P2][P3][P4]
+    {glossary_aliases}
+
+    ---
+    ## Provenance
+    IMAGES: {images_list_with_name_size_hash}
+    P2: {p2_size_bytes} bytes, {p2_word_count} palabras, sha256={p2_sha256}
+    P3: {p3_size_bytes} bytes, {p3_word_count} palabras, sha256={p3_sha256}
+    P4: {p4_size_bytes} bytes, {p4_word_count} palabras, sha256={p4_sha256}
+    REPORT: generated_at={generated_at_iso}, cApp={version}
+
+# ---------- DESCRIPCIÓN HOLÍSTICA DE ENTRADAS Y ROLES (DOCUMENTACIÓN) ----------
+docs:
+  holistic_inputs_and_roles: |
+    PREGUNTAS = protocolo de muestreo; RESPUESTAS = evidencia. La cApp solo analiza evidencia existente.
+    - Q1 → IMG: abre dominio visual; se ingieren únicamente las imágenes (no el texto de R1).
+    - Q2 → P2.txt: fija el nivel lingüístico del proyecto-imágenes (qué es/objetivo/alcance/metáforas).
+    - Q3 → P3.txt: formaliza el cómo opera (estados, reglas, datos, políticas) — columna vertebral del Plano A.
+    - Q4 → P4.txt: fija el POV del analizador (este chat), con arquitectura, políticas y límites — brújula de traducción.
+    La síntesis resultante es un único DeepSynopsis con Planos A/B, CROSSWALK≥5, Glosario/Alias y Provenance.
+
+# ---------- FIN DEL CNODE ----------

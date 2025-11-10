@@ -1,0 +1,211 @@
+# CNode: capps/lo4q-an (Lectura Orquestada 4Q — Análisis) @1.0.0
+# Propósito: Ingerir, normalizar y analizar las respuestas ya existentes a P2–P4 (P1= P2) + imágenes para un proyecto dado,
+# y emitir un único "code snippet txt" canónico por proyecto. El proceso se repite proyecto por proyecto (A, B, C, D, …).
+
+id: "cnode:capps/lo4q-an@1.0.0"
+title: "cApp: Lectura Orquestada 4Q — Análisis (LO4Q-AN)"
+version: "1.0.0"
+owner: "usuario"
+license: "internal-use"
+status: "stable"
+
+# ---------- CONTEXTO ----------
+context:
+  problem: >
+    Existen múltiples proyectos (A, B, C, D, …), cada uno con respuestas a la misma serie de preguntas (P2, P3, P4) y un set de imágenes.
+    Se requiere una síntesis canónica por proyecto para comparar, combinar y ampliar los entendimientos.
+  intent: >
+    Orquestar un intake guiado por proyecto (nombre + imágenes + P2 + P3 + P4), ejecutar un análisis determinista
+    y producir un "code snippet txt" homogéneo entre proyectos.
+  success_criteria:
+    - "Generar un snippet por proyecto con estructura idéntica (comparabilidad)."
+    - "Usar P4 como eje de 'punto de vista' y reencuadre al proyecto/chat actual."
+    - "Mantener trazabilidad mínima (provenance) hacia P2/P3/P4 e imágenes."
+    - "Validar entradas (no vacío, longitud mínima razonable) y reportar faltantes con mensajes claros."
+  non_goals:
+    - "No re-formular ni volver a preguntar el flujo original de 4 preguntas."
+    - "No navegar la web ni modificar archivos del usuario."
+
+# ---------- INTERFAZ (EXPORT SURFACE) ----------
+provides:
+  - name: "lo4q-an.snippet"
+    version: "1.0.0"
+    types_used: ["ProjectSynopsis"]
+    description: "Un code snippet txt por proyecto con entendimiento consolidado y comparable."
+requires:
+  - name: "user.project_inputs"
+    version_range: ">=1.0.0"
+    types_expected: ["ProjectName","Array<Image>","AnswerP2","AnswerP3","AnswerP4"]
+    optional: false
+  - name: "chat.context"
+    version_range: ">=1.0.0"
+    types_expected: ["ProjectContext"]
+    optional: true
+
+types:
+  ProjectName: { format: "string", min_length: 1 }
+  Image: { mime: ["image/png","image/jpeg","image/webp"] }
+  AnswerP2: { format: "text/plain", min_words: 50 }   # P1 = P2, por diseño no se solicita P1
+  AnswerP3: { format: "text/plain", min_words: 50 }
+  AnswerP4: { format: "text/plain", min_words: 50, describes: "punto de vista y reencuadre al proyecto/chat actual" }
+  ProjectContext: { fields: ["prompt_global?:string","archivos_de_proyecto?:string[]"] }
+  ProjectSynopsis:
+    fields:
+      - title: "string"
+      - project: "string"
+      - summary: "string"
+      - structure_components: "string"
+      - deep_selfcontained: "string"
+      - reframing_current_project: "string"
+      - assumptions_limits: "string"
+      - risks_open_questions: "string"
+      - glossary_aliases: "string"
+      - provenance: "string"
+
+# ---------- POLÍTICAS E INVARIANTES ----------
+policies:
+  evidence_only: true
+  deterministic: true
+  provenance: true
+  merge_policy:
+    upsert_only: true
+    conflict: "prefer-specificity"
+    id_collision: "namespaced-rename"
+    provenance: "record"
+invariants:
+  - "No se solicita P1 porque P1 = P2 por definición del flujo original."
+  - "El snippet por proyecto debe ser autosuficiente y comparable con otros."
+  - "El idioma por defecto es el del usuario; se evitan abreviaturas sin definir."
+  - "Cada sección del snippet declara su objetivo y mantiene trazabilidad a P2/P3/P4/IMG."
+fitness_tests:
+  - name: "inputs_presentes"
+    check: "ProjectName != '' AND images_count>=1 AND P2/P3/P4 no vacíos"
+  - name: "longitud_minima"
+    check: "snippet_palabras >= 400"
+  - name: "punto_de_vista_en_P4"
+    check: "el snippet contiene sección 'Reencuadre/Punto de vista' con mención explícita al proyecto/chat actual"
+  - name: "provenance_tags"
+    check: "todas las secciones incluyen marcas [P2]/[P3]/[P4]/[IMG] cuando corresponda"
+
+# ---------- ORQUESTADOR (PIPELINE) ----------
+orchestrator:
+  states:
+    - IDLE
+    - COLLECT_PROJECT_NAME
+    - COLLECT_IMAGES
+    - COLLECT_P2
+    - COLLECT_P3
+    - COLLECT_P4
+    - ANALYZE_NORMALIZE
+    - SYNTHESIZE_SNIPPET
+    - EMIT
+    - END
+  transitions:
+    - from: IDLE
+      to: COLLECT_PROJECT_NAME
+      on: "invoke('inicia proceso de lectura orquestada')"
+      say: "LO4Q-AN iniciado. ¿Cuál es el nombre del proyecto (ej. 'Proyecto A')?"
+    - from: COLLECT_PROJECT_NAME
+      to: COLLECT_IMAGES
+      guard: "ProjectName.length>=1"
+      say: "Gracias. Adjunta 1+ imágenes del proyecto y escribe 'Imágenes listas' cuando termines."
+    - from: COLLECT_IMAGES
+      to: COLLECT_P2
+      guard: "images_count>=1 AND user_confirms~/(Imágenes listas|Listo)/i"
+      say: "Recibido. Pasa la RESPUESTA a la PREGUNTA 2 (P1= P2, no se solicita P1)."
+    - from: COLLECT_P2
+      to: COLLECT_P3
+      guard: "len(P2.words)>=50"
+      say: "Gracias. Ahora la RESPUESTA a la PREGUNTA 3."
+    - from: COLLECT_P3
+      to: COLLECT_P4
+      guard: "len(P3.words)>=50"
+      say: "Perfecto. Finalmente, la RESPUESTA a la PREGUNTA 4 (punto de vista y reencuadre)."
+    - from: COLLECT_P4
+      to: ANALYZE_NORMALIZE
+      guard: "len(P4.words)>=50"
+      say: "Analizando insumos (IMG+P2+P3+P4) y normalizando terminología…"
+    - from: ANALYZE_NORMALIZE
+      to: SYNTHESIZE_SNIPPET
+      do: "extract_concepts(); align_terms(); detect_convergences_divergences(); provenance_map();"
+      say: "Listo. Sintetizando snippet canónico por proyecto…"
+    - from: SYNTHESIZE_SNIPPET
+      to: EMIT
+      do: "generate_snippet(projectName, P2, P3, P4, images)"
+      emit: "ProjectSynopsis"
+      say: "Aquí tienes el 'code snippet txt' del proyecto."
+    - from: EMIT
+      to: END
+      on: "auto"
+      say: "LO4Q-AN finalizado para este proyecto. Repite el comando para otro proyecto cuando desees."
+  errors:
+    - code: "MISSING_IMAGES"
+      when: "images_count==0"
+      say: "Falta al menos una imagen. Adjunta y confirma con 'Imágenes listas'."
+    - code: "INPUT_TOO_SHORT"
+      when: "len(P2.words)<50 OR len(P3.words)<50 OR len(P4.words)<50"
+      say: "La respuesta está muy corta. Amplíala con 3–5 frases adicionales y vuelve a enviarla."
+    - code: "AMBIGUOUS_POV"
+      when: "no se detecta punto de vista claro en P4"
+      say: "No identifico el 'punto de vista' en P4. Explicítalo (objetivo, alcance y reencuadre al proyecto/chat actual)."
+
+# ---------- PLANTILLA DE SALIDA (SNIPPET CANÓNICO) ----------
+templates:
+  project_snippet_txt: |
+    # {ProjectName} — Entendimiento Consolidado (LO4Q-AN)
+    ## Resumen ejecutivo  [fuente: [P2] + [IMG]]
+    {summary}
+
+    ## Componentes / Estructura  [fuente: [P2] + [IMG]]
+    {structure_components}
+
+    ## Profundización autosuficiente  [fuente: [P3]]
+    {deep_selfcontained}
+
+    ## Reencuadre y Punto de vista (proyecto/chat actual)  [fuente: [P4]]
+    {reframing_current_project}
+
+    ## Supuestos y límites
+    {assumptions_limits}
+
+    ## Riesgos y preguntas abiertas
+    {risks_open_questions}
+
+    ## Glosario y alias de términos (normalizados)
+    {glossary_aliases}
+
+    ---
+    **Provenance**: {provenance_tags}   # e.g., [P2]=párrafos 1–3; [P3]=sección “X”; [P4]=ítems a–c; [IMG]=anotaciones.
+
+# ---------- SÍNTESIS (REGLAS) ----------
+synthesis_rules:
+  - "Usar términos de P2 como base de componentes; si hay conflicto con P3/P4, preferir definiciones más específicas."
+  - "La sección de reencuadre debe mencionar explícitamente 'este proyecto/chat actual'."
+  - "Construir glosario con alias detectados (sinónimos, traducciones, abreviaturas → forma canónica)."
+  - "Incluir etiquetas [P2]/[P3]/[P4]/[IMG] dentro de cada sección para trazabilidad."
+  - "Mantener tono técnico, sin opiniones no soportadas por las respuestas."
+
+# ---------- PROVENANCE ----------
+provenance:
+  record:
+    - "project_name"
+    - "images.hashes"
+    - "len(P2)/len(P3)/len(P4)"
+    - "timestamps"
+  emit:
+    - "lo4q-an.report.json": >
+        { project: "{ProjectName}", words: {p2:W2,p3:W3,p4:W4,snippet:WS},
+          checks: {inputs_presentes:OK,longitud_minima:OK,punto_de_vista_en_P4:OK,provenance_tags:OK} }
+
+# ---------- INVOCACIÓN ----------
+invocation:
+  command: "inicia proceso de lectura orquestada"
+  description: "Arranca el intake por proyecto y genera el snippet canónico (LO4Q-AN)."
+
+# ---------- NOTAS ----------
+notes:
+  - "Este CNode asume que P1 = P2 y por eso no solicita P1."
+  - "Repite el comando por cada proyecto para obtener un snippet homogéneo y comparable."
+  - "Si deseas, se puede habilitar una salida adicional con matriz comparativa cuando existan 2+ proyectos (extensión futura)."
+
+# ---------- FIN DEL CNODE ----------

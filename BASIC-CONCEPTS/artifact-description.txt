@@ -1,0 +1,314 @@
+# DESCRIPCIÓN DEL ARTEFACTO DE CÓDIGO (JSONL/NDJSON)
+
+## ¿Qué es el artefacto?
+Un archivo **JSONL/NDJSON** donde **cada línea representa UN archivo** del proyecto.
+Cada línea contiene (cuando aplica):
+- path            → ruta relativa POSIX desde `--root`
+- content         → contenido del archivo si es **texto** (UTF-8 normalizado)
+- size            → tamaño en bytes
+- sha256          → hash SHA-256 del archivo
+- mtime           → fecha de modificación en ISO
+- kind            → "text" | "binary"
+- encoding        → codificación detectada si es texto (ej. "utf-8", "windows-1252")
+- ext             → extensión informativa (ej. ".py", ".js", ".md")
+
+**Nota sobre truncados:** si un archivo de texto supera `--max-bytes`, su `content` se corta y se agrega el marcador:
+`/*__TRUNCATED__: file exceeded --max-bytes */`
+
+**Nota sobre binarios:** solo se incluyen si se usa `--include-binary` y **sin** `content` (solo metadatos).
+
+
+## ¿Cómo se crea?
+El artefacto se genera con un script Node.js que recorre la carpeta objetivo y vuelca la información anterior en formato JSONL.
+El script:
+- Usa un **walker recursivo** (sin globbing externo) → estable y predecible.
+- Detecta **texto vs binario** por inspección de bytes.
+- Detecta **encoding** y normaliza a **UTF-8** al escribir `content`.
+- **Excluye** archivos `.env` y variantes (`.env.local`, `.env.production`, etc.) y **lockfiles** (`package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`) para mejorar seguridad y reducir ruido.
+
+### Dependencias mínimas (para el script)
+- `chardet` (detección de codificación)
+- `iconv-lite` (decodificación a UTF-8)
+
+Instalación (en la carpeta/paquete donde vive el script):
+  npm i chardet iconv-lite
+
+### Código del generador
+(Pegue aquí el contenido de su archivo `scripts/generate-artifact.universal.js`)
+
+---8<----------------- PEGAR AQUÍ EL CÓDIGO DEL SCRIPT -----------------8<---
+// File: scripts/generate-artifact.universal.js
+//
+// ──────────────────────────────────────────────────────────────────────────────
+// PROPÓSITO (versión universal basada en tu walker simple)
+// Recorre una carpeta de proyecto (cualquier lenguaje) y genera un artefacto
+// NDJSON/JSONL con UNA LÍNEA POR ARCHIVO. Incluye:
+//   - path, size, sha256, mtime, kind, encoding, ext y content (si texto)
+// ──────────────────────────────────────────────────────────────────────────────
+
+const fs = require("fs/promises");
+const fssync = require("fs");
+const path = require("path");
+const crypto = require("crypto");
+const chardet = require("chardet");
+const iconv = require("iconv-lite");
+
+/*──────────────────────────── CLI mínima ────────────────────────────*/
+function getArg(flag, dflt = null) {
+  const i = process.argv.indexOf(flag);
+  return i !== -1 && process.argv[i + 1] ? process.argv[i + 1] : dflt;
+}
+const ROOT = path.resolve(getArg("--root", "."));
+const OUT = path.resolve(getArg("--out", "artifact.jsonl"));
+const INCLUDE_BINARY = process.argv.includes("--include-binary");
+const PRINT_SUMMARY = process.argv.includes("--print-summary");
+const MAX_BYTES = Number(getArg("--max-bytes", "4000000")) || 4_000_000;
+
+/*──────────────────────────── Exclusiones simples ───────────────────*/
+// Ignora directorios “ruidosos”
+const DEFAULT_IGNORES = new Set([
+  "node_modules",
+  ".git",
+  "dist",
+  "build",
+  ".next",
+  ".turbo",
+  ".cache",
+  "coverage",
+  ".DS_Store",
+]);
+// 🔒 Además, ignora **archivos .env** y variantes (.env.local, .env.prod, etc.)
+function isDotEnv(name) {
+  return name === ".env" || name.startsWith(".env.");
+}
+
+function isLockfile(name) {
+  return (
+    name === "package-lock.json" ||
+    name === "yarn.lock" ||
+    name === "pnpm-lock.yaml"
+  );
+}
+
+/*──────────────────────────── Main ──────────────────────────────────*/
+(async function main() {
+  await fs.mkdir(path.dirname(OUT), { recursive: true });
+  const ws = fssync.createWriteStream(OUT, { encoding: "utf8", flags: "w" });
+
+  let files = 0,
+    texts = 0,
+    bins = 0,
+    totalBytes = 0;
+
+  for await (const abs of walk(ROOT)) {
+    const rel = toPosix(path.relative(ROOT, abs));
+    try {
+      const st = await fs.lstat(abs);
+      if (!st.isFile()) continue;
+
+      totalBytes += st.size;
+
+      // 1) Clasificación texto/binario con heurística ligera
+      const head = await readHead(abs, 8192);
+      const looksText = isProbablyText(head);
+      const kind = looksText ? "text" : "binary";
+
+      // 2) Hash de integridad (sha256)
+      const sha256 = await hashFile(abs);
+
+      // 3) Entrada base
+      let entry = {
+        path: rel,
+        size: st.size,
+        sha256,
+        mtime: st.mtime.toISOString(),
+        kind,
+        encoding: null,
+        ext: path.extname(rel) || null,
+      };
+
+      // 4) Binarios
+      if (kind === "binary") {
+        if (INCLUDE_BINARY) {
+          ws.write(JSON.stringify(entry) + "\n");
+          bins++;
+          files++;
+        } else {
+          bins++;
+          files++;
+        }
+        continue;
+      }
+
+      // 5) Texto: leer y normalizar a UTF-8 con límite
+      let content;
+      if (st.size > MAX_BYTES) {
+        const partial = await readHead(abs, MAX_BYTES);
+        entry.encoding = detectEncoding(partial);
+        content =
+          decodeToUtf8(partial, entry.encoding) +
+          "\n/*__TRUNCATED__: file exceeded --max-bytes */";
+      } else {
+        const buf = await fs.readFile(abs);
+        entry.encoding = detectEncoding(buf);
+        content = decodeToUtf8(buf, entry.encoding);
+      }
+
+      entry.content = content;
+      ws.write(JSON.stringify(entry) + "\n");
+      texts++;
+      files++;
+    } catch (err) {
+      ws.write(
+        JSON.stringify({ path: rel, error: String(err), kind: "diagnostic" }) +
+          "\n"
+      );
+      files++;
+    }
+  }
+
+  ws.end();
+
+  if (PRINT_SUMMARY) {
+    console.log("== Artifact Summary ==");
+    console.log("root:", ROOT);
+    console.log("out:", OUT);
+    console.log("files (written/diagnostic entries):", files);
+    console.log("text files:", texts);
+    console.log(
+      "binary files:",
+      bins,
+      INCLUDE_BINARY ? "(included)" : "(skipped)"
+    );
+    console.log("total bytes encountered:", totalBytes);
+    console.log("max-bytes per text file:", MAX_BYTES);
+  }
+})().catch((err) => {
+  console.error("[generate-artifact.universal] fatal:", err);
+  process.exit(1);
+});
+
+/*──────────────────────────── Walker recursivo ──────────────────────*/
+async function* walk(dir) {
+  const entries = await fs.readdir(dir, { withFileTypes: true });
+  for (const e of entries) {
+    // Ignorar directorios comunes…
+    if (DEFAULT_IGNORES.has(e.name)) continue;
+    // 🔒 Ignorar archivos .env y variantes
+    if (!e.isDirectory() && (isDotEnv(e.name) || isLockfile(e.name))) continue;
+
+    const abs = path.join(dir, e.name);
+    if (e.isDirectory()) {
+      yield* walk(abs);
+    } else if (e.isFile()) {
+      yield abs;
+    }
+  }
+}
+
+/*──────────────────────────── Utilidades ────────────────────────────*/
+function toPosix(p) {
+  return p.split(path.sep).join("/");
+}
+
+async function readHead(file, n) {
+  const fd = await fs.open(file, "r");
+  try {
+    const st = await fd.stat();
+    const len = Math.min(st.size, n);
+    const buf = Buffer.alloc(len);
+    await fd.read(buf, 0, len, 0);
+    return buf;
+  } finally {
+    await fd.close();
+  }
+}
+
+function isProbablyText(buf) {
+  let nonPrintable = 0;
+  for (let i = 0; i < buf.length; i++) {
+    const c = buf[i];
+    if (c === 0) return false; // byte nulo → binario
+    if (c < 7 || (c > 13 && c < 32)) nonPrintable++;
+    if (nonPrintable > 16) return false; // demasiados controles
+  }
+  return true;
+}
+
+function detectEncoding(buf) {
+  return chardet.detect(buf) || "utf-8";
+}
+
+function decodeToUtf8(buf, encoding) {
+  const enc = encoding || "utf-8";
+  try {
+    return iconv.decode(buf, enc);
+  } catch {
+    return (
+      iconv.decode(buf, "utf-8") + "\n/*__DECODE_NOTE__: fallback utf-8 */"
+    );
+  }
+}
+
+function hashFile(file) {
+  return new Promise((resolve, reject) => {
+    const h = crypto.createHash("sha256");
+    const s = fssync.createReadStream(file);
+    s.on("data", (chunk) => h.update(chunk));
+    s.on("error", reject);
+    s.on("end", () => resolve(h.digest("hex")));
+  });
+}
+
+
+---8<----------------- FIN DEL CÓDIGO DEL SCRIPT ----------------------8<---
+
+
+## Ejemplos de uso
+Desde la carpeta donde esté el proyecto a analizar:
+
+- **Windows PowerShell**:
+  node scripts/generate-artifact.universal.js `
+    --root ".\RUTA\DEL\PROYECTO" `
+    --out ".\mi-proyecto.artifact.jsonl" `
+    --include-binary `
+    --max-bytes 4000000 `
+    --print-summary
+
+- **macOS / Linux**:
+  node scripts/generate-artifact.universal.js \
+    --root ./RUTA/DEL/PROYECTO \
+    --out ./mi-proyecto.artifact.jsonl \
+    --include-binary \
+    --max-bytes 4000000 \
+    --print-summary
+
+**Flags principales:**
+- `--root <dir>`          directorio raíz a escanear (default: ".")
+- `--out <file>`          ruta del artefacto JSONL (default: "artifact.jsonl")
+- `--include-binary`      incluye binarios (sin `content`)
+- `--max-bytes <n>`       límite de lectura para archivos de texto (default: 4,000,000)
+- `--print-summary`       imprime métricas al finalizar
+
+**Exclusiones por diseño (seguridad/ruido):**
+- Archivos `.env` y variantes `.env.*` → **no se incluyen** (evita exposición de secretos)
+- Lockfiles (`package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`) → **no se incluyen**
+
+
+## Garantías y límites del artefacto
+- **Sin secretos**: no se capturan `.env`/credenciales. Podemos inferir **nombres** de variables usadas por el código, **no** sus valores.
+- **Contenido parcial** si un archivo supera `--max-bytes` (marcado con `/*__TRUNCATED__*/`).
+- **Binarios**: opcionales; cuando se incluyen, es **solo** con metadatos (sin contenido).
+
+
+## Qué se espera cuando me envías un artefacto
+Al recibirme `*.artifact.jsonl`, procederé a:
+1) **Identificar** propósito, tecnologías y estructura del proyecto (carpetas clave, lenguajes, puntos de entrada).
+2) **Mapear dependencias** y configuración (manifiestos, scripts de build, herramientas de lint/format).
+3) **Extraer interfaces** (endpoints/CLI), integraciones externas (SDKs/APIs), y uso de variables de entorno (nombres).
+4) **Revisar datos/persistencia** (ORMs, esquemas, migraciones, SQL).
+5) **Analizar calidad y seguridad** (smells, validaciones, patrones de secretos en código, SQL parametrizado, CORS, manejo de errores).
+6) **Comentar operabilidad** (logging, trazas, healthchecks, CI/CD, Docker/compose/IaC si hay).
+7) **Entregar un plan de acción** priorizado (quick wins / mediano plazo / riesgos críticos) con evidencia (path + snippet).
+
+Si el artefacto tuviera archivos truncados o faltara información (por diseño o exclusión), lo **indicaré explícitamente** y sugeriré cómo obtener el detalle (p. ej., subir `--max-bytes`, incluir ciertas rutas, o compartir un `.env.example` sin secretos).

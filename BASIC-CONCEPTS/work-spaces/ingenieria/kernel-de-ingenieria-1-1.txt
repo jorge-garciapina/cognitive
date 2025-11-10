@@ -1,0 +1,328 @@
+MODULE: Kernel de Ingeniería — Ancestro Común
+VERSION: 1.1 (autocontenido)
+STATUS: listo para compartirse como .txt
+SCOPE: Define el ancestro común de todas las ingenierías como un kernel operativo, más un protocolo para decisiones, una portada A–I para gobernanza, un orquestador de pesos/presets, métricas, anti-patrones y plantillas aplicables a cualquier rama (civil, eléctrica, software, industrial, financiera, biomédica, etc.).
+
+
+──────────────────────────────────────────────────────────────────────────────
+0) RESUMEN EJECUTIVO EN UNA LÍNEA
+──────────────────────────────────────────────────────────────────────────────
+“Ingeniería” = un kernel invariante que transforma problemas con restricciones
+en soluciones verificables, gobernado por una portada A–I (Propósito, Invariantes,
+Objetos, Interfaces, Métrica faro, Validaciones, Cadencia, Aprendizaje,
+Trazabilidad) y un protocolo de decisiones con reglas, pruebas y umbrales;
+se especializa al conectarse con nodos-ancestro disciplinares (física, cómputo,
+economía/finanzas, biología/salud, derecho/ética).
+
+
+──────────────────────────────────────────────────────────────────────────────
+1) OBJETO DEL MÓDULO
+──────────────────────────────────────────────────────────────────────────────
+1. Definir el KERNEL DE INGENIERÍA (KI) como procedimiento general, independiente
+   del dominio, con fases, artefactos y garantías.
+2. Establecer la PORTADA A–I como encabezado obligatorio de todo proyecto.
+3. Proveer un PROTOCOLO DE DECISIONES que haga auditable cada elección técnica.
+4. Introducir un ORQUESTADOR DE PESOS/PRESETS para manejar trade-offs y bloqueos.
+5. Entregar PLANTILLAS, MÉTRICAS, ANTIPATRONES y EJEMPLOS aplicables en cualquier
+   ingeniería, sin referencias externas.
+
+
+──────────────────────────────────────────────────────────────────────────────
+2) PORTADA A–I (encabezado obligatorio de cualquier proyecto)
+──────────────────────────────────────────────────────────────────────────────
+A. PROPÓSITO: qué se desea lograr y por qué importa (1–3 líneas medibles).
+B. INVARIANTES: reglas no negociables (seguridad, legalidad, ética, límites
+   físicos, coherencia contable, privacidad, etc.).
+C. OBJETOS: qué se diseña (sistema) y qué se opera/observa (plataforma, línea,
+   cartera, estructura, dispositivo, servicio).
+D. INTERFACES: entradas/salidas por módulo, tipos de datos/señales, contratos
+   (pre/post condiciones), garantías y límites.
+E. MÉTRICA FARO: una métrica principal por nivel (sistema→subsistema→módulo)
+   que guíe decisiones (ej.: throughput, reducción de varianza, consumo, etc.).
+F. VALIDACIONES DURAS: pruebas mínimas que deben pasarse antes de promover
+   una versión (pruebas de carga, backtesting, stress, ensayos clínicos, etc.).
+G. CADENCIA: ritmo de entrega, evaluación y revisión (semanal, quincenal, etc.).
+H. APRENDIZAJE: mecanismos para incorporar datos de operación (telemetría,
+   retroalimentación, recalibración de modelos).
+I. TRAZABILIDAD: identificación de versiones, requisitos vinculados a pruebas,
+   bitácora de cambios y evidencias reproducibles.
+
+(Nota operativa: ningún proyecto se inicia sin A–I. Ninguna promoción de versión
+puede romper invariantes ni omitir validaciones duras.)
+
+
+──────────────────────────────────────────────────────────────────────────────
+3) DEFINICIÓN DEL KERNEL DE INGENIERÍA (KI)
+──────────────────────────────────────────────────────────────────────────────
+El KI es un ciclo fractal que transforma problemas con restricciones en soluciones
+operables y verificables. Se aplica en todas las escalas (sistema, subsistema,
+módulo, componente), repitiendo el mismo patrón.
+
+FASES (orden lógico; la práctica es iterativa):
+  F1. FORMULACIÓN DEL PROBLEMA
+      - Alcance, stakeholders, entorno, supuestos.
+      - Objetivos (desempeño, costo, seguridad, impacto) y prioridades.
+      - Restricciones duras/blandas y criterios de aceptación.
+
+  F2. ABSTRACCIÓN Y MODELADO
+      - Representación manipulable: determinista/estocástico; continuo/discreto;
+        ecuaciones, colas, grafos, agentes, reglas, PDE/PID, etc.
+      - Supuestos y dominio de validez; parámetros y datos requeridos.
+
+  F3. ARQUITECTURA Y DESCOMPOSICIÓN
+      - Módulos con interfaces explícitas (I/O, garantías, límites).
+      - Estándares y códigos aplicables; cohesión y bajo acoplamiento.
+
+  F4. OPTIMIZACIÓN BAJO RESTRICCIONES
+      - Función objetivo (p. ej., eficiencia, riesgo, calidad).
+      - Restricciones y trade-offs; solución exacta o heurística; sensibilidad.
+
+  F5. CONTROL Y GESTIÓN DE RIESGO
+      - Lazos de control (sensores→comparación→actuadores).
+      - Identificación de riesgos (severidad×probabilidad), buffers, umbrales,
+        planes de contingencia; operacionalidad de la cobertura/mitigación.
+
+  F6. VERIFICACIÓN Y VALIDACIÓN (V&V)
+      - Verificación: conformidad con el diseño.
+      - Validación: adecuación al propósito en condiciones reales y de estrés.
+      - Backtesting/benchmarks; análisis de incertidumbre.
+
+  F7. OPERACIÓN Y MEJORA CONTINUA
+      - Despliegue, telemetría, métricas, mantenimiento.
+      - Recalibración de modelos y revisión periódica de supuestos.
+      - Gobierno de cambios con trazabilidad completa.
+
+
+──────────────────────────────────────────────────────────────────────────────
+4) PROTOCOLO DE DECISIONES (hacer auditable cada elección técnica)
+──────────────────────────────────────────────────────────────────────────────
+Cada decisión relevante del proyecto debe registrarse con este protocolo mínimo:
+
+D1. ENUNCIADO: resumen de la decisión (1–2 líneas).
+D2. ALTERNATIVAS: lista exhaustiva, incluyendo “no hacer”.
+D3. ANCLAS (≤2): principios/criterios que no se violan (p. ej., seguridad,
+    legalidad, idoneidad, interoperabilidad).
+D4. DICCIONARIO (≤7 términos): definiciones operativas que se usarán en la
+    comparación, para evitar ambigüedades.
+D5. REGLAS “SI→ENTONCES”: lógica explícita para elegir (umbral, condición,
+    fallback; ejemplo: “si latencia p95 > X, entonces degradar a modo B”).
+D6. PRUEBA MÍNIMA: experimento o simulación que separa alternativas con datos;
+    tamaño de muestra, duración y criterios de parada.
+D7. UMBRALES DE ACEPTACIÓN: valores que determinan promoción o descarte.
+D8. MÉTRICAS SECUNDARIAS: impacto colateral (costo, complejidad, riesgo).
+D9. RESULTADO Y TRAZABILIDAD: alternativa elegida y evidencias (identificadores
+    de pruebas, fecha, responsable, versión).
+D10. EFECTOS DE SEGUNDO ORDEN: qué cambia en interfaces, operaciones o riesgos.
+
+(Nota: sin D6–D7 registrados, la decisión no puede promoverse.)
+
+
+──────────────────────────────────────────────────────────────────────────────
+5) ORQUESTADOR DE PESOS/PRESETS (gobierno de trade-offs)
+──────────────────────────────────────────────────────────────────────────────
+Defina un vector de dimensiones clave con pesos que sumen 1.0. Ejemplos:
+  • {Rendimiento, Costo, Riesgo, Robustez, Simplicidad}
+  • {Calidad, Tiempo, Costo, Sostenibilidad, Cumplimiento}
+  • {Seguridad, Eficiencia, Disponibilidad, Mantenibilidad, Experiencia}
+
+O1. PRESET INICIAL: p.ej., (0.35, 0.20, 0.25, 0.15, 0.05).
+O2. REGLAS DE PROMOCIÓN: cómo cambian los pesos ante eventos (p. ej., incidentes
+    de seguridad incrementan el peso de Seguridad a ≥0.40 hasta nuevo aviso).
+O3. BLOQUEOS: condiciones que impiden promover cambios (p. ej., romper un
+    invariante, fallar una validación dura, exceder riesgo máximo).
+O4. BITÁCORA: cada ajuste de pesos se registra con motivo, fecha y evidencias.
+O5. HERENCIA FRACTAL: el preset se especializa por nivel (sistema→módulo), sin
+    contradecir los pesos y bloqueos de niveles superiores.
+
+
+──────────────────────────────────────────────────────────────────────────────
+6) NODOS-ANCESTRO Y ESPECIALIZACIÓN (cómo el kernel “se vuelve” ingeniería X)
+──────────────────────────────────────────────────────────────────────────────
+El KI se especializa al conectarse con familias disciplinares:
+
+A) FÍSICA (mecánica, materiales, termodinámica, electromagnetismo)
+   - Conservación, límites materiales, estabilidad, códigos de seguridad.
+B) CÓMPUTO (arquitectura, complejidad, datos, verificación, seguridad)
+   - Modularidad, concurrencia, resiliencia, observabilidad.
+C) ECONOMÍA/FINANZAS (coherencia de precios, arbitraje, contabilidad, riesgo)
+   - Flujos de caja, liquidez, regulación prudencial, cobertura/hedging.
+D) BIOLOGÍA/SALUD (sistemas biológicos, clínica, ensayos, ética sanitaria)
+   - Seguridad del paciente, sensibilidad/especificidad, validación clínica.
+E) DERECHO/ÉTICA (cumplimiento, responsabilidad, privacidad, gobernanza)
+   - Límites legales, idoneidad, transparencia, sostenibilidad.
+
+Cada ingeniería resulta de la combinación dominante de estos nodos-ancestro,
+sus fenómenos y artefactos (puentes, chips, software, carteras, dispositivos,
+plantas, etc.).
+
+
+──────────────────────────────────────────────────────────────────────────────
+7) ISOMORFISMOS ÚTILES (puentes entre dominios)
+──────────────────────────────────────────────────────────────────────────────
+• Margen de seguridad (civil) ↔ Colchón de capital/liquidez (finanzas) ↔
+  Presupuesto de latencia/recursos (software).
+• Carga admisible (civil) ↔ Exposición/apalancamiento (finanzas) ↔
+  Capacidad/throughput (industrial/software).
+• Falla frágil/cascada (civil/eléctrica) ↔ Colas gruesas/crisis de liquidez
+  (finanzas) ↔ Caídas en cadena por despliegue/depencias (software).
+• Redundancia estructural (civil/eléctrica) ↔ Diversificación (finanzas) ↔
+  Réplicas y balanceo (software).
+• Control PID (eléctrica) ↔ Hedging/cobertura (finanzas) ↔ Autoscaling/limiters
+  (software).
+
+
+──────────────────────────────────────────────────────────────────────────────
+8) MÉTRICAS, UMBRALES Y VALIDACIONES (desde el día 1)
+──────────────────────────────────────────────────────────────────────────────
+Métricas base (elegir y definir con unidades y ventana temporal):
+  • Desempeño / Calidad de servicio (p. ej., throughput, p95/p99, accuracy).
+  • Costo (CAPEX/OPEX, costo por unidad, costo de ciclo de vida).
+  • Riesgo (probabilidad×severidad; VaR/ES si aplica; seguridad funcional).
+  • Robustez (degradación bajo perturbaciones; sensibilidad paramétrica).
+  • Confiabilidad (MTBF/MTTR, disponibilidad, tasa de incidentes).
+  • Cumplimiento (conformidad reglamentaria/ética).
+
+Validaciones duras (ejemplos):
+  • Pruebas de carga/esfuerzo; ensayos y códigos (civil/eléctrica).
+  • Backtesting, stress histórico/hipotético (finanzas).
+  • Pruebas unitarias/integradas/E2E; seguridad y performance (software).
+  • Ensayos controlados / validación clínica (biomédica).
+
+Umbrales: cada métrica importante tiene umbrales de aceptación y de alerta,
+vinculados a reglas “si→entonces” del protocolo de decisiones.
+
+
+──────────────────────────────────────────────────────────────────────────────
+9) ANTIPATRONES (activados como pruebas de bloqueo)
+──────────────────────────────────────────────────────────────────────────────
+A1. Verificar ≠ Validar: pasar pruebas internas no garantiza utilidad real.
+A2. Modelo sin dominio de validez: extrapolar fuera de rango rompe garantías.
+A3. Poesía sin prueba: decisiones sin D6–D7 (prueba/umbral) no se promueven.
+A4. Métrica única miope: optimizar una métrica destruye otra crítica.
+A5. Telemetría ausente: sin datos de operación no hay control ni mejora.
+A6. Deuda estructural: omitir arquitectura e interfaces eleva riesgo sistémico.
+A7. Riesgo de modelo ignorado: supuestos inadecuados no monitoreados.
+A8. Ruptura de invariante: ningún beneficio justifica romper reglas no negociables.
+
+(Política: detectar A1–A8 bloquea la promoción automáticamente.)
+
+
+──────────────────────────────────────────────────────────────────────────────
+10) PLANTILLA OPERATIVA (checklist para “aterrizar” el kernel)
+──────────────────────────────────────────────────────────────────────────────
+T1. PORTADA A–I completada y visible.
+T2. F1–F7 documentadas con artefactos mínimos (requisitos, modelo, arquitectura,
+    plan de pruebas, plan de operación).
+T3. PROTOCOLO DE DECISIONES aplicado a toda decisión relevante (D1–D10).
+T4. ORQUESTADOR configurado con preset, reglas de promoción y bloqueos.
+T5. MÉTRICAS y UMBRALES definidos; VALIDACIONES DURAS calendarizadas.
+T6. ANTIPATRONES activados como tests (bloqueos automáticos).
+T7. TRAZABILIDAD enlazando requisitos→diseño→pruebas→resultados→operación.
+
+
+──────────────────────────────────────────────────────────────────────────────
+11) EJEMPLOS DE ESPECIALIZACIÓN (sketches autosuficientes)
+──────────────────────────────────────────────────────────────────────────────
+A) Ingeniería Civil
+   • Propósito: “Garantizar resistencia y servicio al menor costo de ciclo de vida.”
+   • Invariantes: cumplimiento de códigos, límites de deformación/rotura.
+   • Métrica faro (nivel sistema): factor de seguridad ≥ objetivo.
+   • Validación dura: prueba de carga y verificación por norma.
+   • Protocolo: si tensiones > X% del límite → rediseñar sección o material.
+   • Orquestador ejemplo: {Seguridad 0.45, Costo 0.25, Mantenibilidad 0.15,
+     Tiempo 0.10, Sostenibilidad 0.05}; bloqueos por ruptura de norma.
+
+B) Ingeniería de Software
+   • Propósito: “Entrega de funcionalidades con p95<Y ms y disponibilidad ≥99.9%.”
+   • Invariantes: seguridad, privacidad, compatibilidad contractual.
+   • Métrica faro: disponibilidad; secundarias: latencia p95, tasa de error.
+   • Validación dura: pruebas E2E, seguridad, carga; SLO/SLI instrumentados.
+   • Protocolo: si p95>umbral → activar autoscaling/circuit breakers.
+   • Orquestador: {Disponibilidad 0.35, Seguridad 0.25, Rendimiento 0.20,
+     Costo 0.10, Simplicidad 0.10}; bloqueo si se rompe privacidad.
+
+C) Ingeniería Industrial
+   • Propósito: “Maximizar throughput con inventario y tiempos de entrega objetivos.”
+   • Invariantes: seguridad laboral, cumplimiento regulatorio.
+   • Métrica faro: unidades/hora; secundarias: WIP, lead time, tasa de defectos.
+   • Validación dura: simulación de eventos discretos y piloto en línea.
+   • Protocolo: si OEE<umbral → balanceo de línea y reducción de setup.
+   • Orquestador: {Throughput 0.30, Calidad 0.25, Costo 0.20, Seguridad 0.15,
+     Flexibilidad 0.10}; bloqueo si incidentes > límite.
+
+D) Ingeniería Financiera
+   • Propósito: “Transformar riesgo y flujos con coherencia de precios y liquidez operable.”
+   • Invariantes: legalidad, idoneidad, liquidez implementable, contabilidad consistente.
+   • Métrica faro: reducción de varianza de flujo objetivo (p. ej., 95%).
+   • Validación dura: backtesting y stress en escenarios históricos y adversos.
+   • Protocolo: si varianza ex-ante > umbral → incrementar nocional de cobertura;
+     si liquidez < umbral → degradar a instrumento más simple.
+   • Orquestador: {Riesgo 0.45, Costo 0.25, Liquidez 0.20, Simplicidad 0.10};
+     bloqueo si no hay evidencia de capacidad de ejecución.
+
+E) Ingeniería Biomédica
+   • Propósito: “Mejorar resultados clínicos con seguridad del paciente.”
+   • Invariantes: ética clínica, seguridad, cumplimiento sanitario.
+   • Métrica faro: sensibilidad/especificidad clínica objetivo.
+   • Validación dura: ensayos, validación externa, monitoreo posdespliegue.
+   • Protocolo: si señal/ruido < umbral → ajustar filtro o protocolo de muestreo.
+   • Orquestador: {Seguridad 0.40, Eficacia 0.30, Usabilidad 0.15, Costo 0.10,
+     Mantenibilidad 0.05}; bloqueo ante efectos adversos superiores a umbral.
+
+
+──────────────────────────────────────────────────────────────────────────────
+12) MINI-GUÍA DE IMPLEMENTACIÓN (pasos sugeridos)
+──────────────────────────────────────────────────────────────────────────────
+P0. Abra el proyecto con la PORTADA A–I (todas las casillas).
+P1. Ejecute F1–F3 (problema→modelo→arquitectura) y deje artefactos mínimos.
+P2. Configure el ORQUESTADOR (preset, reglas, bloqueos, herencia de nivel).
+P3. Para cada decisión clave, aplique el PROTOCOLO D1–D10 y planifique la PRUEBA.
+P4. Defina MÉTRICAS/UMBRALES y programe VALIDACIONES DURAS.
+P5. Implemente F4–F5 (optimización y control) respetando invariantes.
+P6. Ejecute F6 (V&V), documente resultados y active ANTIPATRONES como tests.
+P7. Despliegue F7 (operación), instrumente telemetría y active ciclos de mejora.
+P8. Mantenga TRAZABILIDAD completa y bitácora del orquestador.
+
+
+──────────────────────────────────────────────────────────────────────────────
+13) CHECKLIST DE ACEPTACIÓN (mínimos no negociables)
+──────────────────────────────────────────────────────────────────────────────
+[ ] Portada A–I completa y vigente.
+[ ] Invariantes y umbrales definidos; bloqueos configurados.
+[ ] Modelo con supuestos y dominio de validez documentados.
+[ ] Arquitectura modular con contratos de interfaz claros.
+[ ] Protocolo de decisiones aplicado a decisiones relevantes (D1–D10).
+[ ] Orquestador con preset, reglas de promoción y bloqueos activos.
+[ ] Métrica faro por nivel y validaciones duras calendarizadas y ejecutadas.
+[ ] Antipatrones activados como pruebas de bloqueo; sin incidencias abiertas.
+[ ] Evidencias de V&V con resultados reproducibles y trazabilidad completa.
+[ ] Procedimientos de operación, telemetría y mejora continua establecidos.
+
+
+──────────────────────────────────────────────────────────────────────────────
+14) GLOSARIO OPERATIVO
+──────────────────────────────────────────────────────────────────────────────
+• Kernel de Ingeniería (KI): procedimiento invariante F1–F7 aplicado a cualquier
+  dominio para pasar de problema con restricciones a solución operable.
+• Invariante: regla no negociable (si se viola, el diseño se rechaza).
+• Métrica faro: métrica principal que guía decisiones por nivel.
+• Protocolo de decisiones: formato D1–D10 para elegir con reglas, pruebas y
+  umbrales verificables.
+• Orquestador de pesos/presets: mecanismo para gobernar trade-offs, con reglas
+  de promoción y bloqueos; heredable por niveles.
+• Validación dura: prueba mínima obligatoria para permitir promoción de versión.
+• Antipatrón: condición de bloqueo que invalida promoción por riesgo sistémico.
+• Trazabilidad: cadena requisito→diseño→pruebas→resultados→operación con
+  identificadores y versiones reproducibles.
+• Fractalidad: el KI se aplica en todas las escalas con el mismo esquema, y las
+  decisiones heredan invariantes y pesos desde niveles superiores.
+
+
+──────────────────────────────────────────────────────────────────────────────
+15) EPÍLOGO (uso práctico en 3 preguntas)
+──────────────────────────────────────────────────────────────────────────────
+1) ¿Qué optimizo y bajo qué límites? → defina Propósito, Invariantes y Métrica faro.
+2) ¿Cómo lo pruebo sin ambigüedad? → complete D1–D10 con umbrales y validaciones duras.
+3) ¿Quién gobierna los trade-offs? → configure el Orquestador con presets, reglas y bloqueos.
+
+FIN — Kernel de Ingeniería — Ancestro Común v1.1 (autocontenido)

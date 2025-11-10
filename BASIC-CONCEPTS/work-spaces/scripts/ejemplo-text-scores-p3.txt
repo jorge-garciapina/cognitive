@@ -1,0 +1,30 @@
+🎯 BASE STORY STRUCTURE 
+🧠 Keywords: signal, mystery, pursuit, loss, discovery, transformation 
+🎬 Core Idea: A woman receives a strange signal on her radio and leaves her old life to follow it. 
+📌 Goal: Show how different storytelling strategies change the viewer’s experience using the same core plot. 
+🪓 Problem: She's stuck in a repetitive life, numbed by grief and routine. 
+🚪 Inciting Incident: She hears a signal — strange, familiar — interrupting the radio one night. 
+🧭 Journey: She abandons comfort, follows cryptic clues, meets resistance, doubts herself, nearly quits. 
+🎁 Resolution: In a forgotten bunker, she finds the origin of the signal — a voice message from her deceased father, encoded long ago. 🌀 Transformation: The journey heals her grief and gives her purpose again. 
+ATTENTION ACTIVATION SCORE (AAS) NARRATIVE RELEVANCE SCORE (NRS) EMOTION ACTIVATION SCORE (EAS)
+-------------------------------------------------------------------------------- 
+🎯 Scenario: Default Weights (AAS=0.45, NRS=0.35, EAS=0.20)
+📊 Justification: Balanced for general storytelling: prioritizes attention, followed by structure, and then emotion. Matches standard short-form storytelling needs.
+🎥 Story Version: This is the story of a young woman who leaves everything behind to pursue a strange signal she heard on her radio. She follows it across towns, experiencing rejection, moments of awe, and eventually, a terrifying discovery beneath the mountains.
+--------------------------------------------------------------------------------
+🎯 Scenario: Attention-Dominant (AAS=0.70, NRS=0.20, EAS=0.10) 
+📊 Justification: Optimized for initial engagement: favors hooks, surprise, and pacing. Useful for TikTok’s first-3-second performance demands. 
+🎥 Story Version: A piercing sound interrupts her sleep. Eyes wide, heart racing, she grabs the radio. The signal is back. Without packing, she runs into the night, chased by blinding lights and unexplained forces. 
+-------------------------------------------------------------------------------- 
+🎯 Scenario: Narrative-Dominant (AAS=0.20, NRS=0.70, EAS=0.10) 
+📊 Justification: Ideal for plot progression and mythic arcs. Favors structure, revelation, and causality. Great for scripted formats like YouTube Shorts or serialized Reels. 
+🎥 Story Version: Once, in a forgotten town, a girl found a radio in her grandfather’s attic. From that moment, a mystery unraveled. She faced townspeople who warned her, signs that made no sense, and finally — the moment she realized the signal was calling her by name. 
+-------------------------------------------------------------------------------- 
+🎯 Scenario: Emotion-Dominant (AAS=0.10, NRS=0.30, EAS=0.60) 
+📊 Justification: Emphasizes internal states, embodiment, and catharsis. Best used for poetic, slow-burn, or confessional videos. 
+🎥 Story Version: Her hands trembled over the dials. She had not cried since her father died, but the sound — familiar, almost like his voice — undid her. Memories surged. Was it grief? Was it hope? She pressed her ear to the radio, eyes closed, breath shaking. 
+-------------------------------------------------------------------------------- 
+🎯 Scenario: Balanced Weights (AAS=0.33, NRS=0.33, EAS=0.34) 
+📊 Justification: Even emphasis across all dimensions. Produces a structurally and emotionally cohesive narrative with good flow and engagement. 
+🎥 Story Version: She hears a signal. It pulls her — heart thumping, story unfolding, emotions building. She crosses thresholds: fear, rejection, memory. And at the center, buried in the hills, she finds not just a machine, but a memory made physical — one that changes her forever. 
+--------------------------------------------------------------------------------

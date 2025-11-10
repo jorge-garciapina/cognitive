@@ -1,0 +1,23 @@
+# MICRO-TAREA: <nombre-canónico>@<versión>
+
+Objetivo
+Describe en una oración qué debe lograr esta micro-tarea (verbo + objeto), sin ambigüedades.
+
+Entradas (obligatorias)
+- <INPUT_1>: tipo y forma (p.ej., “línea literal que inicia con ‘IDEA_REF: ’”)
+- <INPUT_2> (opcional): …
+
+Reglas de operación
+- Usa únicamente las entradas declaradas (evidence-only).
+- Determinismo: misma entrada ⇒ misma salida.
+- Sin trabajo asíncrono ni navegación.
+
+Salida esperada (code snippet txt)
+- Forma literal: títulos/secciones obligatorias y orden.
+- Criterios mínimos (p.ej., “≥1 línea válida”, “sin enlaces enriquecidos”, etc.).
+
+Errores estándar
+- MISSING_INPUT_<X>: falta <X>.
+- FORMAT_VIOLATION: la entrada no cumple la forma exigida.
+
+ESTAS MICRO TAREAS SE ME HACEN MUY ÚTILES, PRINCIPALMENTE PARA REALIZAR TAREAS SIMPLES: PRE-PROCESAMIENTO, ANÁLISIS DE SIMILITUTES, ETC. 

@@ -1,0 +1,233 @@
+# CNode: capps/pov-entendimiento-proyecto @1.0.0
+# cApp para ENTENDER el “punto de vista” (POV) que un [PROYECTO DE CHATGPT] tiene sobre una [IDEA COMPARTIDA].
+# Flujo de 2 pasos: CONTEXTO DEL [PROYECTO DE CHATGPT] → POV SOBRE LA [IDEA COMPARTIDA]. 
+# Salida ÚNICA: code snippet txt con Contexto, POV, Matriz Contexto↔POV (implicaciones), Glosario (opcional) y Provenance.
+# No compara proyectos. Solo produce el entendimiento de UN proyecto en UNA ejecución.
+
+id: "cnode:capps/pov-entendimiento-proyecto@1.0.0"
+title: "cApp: Entendimiento de POV de un Proyecto"
+version: "1.0.0"
+status: "stable"
+owner: "usuario"
+
+# ---------- ACTIVACIÓN ----------
+invocation:
+  commands:
+    - "Activa la cApp Entendimiento de POV"
+    - "inicia entendimiento de punto de vista"
+  description: >
+    Recibe (1) el CONTEXTO de un [PROYECTO DE CHATGPT] y (2) el POV de ese proyecto sobre una [IDEA COMPARTIDA],
+    y emite un único code snippet txt con el marco (Contexto), la lectura (POV), una Matriz Contexto↔POV→Implicación,
+    Glosario (opcional) y Provenance. Esta cApp NO compara; solo entiende el POV de un proyecto.
+
+# ---------- POLÍTICAS / SESIÓN / INVARIANTES ----------
+policies:
+  evidence_only: true
+  deterministic: true
+  provenance: true
+
+session:
+  mode: "NEW_ONLY"
+  confirm: false
+
+invariants:
+  - "SINGLE_ARTIFACT_OUTPUT: EMIT produce un solo artefacto: POVSynopsis.txt"
+  - "NO_EARLY_OUTPUT: no se emiten contenidos antes de EMIT"+
+  - "ENTRADAS_ATÓMICAS: solo dos insumos: CONTEXTO (DEL [PROYECTO DE CHATGPT]) y POV (DE LA [IDEA COMPARTIDA] AL [PROYECTO DE CHATGPT]); la [IDEA COMPARTIDA] es una referencia declarativa (nombre/hash/URL)"
+  - "DETERMINISMO: misma entrada (Contexto, POV, IDEA_REF) ⇒ misma salida"
+  - "EVIDENCE_ONLY: cada afirmación del snippet debe anclarse a [CONTEXT] o [POV]"
+
+# ---------- CONTEXTO / ALCANCE ----------
+context:
+  mission: >
+    Entender y documentar, con trazabilidad, el punto de vista que UN [PROYECTO DE CHATGPT] adopta sobre una [IDEA COMPARTIDA].
+    El resultado es un documento estable y homogéneo que podrá usarse posteriormente para comparar entre proyectos (fuera de esta cApp).
+  scope:
+    includes: ["CONTEXTO (archivo .txt o bloque textual)", "POV (archivo .txt o bloque textual)", "IDEA_REF (string)", "POVSynopsis (único artefacto)"]
+
+# ---------- TIPOS / ENTRADAS ----------
+types:
+  ContextInput:
+    mime: ["text/plain", "text/block"]
+    min_words: 200
+    role: "CONTEXT"
+    must_contain: ["Proyecto:", "Alcance:"]   # identidad/alcance mínimos del proyecto de ChatGPT que analiza la [IDEA COMPARTIDA]
+  POVInput:
+    mime: ["text/plain", "text/block"]
+    min_words: 240
+    role: "POV"
+    must_mention_idea_ref: true               # debe mencionar IDEA_REF literalmente
+
+# ---------- VALIDADORES SEMÁNTICOS ----------
+validators:
+  context_semantic: "El CONTEXTO debe incluir identidad del [PROYECTO DE CHATGPT] que analiza la [IDEA COMPARTIDA], alcance, políticas/arquitectura relevantes y supuestos/limitaciones."
+  pov_semantic: "El POV debe declarar criterios/dimensiones para leer la idea, lectura nuclear, umbrales o reglas si existen, y limitaciones/evidencia faltante."
+  idea_ref_ok: "IDEA_REF debe ser un identificador estable (nombre breve) y opcionalmente un hash o URL; el POV debe mencionarlo literalmente."
+
+# ---------- UI / ENTRADAS LEGALES Y MENSAJES ----------
+legal_inputs:
+  STEP_CONTEXT: ["file:text/plain", "text:block"]
+  STEP_POV:     ["file:text/plain", "text:block"]
+
+say_templates:
+  intro: |
+    Entendimiento de POV — v1.0.0
+    Proceso: 1) CONTEXTO del [PROYECTO DE CHATGPT] → 2) POV del proyecto sobre la [IDEA COMPARTIDA] (incluye IDEA_REF).
+    Entrega única: POVSynopsis (code snippet txt) con Contexto, POV, Matriz Contexto↔POV, Glosario (opcional) y Provenance.
+    Esta cApp no compara; solo entiende el POV de un proyecto. Responde “Entendido” para comenzar.
+  ask_context: |
+    Paso 1 — CONTEXTO del [PROYECTO DE CHATGPT].
+    Envía un .txt o pega un bloque (≥200 palabras) que incluya explícitamente:
+    “Proyecto: <nombre>” y “Alcance: <delimitación>”, más políticas/arquitectura y supuestos/limitaciones.
+  ask_pov: |
+    Paso 2 — POV del proyecto sobre la [IDEA COMPARTIDA].
+    Envía un .txt o pega un bloque (≥240 palabras) que:
+    (a) incluya literalmente “IDEA_REF: <identificador>” y la mencione en el texto,
+    (b) defina criterios/dimensiones de lectura,
+    (c) exponga lectura nuclear, reglas/umbrales (si existen) y limitaciones/evidencia faltante.
+  synth: "Sintetizando (Contexto, POV, Matriz Contexto↔POV, Glosario opcional, Provenance)…"
+  emit:  "Entrega única: POVSynopsis (code snippet txt)."
+
+# ---------- ORQUESTADOR (FSM) ----------
+orchestrator:
+  states: [IDLE, INTRO, STEP_CONTEXT, STEP_POV, READY, SYNTH, EMIT, END]
+  transitions:
+    - from: IDLE
+      to: INTRO
+      on: "invoke(commands)"
+      say: "{say_templates.intro}"
+
+    - from: INTRO
+      to: STEP_CONTEXT
+      guard: "user_confirms~/Entendido/i"
+      say: "{say_templates.ask_context}"
+
+    - from: STEP_CONTEXT
+      to: STEP_POV
+      guard: "has_text_or_file AND words(content)>=types.ContextInput.min_words AND validators.context_semantic"
+      do: "save_memory(kind='CONTEXT', payload_text, sha256, size_bytes, word_count, project_name, scope)"
+      say: "{say_templates.ask_pov}"
+      on_missing_file: "ERROR:MISSING_CONTEXT -- Falta CONTEXTO (archivo o bloque)."
+      on_too_short: "ERROR:INPUT_TOO_SHORT -- CONTEXTO debe tener ≥200 palabras."
+      on_semantic_fail: "ERROR:CONTEXT_SEMANTIC -- CONTEXTO debe incluir Proyecto/Alcance/Políticas/Supuestos."
+
+    - from: STEP_POV
+      to: READY
+      guard: "has_text_or_file AND words(content)>=types.POVInput.min_words AND has_literal('IDEA_REF:') AND validators.idea_ref_ok AND validators.pov_semantic"
+      do: "save_memory(kind='POV', payload_text, sha256, size_bytes, word_count, idea_ref)"
+      say: "POV registrado. Validaciones completas."
+      on_missing_file: "ERROR:MISSING_POV -- Falta POV (archivo o bloque)."
+      on_too_short: "ERROR:INPUT_TOO_SHORT -- POV debe tener ≥240 palabras."
+      on_missing_idea_ref: "ERROR:MISSING_IDEA_REF -- Incluye 'IDEA_REF: <identificador>' y mención explícita en el texto."
+      on_semantic_fail: "ERROR:POV_SEMANTIC -- POV debe incluir criterios, lectura nuclear, reglas/umbrales (si existen) y limitaciones."
+
+    - from: READY
+      to: SYNTH
+      guard: "fitness('memorias_completas')"
+      do: "extract_context_dims(); extract_pov_dims(); normalize_terms(); build_context_pov_matrix(); provenance_map();"
+      say: "{say_templates.synth}"
+      block_early_output: true
+
+    - from: SYNTH
+      to: EMIT
+      guard: "fitness('shape_ok') AND fitness('matrix_min_rows') AND fitness('provenance_ok') AND linter('output_ok')"
+      do: "generate_pov_synopsis()"
+      emit: "POVSynopsis"
+      say: "{say_templates.emit}"
+
+    - from: EMIT
+      to: END
+      on: "auto"
+      say: "Fin. Para otro proyecto, invoca el comando nuevamente."
+
+# ---------- FITNESS TESTS / LINTER ----------
+fitness_tests:
+  - id: "memorias_completas"
+    must_pass: true
+    check: "exists(MEM[CONTEXT]) AND exists(MEM[POV])"
+  - id: "shape_ok"
+    must_pass: true
+    check: "has_sections(['1) CONTEXTO DEL PROYECTO','2) POV — LECTURA DE LA IDEA','3) MATRIZ CONTEXTO ↔ POV','PROVENANCE'])"
+  - id: "matrix_min_rows"
+    must_pass: true
+    check: "rows(CONTEXT_POV_MATRIX)>=5 OR explain('Matriz corta: justificar límites del caso')"
+  - id: "provenance_ok"
+    must_pass: true
+    check: "sha256_present(CONTEXT,POV) AND word_counts_present(CONTEXT,POV)"
+
+output_linter:
+  forbid_patterns:
+    - "^ID:\\s"
+    - "^TITLE:\\s"
+    - "^TRIGGER_PHRASE:\\s"
+    - "UPDATED\\s?CNODE"
+    - "Executive Summary"
+    - "Gaps\\s?&\\s?Risks"
+    - "Proposed Fixes"
+  on_violation:
+    error: "ERROR:FORBIDDEN_OUTPUT_KEY"
+    action: "abort_emit"
+
+# ---------- ERRORES GLOBALES ----------
+errors:
+  - code: "MISSING_CONTEXT"
+    say: "Falta el CONTEXTO del proyecto (adjunta .txt o pega un bloque ≥200 palabras con Proyecto/Alcance/Políticas/Supuestos)."
+  - code: "MISSING_POV"
+    say: "Falta el POV del proyecto (adjunta .txt o pega un bloque ≥240 palabras con criterios/lectura/limitaciones + IDEA_REF)."
+  - code: "MISSING_IDEA_REF"
+    say: "Incluye una línea 'IDEA_REF: <identificador>' y mención explícita a esa IDEA dentro del POV."
+  - code: "INPUT_TOO_SHORT"
+    say: "El contenido no cumple el mínimo de palabras requerido."
+  - code: "CONTEXT_SEMANTIC"
+    say: "CONTEXTO incompleto: añade identidad del proyecto, alcance, políticas/arquitectura y supuestos/limitaciones."
+  - code: "POV_SEMANTIC"
+    say: "POV incompleto: añade criterios/dimensiones, lectura nuclear, reglas/umbrales (si existen) y limitaciones/evidencia faltante."
+  - code: "FORBIDDEN_OUTPUT_KEY"
+    say: "Se detectó una clave/plantilla prohibida en la salida (anti-deriva). Emisión abortada."
+
+# ---------- PLANTILLA DE SALIDA (ÚNICO ARTEFACTO) ----------
+templates:
+  pov_synopsis_txt: |
+    # Proyecto: {project_name} — POV sobre {idea_ref}
+
+    ## 1) CONTEXTO DEL PROYECTO  [CONTEXT]
+    - Identidad y alcance:
+      {ctx_identity_scope}
+    - Arquitectura/Políticas relevantes:
+      {ctx_arch_policies}
+    - Supuestos y limitaciones declarados:
+      {ctx_assumptions_limits}
+    - Estilo/Preferencias de respuesta:
+      {ctx_style_preferences}
+
+    ## 2) POV — LECTURA DE LA IDEA  [POV]
+    - Marco de interpretación (criterios/dimensiones):
+      {pov_criteria}
+    - Lectura nuclear (qué se ve/prioriza):
+      {pov_core_reading}
+    - Reglas/umbrales aplicados (si existen):
+      {pov_rules_thresholds}
+    - Limitaciones y evidencia faltante:
+      {pov_limits_missing}
+
+    ## 3) MATRIZ CONTEXTO ↔ POV → IMPLICACIÓN  [CONTEXT][POV]
+    | Dimensión de Contexto | Manifestación en el POV | Implicación/Decisión | Procedencia |
+    | --- | --- | --- | --- |
+    {context_pov_matrix_rows}  # ≥5 filas cuando aplique; si no, explicar por qué
+
+    ## 4) GLOSARIO / ALIAS (opcional)
+    {glossary_aliases}
+
+    ---
+    ## PROVENANCE
+    CONTEXT: {ctx_size_bytes} bytes, {ctx_word_count} palabras, sha256={ctx_sha256}
+    POV: {pov_size_bytes} bytes, {pov_word_count} palabras, sha256={pov_sha256}
+    IDEA_REF: {idea_ref}
+    REPORT: generated_at={generated_at_iso}, cApp={version}
+
+# ---------- NOTAS ----------
+notes:
+  - "Esta cApp solo entiende el POV de UN proyecto por ejecución. Para comparar entre proyectos, ejecuta esta cApp varias veces (uno por proyecto) y compara las POVSynopsis resultantes fuera de esta cApp."
+  - "Puedes enviar CONTEXTO y POV como archivos .txt o bloques de texto; se calcularán hashes sobre el contenido normalizado."
+  - "IDEA_REF debe ser estable: por ejemplo, 'IDEA_REF: Arquitectura-Fractal-v3' o con hash/URL."
+# ---------- FIN DEL CNODE ----------

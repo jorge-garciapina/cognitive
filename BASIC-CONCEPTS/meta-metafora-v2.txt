@@ -1,0 +1,146 @@
+Título: Metáfora y Meta-Metáfora — Versión Autocontenida y Operativa (v2.0)
+
+Propósito
+Elevar la discusión sobre metáfora desde un plano meramente lingüístico a un plano estructural y operativo. Proveer definiciones, componentes mínimos, procedimiento verificable y métricas que permitan usar metáforas como herramientas de diseño cognitivo y toma de decisiones reproducible.
+
+Resumen en una línea
+Metáfora = transferir una forma de organización conocida para comprender otra; Meta-Metáfora = convertir esa forma en un protocolo operativo con reglas, pruebas y umbrales, aplicable entre niveles y dominios.
+
+------------------------------------------------------------
+1) TAXONOMÍA DE LA METÁFORA (MÚLTIPLES DIMENSIONES)
+------------------------------------------------------------
+1.1 Dimensión lingüística (superficie)
+- Función: captar atención, reducir fricción de entrada y nombrar lo desconocido con vocabulario conocido.
+- Señales de calidad: claridad del símil, economía de palabras, ausencia de ambigüedad crítica.
+
+1.2 Dimensión estructural (forma)
+- Función: mapear relaciones y restricciones (parte-de, depende-de, orden, acoplamientos).
+- Señales de calidad: preserva relaciones esenciales, identifica invariantes (lo que no cambia al trasladar).
+
+1.3 Dimensión operacional (reglas)
+- Función: definir decisiones en formato si <condición> entonces <acción>.
+- Señales de calidad: reglas observables, medibles y sin contradicciones.
+
+1.4 Dimensión cognitiva (modelo mental)
+- Función: comprimir complejidad en plantillas reutilizables; facilitar memoria y transferencia.
+- Señales de calidad: recordabilidad, cobertura suficiente sin sobrecargar detalles.
+
+1.5 Dimensión epistémica (validez)
+- Función: distinguir analogía útil de espejismo retórico.
+- Señales de calidad: anclas empíricas, posibilidad de refutación, métricas de éxito.
+
+1.6 Dimensión ética (uso responsable)
+- Función: evitar engaño o manipulación por similitudes falsas.
+- Señales de calidad: transparencia de límites, declaración de supuestos y alcances.
+
+------------------------------------------------------------
+2) DEFINICIONES OPERATIVAS
+------------------------------------------------------------
+Metáfora (definición operativa)
+- Es un mapeo A←B que transfiere la forma organizativa de B (fuente) a A (objetivo) para comprender A con menor ambigüedad.
+- Requisitos mínimos: anclas A/B, relaciones clave, invariantes, alcance y límites.
+
+Meta-Metáfora (definición operativa)
+- Es la elevación de la metáfora a un protocolo: especifica entradas, reglas, pruebas y umbrales para portar formas entre dominios y niveles.
+- Requisitos mínimos: diccionario mínimo, reglas si-entonces, plan de prueba, criterios de aceptación, registro de resultados.
+
+Diferencia esencial
+- Metáfora explica; Meta-Metáfora gobierna: habilita decisiones repetibles con verificación.
+
+------------------------------------------------------------
+3) COMPONENTES MÍNIMOS (CHECKLIST)
+------------------------------------------------------------
+C1. Anclas: pares (A: objetivo, B: fuente) bien definidos.
+C2. Relaciones: parte-de, depende-de, orden, intercambio, límites.
+C3. Invariantes: lo que debe preservarse al trasladar (p. ej., conservación de recursos, causalidad).
+C4. Diccionario mínimo: términos imprescindibles y sus equivalencias A↔B.
+C5. Reglas si-entonces: decisiones operativas derivadas del mapeo.
+C6. Alcance y límites: dónde funciona, dónde no, y por qué.
+C7. Plan de prueba: micro-experimento, datos requeridos, periodo y tamaño.
+C8. Criterios de aceptación: umbrales claros de éxito/fracaso.
+C9. Métricas de validez: utilidad, consistencia, cobertura, costo cognitivo.
+C10. Trazabilidad: registro de supuestos, iteraciones y resultados.
+
+------------------------------------------------------------
+4) PROCEDIMIENTO DETERMINISTA (PASO A PASO)
+------------------------------------------------------------
+P1. Declarar objetivo: qué decisión o comprensión se desea mejorar.
+P2. Seleccionar B (fuente) con forma conocida y relevante para A (objetivo).
+P3. Extraer relaciones e invariantes de B; listar anclas observables en A.
+P4. Construir diccionario mínimo A↔B (solo términos esenciales).
+P5. Redactar reglas si-entonces que preserven las invariantes.
+P6. Diseñar prueba mínima: contexto, duración, datos, riesgos.
+P7. Ejecutar prueba; medir contra criterios de aceptación.
+P8. Ajustar o refutar: si falla por ruptura de invariante, modificar mapeo o descartar metáfora.
+P9. Documentar: decisiones, datos, cambios y aprendizaje reutilizable.
+
+------------------------------------------------------------
+5) MÉTRICAS DE VALIDEZ (CON UMBRALES SUGERIDOS)
+------------------------------------------------------------
+M1. Utilidad observable: mejora ≥ X% en precisión/tiempo/consistencia de la decisión.
+M2. Consistencia inter-evaluador: ≥ Y% de acuerdo usando la misma plantilla.
+M3. Cobertura de esenciales: ≥ Z% de relaciones críticas mapeadas sin pérdida.
+M4. Costo cognitivo: tiempo de uso ≤ T minutos y diccionario ≤ D términos.
+M5. Reproducibilidad: mismo input → misma salida dentro de tolerancia ε.
+
+------------------------------------------------------------
+6) EJEMPLOS CANÓNICOS (BREVES Y OPERATIVOS)
+------------------------------------------------------------
+E1. Refugio (Madriguera ↔ Casa)
+- Invariantes: protección, acceso, mantenimiento.
+- Regla: si el “acceso” se degrada, entonces la “protección” cae; en A, mejorar cerraduras y señalización.
+- Prueba: medir incidentes antes/después; éxito = −30% incidentes.
+
+E2. Crecimiento (Semilla ↔ Idea)
+- Invariantes: fases, condiciones de entorno, cuidado periódico.
+- Regla: si fase = “germinación”, entonces limitar carga (alcance mínimo) y proveer “luz” (feedback frecuente).
+- Prueba: éxito = completar prototipo en ≤ 2 semanas con 2 iteraciones.
+
+E3. Formación de hábitos (Cachorro/niño ↔ Perro/adulto)
+- Invariantes: repetición, refuerzo, límites claros.
+- Regla: si conducta deseada ocurre, entonces refuerzo inmediato; si no, moldear en pasos.
+- Prueba: éxito = tasa de cumplimiento ≥ 80% en 10 días.
+
+E4. Orquestación de portafolio (Holding ↔ Sistema Operativo)
+- Invariantes: asignación de recursos, políticas, aislamiento de fallas.
+- Regla: si unidad < ROIC objetivo, entonces restringir capital y activar plan de saneamiento.
+- Prueba: éxito = mejora de ROIC ≥ 2 pp en trimestre subsecuente.
+
+------------------------------------------------------------
+7) ANTI-PATRONES (SEÑALES DE ALARMA)
+------------------------------------------------------------
+A1. Poesía sin pruebas: metáfora bonita que no decide nada.
+A2. Diccionario inflado: términos excesivos que suben costo cognitivo.
+A3. Violación de invariantes: analogía rompe relaciones críticas (p. ej., confundir correlación con causalidad).
+A4. Ambigüedad normativa: reglas sin umbrales o sin datos medibles.
+A5. Confundir niveles: pedirle a la metáfora de instancia que resuelva políticas de sistema.
+
+------------------------------------------------------------
+8) PLANTILLA RÁPIDA (LISTA PARA COPIAR)
+------------------------------------------------------------
+• Objetivo:
+• A (objetivo) / B (fuente):
+• Invariantes (3–5):
+• Relaciones clave:
+• Diccionario mínimo A↔B (≤ 7 términos):
+• Reglas si-entonces:
+• Alcance y límites:
+• Prueba mínima (contexto, duración, datos):
+• Criterios de aceptación:
+• Resultados y aprendizaje:
+
+------------------------------------------------------------
+9) META-METÁFORA COMO PROTOCOLO (RESUMEN EJECUTIVO)
+------------------------------------------------------------
+Entrada: objetivo + caso A + fuente B
+→ Proceso: invariantes + diccionario + reglas + prueba
+→ Salida: decisión reproducible con métricas y trazabilidad
+→ Iteración: ajustar o refutar mapeo según evidencia.
+
+Idea fuerza
+Metáfora organiza comprensión; Meta-Metáfora organiza decisión. Cuando se diferencian niveles, se evita la confusión entre “lenguaje bonito” y “gobernanza efectiva” de problemas.
+
+Anexo conceptual mínimo (acrónimos desplegados)
+- ROIC — Return On Invested Capital (Retorno sobre Capital Invertido).
+- LTV/CAC — Lifetime Value / Customer Acquisition Cost (Valor de Vida del Cliente / Costo de Adquisición de Cliente).
+- NPS — Net Promoter Score (Puntaje Neto del Promotor).

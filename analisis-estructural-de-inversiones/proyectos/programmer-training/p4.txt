@@ -1,0 +1,162 @@
+TÍTULO: PROYECTO CHATGPT — “APRENDIZAJE ACTIVO DE PROGRAMACIÓN / GRAFO DE DOMINIO”
+SUBTÍTULO: Descripción exhaustiva, autosuficiente y contextual del sistema conceptual y operativo que estructura este proyecto. 
+
+──────────────────────────────────────────────────────────────────────────────
+0) PROPÓSITO DE ESTE DOCUMENTO
+Este texto explica en profundidad el proyecto actual en el que se desarrolla este chat de ChatGPT, cuyo núcleo es el **sistema de Aprendizaje Activo de Programación**, formalizado como un **Grafo de Dominio auditable**. El propósito es que cualquier lector, sin conocimiento previo, pueda comprender **qué es este proyecto, cómo funciona, qué lo hace único y por qué es relevante**.  
+
+En esencia, el proyecto convierte el aprendizaje, la escritura de código y la evolución del conocimiento en un sistema verificable y reproducible, sustentado por evidencia. Cada conversación, artefacto o actualización se traduce en estructuras textuales (archivos `.jsonl`, `.txt`, `.md`) que conforman un grafo vivo de conocimiento: un **modelo computacional del aprendizaje humano**, diseñado para crecer, refinarse y auditarse de manera determinista.
+
+──────────────────────────────────────────────────────────────────────────────
+1) VISIÓN GENERAL
+El proyecto **“Aprendizaje Activo de Programación / Grafo de Dominio”** transforma la práctica de aprender a programar (y más ampliamente, de aprender cualquier dominio técnico) en un proceso **auditable, versionado y autoevaluado**.  
+Todo ocurre dentro de un marco donde:
+- **El conocimiento se representa como un grafo.**
+- **Cada nodo representa un concepto, herramienta o proyecto.**
+- **Cada conexión (borde) representa una relación verificable entre ellos.**
+- **Cada avance está sustentado por evidencia real (repos, commits, despliegues, ejemplos).**
+
+El grafo no es solo una metáfora: es el archivo central de memoria del proyecto, almacenado en `/memory/`. Su integridad, estructura y evolución son verificadas constantemente por módulos especializados que actúan como el cerebro del sistema.
+
+──────────────────────────────────────────────────────────────────────────────
+2) COMPONENTES PRINCIPALES DEL SISTEMA
+El proyecto se compone de tres capas fundamentales:
+
+2.1) **El Prompt Global**  
+El “Prompt Global” es el documento constitucional del proyecto. Define reglas universales de operación, formatos, contratos y responsabilidades entre usuario y asistente.  
+En él se establecen:
+- La filosofía de trabajo (“evidence-first”, “round-trip determinism”).
+- Los principios de separación de funciones (lectura ≠ escritura).
+- El formato obligatorio de los artefactos JSONL.
+- Los mecanismos de validación y control de calidad.
+- Las condiciones de éxito (cada interacción debe producir un cambio trazable, justificado y reproducible en el grafo de dominio).
+
+El Prompt Global convierte al asistente en un **sistema operativo de conocimiento**, más que en un simple modelo conversacional.
+
+2.2) **El Módulo de Lectura (aprendizaje-activo-de-programación-lectura.txt)**  
+Es el componente **analítico y no mutante**.  
+Su función es **leer, validar, interpretar y explicar** el estado actual del grafo de dominio. Opera con privilegios de sólo lectura sobre los archivos en `/memory/`, asegurando que ninguna consulta altere el conocimiento existente.  
+Sus tareas:
+- Cargar y verificar esquemas (nodos, bordes, checkpoints, ejemplos, métricas).
+- Calcular métricas derivadas (coverage, integration_index, recency_score, project_depth).
+- Detectar inconsistencias, brechas de evidencia y oportunidades de promoción.
+- Generar reportes ejecutivos, mapas de integración y resúmenes de estado.
+- Emitir “insights” (sugerencias no vinculantes) para que el módulo de escritura decida las mutaciones posteriores.  
+El Módulo de Lectura funciona como **la conciencia reflexiva del sistema**: observa, evalúa y comunica el estado cognitivo sin modificarlo.
+
+2.3) **El Módulo de Escritura (aprendizaje-activo-de-programación-escritura.txt)**  
+Es el componente **activo y mutante**.  
+Se encarga de **planificar, ejecutar y registrar** sesiones de aprendizaje o trabajo, aplicando los cambios justificados por evidencia.  
+Opera como una máquina de estados con siete fases (INIT → PLAN → EXECUTE → CHECK → ASSESS → PATCH → END).  
+Sus responsabilidades:
+- Capturar evidencia verificable (repositorios, commits, artefactos, despliegues, documentación).
+- Aplicar la rúbrica de niveles de dominio (0 a 5).
+- Generar parches deterministas en formato JSONL para actualizar el grafo.
+- Emitir reportes de cambio con métricas actualizadas y próximos pasos recomendados.  
+
+El Módulo de Escritura es, en términos de ingeniería, el **motor transaccional del conocimiento**: cada nueva sesión modifica la base de conocimiento de forma transparente y versionada.
+
+──────────────────────────────────────────────────────────────────────────────
+3) LA ESTRUCTURA DE MEMORIA (ARCHIVOS DE PROYECTO)
+El conocimiento está materializado en archivos bajo `/memory/`, cada uno con una función específica:
+
+- **domain-graph.nodes.jsonl** → define cada nodo del conocimiento (concepto, lenguaje, librería, proyecto, etc.), con sus evidencias, nivel de dominio, subtemas y relaciones jerárquicas.
+- **domain-graph.edges.jsonl** → documenta las conexiones entre nodos (por ejemplo, “Node.js depende de JavaScript” o “Express integra con HTTP”).
+- **domain-graph.checkpoints.jsonl** → lista objetivos de evaluación, su estado (pendiente, aprobado, fallido) y la evidencia que los justifica.
+- **exercises.index.jsonl** → define ejercicios integradores que combinan varios nodos en proyectos prácticos.
+- **examples.index.jsonl** y **/examples/*.txt** → contienen ejemplos funcionales, comprobados, con instrucciones, código y verificaciones.
+- **metrics.snapshot.json** → guarda métricas derivadas para auditoría y monitoreo de progreso.
+- **VERSION.md** → indica la versión del esquema y notas de compatibilidad.
+
+Cada archivo es texto plano, lo que garantiza trazabilidad, portabilidad y revisión manual si fuera necesario.
+
+──────────────────────────────────────────────────────────────────────────────
+4) PRINCIPIOS RECTORES
+El proyecto se sostiene sobre principios de ingeniería cognitiva y reproducibilidad científica:
+
+- **Evidence-first:** ninguna afirmación o promoción de nivel ocurre sin evidencia verificable.  
+- **Round-trip determinism:** cualquier mutación del grafo puede ser revertida o reproducida exactamente con las mismas entradas.  
+- **Separación de funciones:** el módulo lector jamás escribe; el escritor jamás lee sin intención de mutar.  
+- **Reproducibilidad total:** el estado completo del sistema puede reconstruirse desde archivos de texto.  
+- **Auditabilidad:** cada cambio queda documentado, con fuentes, fechas y descripciones.  
+- **Sin secretos ni binarios:** el sistema sólo procesa texto plano y referencias públicas seguras.  
+- **Versionado semántico:** los esquemas evolucionan mediante control de versiones explícito (v1.0, v1.1, etc.).  
+
+Estos principios transforman el aprendizaje y la práctica del software en un proceso riguroso, verificable y científicamente replicable.
+
+──────────────────────────────────────────────────────────────────────────────
+5) LA RÚBRICA DE NIVELES DE DOMINIO (0–5)
+El avance en el grafo no se mide por intuición, sino mediante una escala objetiva:
+
+| Nivel | Descripción | Evidencia mínima requerida |
+|-------|--------------|-----------------------------|
+| 0 | Sin base | Ninguna |
+| 1 | Exposición guiada | Tutorial o snippet funcional |
+| 2 | Autonomía básica | Tareas sin guía, manejo de errores comunes |
+| 3 | Integración | Proyecto pequeño que combina ≥2 nodos |
+| 4 | Diseño avanzado | Decisiones arquitectónicas, pruebas, CI/CD |
+| 5 | Maestría | Optimización, métricas, patrones reusables, mentoría documentada |
+
+La promoción entre niveles se justifica exclusivamente con nueva evidencia registrada en la sesión.
+
+──────────────────────────────────────────────────────────────────────────────
+6) MÉTRICAS DERIVADAS
+Para medir la salud y evolución del grafo, el sistema calcula indicadores cuantitativos:
+- **Coverage:** porcentaje de metas con evidencia reciente.
+- **Integration Index:** promedio de relaciones fuertes (≥3) por nodo.
+- **Recency Score:** medida del envejecimiento de la evidencia (ponderación temporal).
+- **Project Depth:** número de nodos distintos involucrados en proyectos recientes.
+
+Estas métricas funcionan como indicadores de madurez del conocimiento, equivalentes a “vital signs” de un sistema vivo.
+
+──────────────────────────────────────────────────────────────────────────────
+7) EJEMPLO DE CICLO DE INTERACCIÓN COMPLETO
+1. **Lectura inicial:** el usuario solicita `SHOW NODE javascript-arrays`. El Módulo de Lectura muestra la descripción, relaciones y ejemplos.  
+2. **Inicio de sesión de aprendizaje:** `WRITE START target=javascript-arrays goals=["entender push, pop, shift, unshift"]`.  
+3. **Registro de evidencia:** el usuario comparte un pequeño repositorio o commit que demuestra dominio.  
+4. **Evaluación y cierre:** el Módulo de Escritura genera un parche JSONL actualizando el nivel de dominio del nodo, añade la evidencia y recalcula métricas.  
+5. **Reporte final:** el sistema produce un informe legible, una actualización del grafo y propone un nuevo ejercicio integrador que combine arrays con otro concepto (por ejemplo, bucles o objetos).  
+
+Este flujo crea una **traza auditable de aprendizaje**, desde la práctica hasta la actualización del conocimiento formalizado.
+
+──────────────────────────────────────────────────────────────────────────────
+8) DIMENSIÓN FILOSÓFICA Y TEÓRICA
+El proyecto trasciende la mera programación: es una **teoría operativa del conocimiento humano asistido por IA**.  
+El grafo de dominio modela una mente estructurada, donde cada nodo equivale a una “unidad cognitiva” (concepto aprendido), cada borde a una “relación de comprensión” y cada checkpoint a una “verificación empírica del dominio”.  
+El sistema combina:
+- epistemología (qué significa “saber” algo);
+- ingeniería de software (representación formal de conocimiento);
+- filosofía de la ciencia (evidencia, reproducibilidad, falsabilidad);
+- y teoría de grafos (estructuración de relaciones cognitivas).  
+
+Desde esta perspectiva, el proyecto convierte el aprendizaje en una práctica **científica, auditable y expansiva**.
+
+──────────────────────────────────────────────────────────────────────────────
+9) RELACIÓN ENTRE ESTE MARCO Y EL PROYECTO DE INVERSIÓN
+El proyecto de inversiones (en análisis paralelo) no es un sistema aislado, sino **una aplicación del marco cognitivo** definido aquí.  
+La arquitectura en capas (Núcleo–Puentes–Alas) se interpreta, dentro del grafo de dominio, como un ejemplo de diseño sistémico:  
+- “Núcleo” = nodos de base estable (conceptos estructurales).  
+- “Puentes” = bordes de integración entre dominios.  
+- “Alas” = expansiones exploratorias o experimentales con mayor volatilidad.  
+De este modo, el grafo de programación no sólo enseña a codificar, sino a pensar, construir y auditar sistemas complejos —financieros, técnicos o conceptuales— bajo las mismas reglas de trazabilidad y evidencia.
+
+──────────────────────────────────────────────────────────────────────────────
+10) IMPACTO Y ESCALABILIDAD
+El marco puede ampliarse más allá de la programación:
+- En educación: convertir cursos en grafos vivos de conocimiento.  
+- En investigación: representar hipótesis, experimentos y evidencias como nodos y bordes.  
+- En ingeniería: trazar relaciones entre módulos, servicios, APIs y pruebas.  
+- En análisis financiero o científico: registrar teoría, datos y simulaciones como evidencias dentro de un mismo grafo.
+
+En todos los casos, la lógica es la misma: **conocimiento estructurado + evidencia verificable = aprendizaje real y auditable.**
+
+──────────────────────────────────────────────────────────────────────────────
+11) CONCLUSIÓN GENERAL
+El proyecto “Aprendizaje Activo de Programación / Grafo de Dominio” es un **entorno cognitivo de nueva generación** que fusiona la lógica de los sistemas de control de versiones con los principios del aprendizaje humano.  
+Cada conversación es una operación sobre un grafo: se leen, se validan o se mutan nodos de conocimiento.  
+Cada cambio deja una traza verificable.  
+Cada evidencia se convierte en parte de un ecosistema creciente y coherente.  
+
+Así, el asistente no enseña en abstracto: **construye una memoria estructurada, auditable y viva**, en la que cada paso del aprendizaje deja huella, cada avance se mide y cada conocimiento se integra como parte de un sistema cognitivo universal.
+
+FIN DEL DOCUMENTO AUTOSUFICIENTE.

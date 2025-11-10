@@ -1,0 +1,50 @@
+# PROMPT OPERATIVO: WRITER (ARTEFACTO → ARCHIVOS)
+
+## Propósito
+Estandarizar cómo reconstruir un proyecto de archivos a partir de un artefacto JSONL/NDJSON.
+
+## Alcance y fuentes del artefacto
+1) Artefactos generados por ChatGPT (caso principal).
+   - Formato mínimo por línea: `path` (POSIX), `kind` ("text" | "binary"), `content` (solo si `kind==="text"`).
+2) Artefactos generados por el extractor local (`generate-artifact.universal.js`).
+   - Pueden traer metadatos (`size`, `sha256`, `mtime`, `encoding`, `ext`).
+   - El writer no los necesita para reconstruir; los ignora si aparecen.
+
+## Esquema esperado (por línea)
+- Mínimo (ChatGPT → writer):
+  `{"path":"src/index.js","kind":"text","content":"console.log('hi')\n"}`
+  `{"path":"assets/logo.png","kind":"binary"}`
+- Enriquecido (extractor → writer, metadatos ignorados):
+  `{"path":"src/index.js","kind":"text","content":"...","size":123,"sha256":"...","mtime":"...","encoding":"utf-8","ext":".js"}`
+
+## Reglas del writer
+- Texto: crea carpetas y escribe `content` en UTF-8 tal cual.
+- Binarios: se omiten (sin placeholders) en esta versión mínima.
+- Seguridad de ruta: bloquea rutas absolutas y path traversal fuera de `--out-dir`.
+- Entradas diagnósticas/ inválidas: se registran y se ignoran.
+- Todas las rutas (script y `--in`) se interpretan relativas al directorio actual (CWD) si no son absolutas.
+
+## Script actual (ubicación flexible)
+Guarda el writer donde prefieras (p. ej., `code-analysis/generate-artifact/scripts/artifact-writer.min.js`).
+
+---8<----------------- PEGAR AQUÍ EL CÓDIGO DEL SCRIPT -----------------8<---
+(Coloca el contenido del writer aquí para tenerlo como referencia canónica.)
+---8<----------------- FIN DEL CÓDIGO DEL SCRIPT ----------------------8<---
+
+## Flags del writer
+- `--in <file>` (obligatorio): ruta al artefacto JSONL/NDJSON.
+- `--out-dir <dir>`: carpeta destino (default `./out`).
+- `--mode overwrite|skip|fail` (default `overwrite`).
+- `--dry-run`: simula sin escribir.
+
+## Uso (resumen)
+- Windows (PowerShell) o macOS/Linux: `node <ruta-al-writer> --in <ruta-al-artefacto> --out-dir ./restored --mode overwrite`.
+- Usa `--dry-run` para ver qué haría sin escribir.
+
+## Buenas prácticas
+- Verifica rutas con `Test-Path`/`ls` antes de ejecutar.
+- Si el artefacto del extractor tiene `/*__TRUNCATED__*/`, asume análisis parcial de ese archivo.
+- Mantén el mismo esquema para artefactos de entrada (ChatGPT) y de salida (extractor) para garantizar interoperabilidad.
+
+## Resultado esperado
+Una carpeta `--out-dir` con la jerarquía de archivos reconstruida, lista para ejecutar o compilar. Los binarios se omiten por diseño; si se necesitan placeholders o permisos ejecutables, se extenderá explícitamente.
